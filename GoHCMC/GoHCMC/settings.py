@@ -37,6 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'register.apps.RegisterConfig',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'widget_tweaks',
+    'location',
+    'weather',
+    'trip',
+    'favourite',
+    # 'dialogflow',
 ]
 
 MIDDLEWARE = [

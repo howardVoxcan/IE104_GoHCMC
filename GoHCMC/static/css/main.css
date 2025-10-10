@@ -1,0 +1,23 @@
+/* Main CSS: Layout and components */
+.header {
+  height: var(--header-height);
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  font-size: 1.3rem;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height);
+  padding: 2rem;
+}
+.footer {
+  background: #eee;
+  color: #555;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}

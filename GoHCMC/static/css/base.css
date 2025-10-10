@@ -1,0 +1,21 @@
+:root {
+  --main-bg: #FFFFFF;      /* Nền tổng thể */
+  --primary: #2ECC71;      /* Xanh ngọc lục bảo - chủ đạo */
+  --secondary: #27AE60;    /* Xanh rừng - màu phụ */
+  --accent: #E67E22;       /* Cam nhấn */
+  --danger: #E74C3C;       /* Đỏ cảnh báo/nguy hiểm */
+  --text-main: #2C3E50;    /* Chữ chính - đen chuyên nghiệp */
+  --text-sub: #7F8C8D;     /* Chữ phụ - xám */
+  --header-height: 64px;
+  --font-main: 'Segoe UI', Arial, sans-serif;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: var(--font-main);
+  background: var(--main-bg);
+  color: var(--text-main);
+}

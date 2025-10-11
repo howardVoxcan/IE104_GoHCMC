@@ -1,0 +1,10 @@
+Django>=4.2
+djangorestframework>=3.14.0
+python-dotenv>=1.0.0
+Pillow>=10.0.0
+# Các package bổ sung cho dự án
+django-crispy-forms>=2.0
+crispy-bootstrap5>=0.7
+django-widget-tweaks>=1.4.1
+# Nếu dùng PostgreSQL, thêm dòng sau:
+# psycopg2-binary>=2.9.9

@@ -9,11 +9,25 @@
   --header-height: 64px;
   --font-main: 'Segoe UI', Arial, sans-serif;
 }
+
+:root[data-theme="dark"] {
+  --main-bg: #121212;
+  --primary: #27AE60;
+  --secondary: #1E8449;
+  --accent: #D35400;
+  --danger: #C0392B;
+  --text-main: #ECF0F1;
+  --text-sub: #95A5A6;
+  --header-height: 64px;
+  --font-main: 'Segoe UI', Arial, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: var(--font-main);
   background: var(--main-bg);

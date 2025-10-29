@@ -8,3 +8,5 @@ crispy-bootstrap5>=0.7
 django-widget-tweaks>=1.4.1
 # Nếu dùng PostgreSQL, thêm dòng sau:
 # psycopg2-binary>=2.9.9
+# Để cài sympy cho Python 3.9:
+python3.9 -m pip install sympy

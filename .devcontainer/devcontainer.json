@@ -23,7 +23,8 @@
 			"extensions": [
 				"ms-python.python",
 				"batisteo.vscode-django",
-				"GitHub.copilot"
+				"GitHub.copilot",
+				"Prettier.prettier-vscode"
 			]
 		}
 	}

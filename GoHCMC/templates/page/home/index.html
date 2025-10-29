@@ -35,17 +35,17 @@
       const palaces = [
         {
           name: "Dinh Độc Lập",
-          image_url: "/static/images/palaces/dinh_doc_lap.jpg",
+          image_url: "https://statics.vinpearl.com/Where-is-ho-chi-minh-city-01_1684509272.jpg",
           description: "Biểu tượng lịch sử của TP.HCM, nơi diễn ra nhiều sự kiện quan trọng."
         },
         {
           name: "Chợ Bến Thành",
-          image_url: "/static/images/palaces/cho_ben_thanh.jpg",
+          image_url: "https://statics.vinpearl.com/Where-is-ho-chi-minh-city-01_1684509272.jpg",
           description: "Chợ truyền thống nổi tiếng với đa dạng hàng hóa và ẩm thực địa phương."
         },
         {
           name: "Nhà thờ Đức Bà",
-          image_url: "/static/images/palaces/nha_tho_duc_ba.jpg",
+          image_url: "https://statics.vinpearl.com/Where-is-ho-chi-minh-city-01_1684509272.jpg",
           description: "Kiến trúc Pháp cổ kính giữa lòng thành phố hiện đại."
         }
       ];
@@ -55,15 +55,16 @@
         item.className = 'palace-item';
         item.innerHTML = `
           <img src="${palace.image_url}" alt="${palace.name}">
-          <h4>${palace.name}</h4>
-          <p>${palace.description}</p>
+          <div class="palace-info">
+            <h4><strong>${palace.name}</strong></h4>
+            <p>${palace.description}</p>
+            <p>Rating: ⭐⭐⭐⭐⭐ 5/5</p>
+          </div>
         `;
         palaceList.appendChild(item);
       });
     });
   </script>
-  <h2>Chào mừng đến với GoHCMC!</h2>
-  <p>Khám phá du lịch TP.HCM với các chức năng chuyến đi, thời tiết, địa điểm, đăng ký...</p>
   {% comment %} List palace of tourist {% endcomment %}
   <div class="palace-section">
     <h3>Địa điểm nổi bật</h3>

@@ -1,6 +1,37 @@
 {% extends 'layout.html' %}
+{% load static %}
 {% block title %}Trang chủ{% endblock %}
 {% block content %}
+  <link rel="stylesheet" href="{% static 'css/banner.css' %}">
+  <div class="banner" id="banner">
+    <img id="banner-img" class="banner-img" src="" alt="Banner" />
+    <div class="banner-overlay">
+      <h1 id="banner-title"></h1>
+      <p id="banner-desc"></p>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/static/data/Banner.json')
+        .then(res => res.json())
+        .then(banners => {
+          let idx = 0;
+          const img = document.getElementById('banner-img');
+          const title = document.getElementById('banner-title');
+          const desc = document.getElementById('banner-desc');
+          function showBanner(i) {
+            img.src = banners[i].img;
+            title.textContent = banners[i].title;
+            desc.textContent = banners[i].desc;
+          }
+          showBanner(idx);
+          setInterval(() => {
+            idx = (idx + 1) % banners.length;
+            showBanner(idx);
+          }, 5000);
+        });
+    });
+  </script>
   <h2>Chào mừng đến với GoHCMC!</h2>
   <p>Khám phá du lịch TP.HCM với các chức năng chuyến đi, thời tiết, địa điểm, đăng ký...</p>
 {% endblock %}

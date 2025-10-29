@@ -18,6 +18,7 @@
   align-items: center;
   margin-right: 1rem;
 }
+
 .header__logo-img {
   height: 48px;
   width: auto;
@@ -50,6 +51,7 @@
   font-size: 1.15rem;
   transition: background 0.2s, color 0.2s;
 }
+
 .nav-link.active,
 .nav-link:hover {
   background: var(--primary);
@@ -67,9 +69,11 @@
   transition: width 0.3s;
   border: 2px solid var(--primary);
 }
+
 :root[data-theme="dark"] .search-form {
   border: 2px solid var(--accent);
 }
+
 .search-input {
   padding: 0.4rem 0.8rem;
   border: none;
@@ -81,6 +85,7 @@
   min-width: 0;
   background: var(--main-bg);
 }
+
 .search-button {
   background: transparent;
   color: var(--text-sub);
@@ -105,10 +110,12 @@
   color: var(--primary);
   transition: background 0.2s, color 0.2s;
 }
+
 .button-primary {
   background: var(--primary);
   color: #fff;
 }
+
 .button-secondary {
   background: #fff;
   color: var(--primary);
@@ -118,6 +125,7 @@
   position: relative;
   display: inline-block;
 }
+
 .user-btn {
   border: 2px solid var(--primary);
   border-radius: 32px;
@@ -145,7 +153,7 @@
   background: #fff;
   color: var(--primary);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(44,62,80,0.15);
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
   z-index: 100;
   padding: 0.7rem 0;
   flex-direction: column;
@@ -153,9 +161,11 @@
   font-size: 1.08rem;
   border: 1.5px solid #f0f0f0;
 }
+
 .user-menu.open {
   display: flex;
 }
+
 .user-menu a,
 .user-menu button {
   display: flex;
@@ -175,6 +185,7 @@
   transition: background 0.18s, color 0.18s;
   box-shadow: none;
 }
+
 .user-menu a:hover,
 .user-menu a:focus,
 .user-menu button:hover,
@@ -184,6 +195,7 @@
   outline: none;
   text-decoration: none;
 }
+
 .user-menu i {
   font-size: 1.15em;
   min-width: 1.3em;
@@ -191,11 +203,13 @@
   color: inherit !important;
   transition: color 0.18s;
 }
+
 .user-menu a:active,
 .user-menu button:active {
   background: var(--secondary);
   color: #fff;
 }
+
 .user-menu a:visited {
   color: var(--primary);
   text-decoration: none;
@@ -219,6 +233,7 @@
   position: relative;
   padding: 0;
 }
+
 .theme-switch__icon,
 .header__search-icon i {
   margin: 0;
@@ -231,37 +246,45 @@
   width: 100%;
   height: 100%;
 }
+
 .theme-switch[data-theme="dark"] .theme-switch__icon {
   color: var(--accent);
   transform: rotate(360deg);
 }
+
 .theme-switch[data-theme="light"] .theme-switch__icon {
   transform: rotate(0deg);
 }
+
 .theme-switch:hover,
 .header__search-icon:hover {
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
 }
+
 .theme-switch:hover .theme-switch__icon,
 .header__search-icon:hover i {
   color: #fff;
 }
+
 :root[data-theme="dark"] .theme-switch,
 :root[data-theme="dark"] .header__search-icon {
   background: #222;
   border-color: var(--accent);
 }
+
 :root[data-theme="dark"] .theme-switch__icon,
 :root[data-theme="dark"] .header__search-icon i {
   color: var(--accent);
 }
+
 :root[data-theme="dark"] .theme-switch:hover,
 :root[data-theme="dark"] .header__search-icon:hover {
   background: var(--accent);
   border-color: var(--accent);
 }
+
 :root[data-theme="dark"] .theme-switch:hover .theme-switch__icon,
 :root[data-theme="dark"] .header__search-icon:hover i {
   color: #fff;
@@ -269,7 +292,7 @@
 
 .main-content {
   margin-left: var(--sidebar-width);
-  margin-top: var(--header-height);
+  margin-top: 1rem;
   padding: 2rem;
 }
 
@@ -281,10 +304,12 @@
   font-size: 1.08rem;
   margin-top: 2rem;
 }
+
 .footer-container {
   margin: 0 auto;
   padding: 0 2rem;
 }
+
 .footer-grid {
   display: flex;
   justify-content: center;
@@ -294,6 +319,7 @@
   border-bottom: 1px solid #555;
   padding-bottom: 1.5rem;
 }
+
 .footer-column {
   flex: 1 1 260px;
   min-width: 220px;
@@ -302,16 +328,19 @@
   flex-direction: column;
   align-items: center;
 }
+
 .footer-column h3,
 .footer-column p {
   text-align: center;
 }
+
 .social-links {
   display: flex;
   gap: 1rem;
   margin-top: 0.5rem;
   justify-content: center;
 }
+
 .social-links a {
   display: flex;
   align-items: center;
@@ -325,11 +354,13 @@
   transition: background 0.2s, color 0.2s, transform 0.18s;
   text-decoration: none;
 }
+
 .social-links a:hover {
   background: var(--primary);
   color: #fff;
   transform: translateY(-2px) scale(1.08);
 }
+
 .footer-bottom {
   text-align: center;
   color: #aaa;
@@ -337,6 +368,7 @@
   margin-top: 1.2rem;
   padding-bottom: 0.5rem;
 }
+
 /* Responsive */
 @media (max-width: 900px) {
   .footer-grid {
@@ -345,6 +377,7 @@
     gap: 1.5rem;
     text-align: center;
   }
+
   .footer-column {
     min-width: 0;
   }

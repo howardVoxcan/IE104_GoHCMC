@@ -1,0 +1,23 @@
+.palace-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.palace-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    grid-column: auto / span 3;
+    height: 500px;
+}
+
+.palace-item {
+    width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin: 20px;
+}

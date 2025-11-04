@@ -1,7 +1,7 @@
 {% load static %}
 <header class="header">
   <div class="header__logo">
-    <a href="#">
+    <a href="{% url 'homepage' %}">
       <img
         src="{% static 'img/Logo_GoHCMC.png' %}"
         alt="GoHCMC Logo"
@@ -10,7 +10,7 @@
   </div>
   <nav class="header__nav-tabs">
     <a
-      href="#"
+      href="{% url 'homepage' %}"
       class="nav-link {% if request.resolver_match.url_name == 'homepage' %}active{% endif %}">
       <i class="fas fa-house"></i> Home
     </a>
@@ -20,7 +20,7 @@
       <i class="fas fa-cloud-sun"></i> Weather
     </a>
     <a
-      href="#"
+      href="{% url 'locations' %}"
       class="nav-link {% if request.resolver_match.url_name == 'locations' %}active{% endif %}">
       <i class="fas fa-map-pin"></i> Locations
     </a>

@@ -10,4 +10,7 @@ sympy
 
 # Nếu dùng PostgreSQL, thêm dòng sau:
 # psycopg2-binary>=2.9.9
-# python3.9 -m pip install sympy
+
+# Để cài sympy cho Python 3.9:
+python3.9 -m pip install sympy
+

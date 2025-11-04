@@ -2,6 +2,9 @@ Django>=4.2
 djangorestframework>=3.14.0
 python-dotenv>=1.0.0
 Pillow>=10.0.0
+requests
+joblib
+spacy
 # Các package bổ sung cho dự án
 django-crispy-forms>=2.0
 crispy-bootstrap5>=0.7
@@ -11,6 +14,5 @@ sympy
 # Nếu dùng PostgreSQL, thêm dòng sau:
 # psycopg2-binary>=2.9.9
 
-# Để cài sympy cho Python 3.9:
-python3.9 -m pip install sympy
+
 

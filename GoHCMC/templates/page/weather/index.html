@@ -1,6 +1,331 @@
 {% extends 'layout.html' %}
-{% block title %}Thời tiết{% endblock %}
+{% load static %}
+
+{% block title %}Weather{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/weather.css' %}?v={{ timestamp }}">
+{% endblock %}
+
 {% block content %}
-  <h2>Thông tin thời tiết</h2>
-  <!-- Nội dung thời tiết sẽ render ở đây -->
+<div class="weather-fullscreen">
+  <!-- Left: Day tabs -->
+  <div class="day-tabs">
+    {% for day in forecast %}
+      <button class="tab-btn {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter0 }}">
+        <div class="tab-day">{{ day.date|slice:":3" }}</div>
+        <div class="tab-date">{{ day.date }}</div>
+      </button>
+    {% endfor %}
+  </div>
+
+  <!-- Right: Chart + details -->
+  <div class="forecast-right">
+    <div class="header-row">
+      <div class="title-area">
+        <div class="title">Dự báo thời tiết</div>
+        <div class="subtitle">Nhiệt độ (°C) và ước lượng mưa (mm)</div>
+      </div>
+      <div class="updated">Updated: <span id="updatedAt">—</span></div>
+    </div>
+
+    <div id="chartContainer" class="svg-wrap">
+      <div id="tooltip" class="tooltip"></div>
+      <svg id="chartSvg" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid meet"
+           role="img" aria-labelledby="chartTitle">
+        <defs>
+          <linearGradient id="tempGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#ffb86b" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <g id="gridAndLabels"></g>
+        <g id="rainBars"></g>
+        <g id="tempAreaLine"></g>
+        <g id="dots"></g>
+      </svg>
+    </div>
+
+    <div class="legend">
+      <span><i class="swatch sw-temp"></i> Nhiệt độ (°C)</span>
+      <span><i class="swatch sw-rain"></i> Mưa (mm) — ước lượng</span>
+    </div>
+
+    <!-- Period cards for selected day -->
+    <div id="periodCards" class="period-cards">
+      <!-- JS sẽ render các card ở đây theo ngày đang active -->
+    </div>
+  </div>
+</div>
+
+<script>
+/* Build JS data from Django context (safe-escaped) */
+const forecastData = [
+{% for day in forecast %}
+  {
+    date: "{{ day.date|escapejs }}",
+    label: "{{ day.date|slice:":3"|escapejs }}",
+    periods: [
+      {% for p in day.periods %}
+        {
+          time: "{{ p.time|escapejs }}",
+          temp: {{ p.temp_c }},
+          condition: "{{ p.condition|escapejs }}",
+          icon: "{{ p.icon|escapejs }}"
+        }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }{% if not forloop.last %},{% endif %}
+{% endfor %}
+];
+
+document.getElementById('updatedAt').textContent = (new Date()).toLocaleString();
+
+/* Create a summarized array used by the chart:
+   - temp: max temp in that day (you can switch to avg/min if preferred)
+   - rain: approximated by counting periods whose condition string contains rain-related words
+   - icon: choose the middle period's icon for display
+*/
+const summary = forecastData.map(day => {
+  const temps = day.periods.map(p => Number(p.temp));
+  const maxTemp = Math.round(Math.max(...temps));
+  const conds = day.periods.map(p => p.condition.toLowerCase());
+  const rainCount = conds.filter(c => c.includes('rain') || c.includes('shower') || c.includes('drizzle') || c.includes('thunder')).length;
+  const rainEstimate = rainCount * 3; // heuristic: 3 mm per rainy period (adjust later if you have precip_mm)
+  const midIcon = day.periods[Math.floor(day.periods.length/2)]?.icon || day.periods[0]?.icon || '';
+  return {
+    date: day.date,
+    day: day.label,
+    temp: maxTemp,
+    rain: rainEstimate,
+    icon: midIcon
+  };
+});
+
+/* ---------- Chart renderer (based on earlier SVG example) ---------- */
+function renderWeatherChart(data){
+  const svgW = 900, svgH = 300;
+  const padding = { top: 18, bottom: 48, left: 40, right: 24 };
+  const innerW = svgW - padding.left - padding.right;
+  const innerH = svgH - padding.top - padding.bottom;
+
+  const temps = data.map(d => d.temp);
+  const rains = data.map(d => d.rain);
+  const minTemp = Math.min(...temps) - 2;
+  const maxTemp = Math.max(...temps) + 2;
+  const maxRain = Math.max(...rains, 5);
+
+  const xStep = innerW / (Math.max(1, data.length - 1));
+  const x = i => padding.left + xStep * i;
+  const yTemp = t => padding.top + ((maxTemp - t) / (maxTemp - minTemp)) * innerH;
+  const yRain = r => padding.top + innerH - (r / maxRain) * (innerH * 0.5);
+
+  const gridG = document.getElementById('gridAndLabels');
+  const rainG = document.getElementById('rainBars');
+  const tempG = document.getElementById('tempAreaLine');
+  const dotsG = document.getElementById('dots');
+  gridG.innerHTML = ''; rainG.innerHTML=''; tempG.innerHTML=''; dotsG.innerHTML='';
+
+  // Y axis labels (temperature)
+  const ticks = 4;
+  for(let i=0;i<=ticks;i++){
+    const tVal = minTemp + (i / ticks) * (maxTemp - minTemp);
+    const yPos = padding.top + innerH - (i / ticks) * innerH;
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', padding.left);
+    line.setAttribute('x2', svgW - padding.right);
+    line.setAttribute('y1', yPos);
+    line.setAttribute('y2', yPos);
+    line.setAttribute('class','grid-line');
+    gridG.appendChild(line);
+
+    const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('x', padding.left - 8);
+    label.setAttribute('y', yPos + 4);
+    label.setAttribute('class','y-labels');
+    label.setAttribute('text-anchor','end');
+    label.textContent = Math.round(tVal) + '°';
+    gridG.appendChild(label);
+  }
+
+  // x labels and icons
+// x labels (day) + weather icons
+    data.forEach((d, i) => {
+    // --- Nhãn ngày ---
+    const tx = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    tx.setAttribute('x', x(i));
+    tx.setAttribute('y', svgH - 12);
+    tx.setAttribute('class', 'x-label');
+    tx.setAttribute('text-anchor', 'middle');
+    tx.textContent = d.day;
+    gridG.appendChild(tx);
+
+    // --- Icon thời tiết ---
+    if (d.icon) {
+        const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+        img.setAttribute('x', x(i) - 16);   // canh giữa icon
+        img.setAttribute('y', svgH - 50);   // cao hơn text một chút
+        img.setAttribute('width', 32);
+        img.setAttribute('height', 32);
+        img.setAttribute('href', d.icon.startsWith('http') ? d.icon : 'https:' + d.icon);
+        gridG.appendChild(img);
+    }
+    });
+
+
+  // rain bars
+  data.forEach((d,i)=>{
+    const rx = x(i) - xStep*0.28;
+    const rw = xStep*0.56;
+    const ry = yRain(d.rain);
+    const rheight = padding.top + innerH - ry;
+    const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x', rx);
+    rect.setAttribute('y', ry);
+    rect.setAttribute('width', Math.max(6, rw));
+    rect.setAttribute('height', rheight);
+    rect.setAttribute('rx', 3);
+    rect.setAttribute('class','rain-bar');
+    rect.setAttribute('opacity', d.rain === 0 ? 0.15 : 0.95);
+    rect.dataset.rain = d.rain;
+    rect.dataset.day = d.day;
+    rainG.appendChild(rect);
+  });
+
+  // temp path + area
+  let lineD = '', areaD = '';
+  data.forEach((d,i)=>{
+    const px = x(i);
+    const py = yTemp(d.temp);
+    if(i===0){
+      lineD += `M ${px} ${py}`;
+      areaD += `M ${px} ${py}`;
+    } else {
+      lineD += ` L ${px} ${py}`;
+      areaD += ` L ${px} ${py}`;
+    }
+  });
+  const lastX = x(data.length-1);
+  const firstX = x(0);
+  areaD += ` L ${lastX} ${padding.top + innerH} L ${firstX} ${padding.top + innerH} Z`;
+
+  const areaPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+  areaPath.setAttribute('d', areaD);
+  areaPath.setAttribute('class','temp-area');
+  tempG.appendChild(areaPath);
+
+  const linePath = document.createElementNS('http://www.w3.org/2000/svg','path');
+  linePath.setAttribute('d', lineD);
+  linePath.setAttribute('class','temp-line');
+  tempG.appendChild(linePath);
+
+  // dots and tooltip interactions
+  const tooltip = document.getElementById('tooltip');
+
+  data.forEach((d,i)=>{
+    const px = x(i);
+    const py = yTemp(d.temp);
+
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', px);
+    c.setAttribute('cy', py);
+    c.setAttribute('class', 'dot');
+    c.setAttribute('r', 5);
+    c.dataset.temp = d.temp;
+    c.dataset.rain = d.rain;
+    c.dataset.day = d.day;
+    dotsG.appendChild(c);
+
+    const hit = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    hit.setAttribute('x', px - xStep*0.5);
+    hit.setAttribute('y', padding.top);
+    hit.setAttribute('width', xStep);
+    hit.setAttribute('height', innerH);
+    hit.setAttribute('fill', 'transparent');
+    hit.style.cursor = 'pointer';
+    hit.dataset.index = i;
+    dotsG.appendChild(hit);
+
+    function showTooltip(evt){
+      const rect = document.getElementById('chartContainer').getBoundingClientRect();
+      const clientX = (evt.type.startsWith('touch') ? evt.touches[0].clientX : evt.clientX);
+      const clientY = (evt.type.startsWith('touch') ? evt.touches[0].clientY : evt.clientY);
+      const left = clientX - rect.left;
+      const top = clientY - rect.top;
+      tooltip.style.display = 'block';
+      tooltip.style.left = left + 'px';
+      tooltip.style.top = top + 'px';
+      tooltip.innerHTML = `<strong>${d.day}, ${d.date}</strong><br>
+                           Nhiệt độ: <strong>${d.temp}°C</strong><br>
+                           Mưa (ước): <strong>${d.rain} mm</strong>`;
+    }
+    function hideTooltip(){ tooltip.style.display = 'none'; }
+
+    c.addEventListener('mouseenter', showTooltip);
+    c.addEventListener('mousemove', showTooltip);
+    c.addEventListener('mouseleave', hideTooltip);
+    hit.addEventListener('mouseenter', showTooltip);
+    hit.addEventListener('mousemove', showTooltip);
+    hit.addEventListener('mouseleave', hideTooltip);
+
+    hit.addEventListener('click', () => {
+      // when click on chart column, switch left tab to that day
+      const idx = Number(hit.dataset.index || i);
+      activateTab(idx);
+    });
+    hit.addEventListener('touchstart', function(e){ e.preventDefault(); showTooltip(e); }, {passive:false});
+    document.addEventListener('touchstart', function(e){ if(!e.target.closest('#chartContainer')) hideTooltip(); });
+  });
+}
+
+/* Render period cards for given day index */
+function renderPeriodCards(dayIndex){
+  const container = document.getElementById('periodCards');
+  container.innerHTML = '';
+  const day = forecastData[dayIndex];
+  if(!day) return;
+  const title = document.createElement('h3');
+  title.className = 'period-title';
+  title.textContent = day.date;
+  container.appendChild(title);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'period-grid';
+  day.periods.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'forecast-period';
+    card.innerHTML = `
+    <p class="time"><strong>${p.time}</strong></p>
+    <img src="https:${p.icon}" alt="${p.condition}">
+    <p class="temp"><strong>${p.temp}°C</strong></p>
+    <p class="cond">${p.condition}</p>
+    `;
+    wrap.appendChild(card);
+  });
+  container.appendChild(wrap);
+}
+
+/* Tab activation helper */
+function activateTab(idx){
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  tabButtons.forEach((b,i)=> {
+    if(i===idx) b.classList.add('active'); else b.classList.remove('active');
+  });
+  renderPeriodCards(idx);
+}
+
+/* Wire up left-tab clicks */
+document.querySelectorAll('.tab-btn').forEach((btn, index) => {
+  btn.addEventListener('click', () => {
+    activateTab(index);
+  });
+});
+
+/* Initial render */
+renderWeatherChart(summary);
+activateTab(0);
+</script>
 {% endblock %}

@@ -5,6 +5,7 @@ Pillow>=10.0.0
 requests
 joblib
 spacy
+sklearn
 # Các package bổ sung cho dự án
 django-crispy-forms>=2.0
 crispy-bootstrap5>=0.7

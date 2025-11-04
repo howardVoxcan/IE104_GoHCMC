@@ -1,16 +1,17 @@
 /* Filter section */
 .filter-section {
-  max-width: 1100px;             /* Giới hạn chiều rộng tối đa */
-  margin: 20px auto 24px auto;     /* Canh giữa và tạo khoảng cách dưới */
+  max-width: 1100px;
+  margin: 20px auto 24px auto;
   padding: 20px;
-  background: #fff;
+  background: var(--card-bg); /* Use a distinct background color */
+  border: 1px solid var(--border-color);
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   align-items: center;
-  justify-content: center;      /* Canh giữa các phần tử con */
+  justify-content: center;
 }
 
 .filter-element {
@@ -21,33 +22,37 @@
   font-size: 16px;
   font-weight: 500;
   margin-right: 8px;
+  color: var(--text-main);
 }
 
 .filter-section select,
 .filter-section input {
   padding: 10px 14px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 15px;
   min-width: 150px;
+  background: var(--main-bg);
+  color: var(--text-main);
 }
 
 .filter-section button {
   flex: 1;
   padding: 10px 18px;
-  background-color:#00aa6c;
+  background-color: var(--primary);
   color: #fff;
   margin-left: auto;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 15px;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .filter-section button:hover {
-  background-color: #029e65;
+  background-color: var(--secondary);
+  transform: scale(1.05);
 }
-
 
 /* Content section */
 .content-section {
@@ -65,20 +70,20 @@
 /* Card */
 .card {
   display: flex;
-  background-color: white;
+  background-color: var(--card-bg); /* Use a distinct background color */
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   height: 250px;
   width: 1100px;
   margin: 0 auto;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  transform: scale(1.03);
 }
 
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
 }
 
 /* Card image */
@@ -86,6 +91,7 @@
   width: 33%;
   background-size: cover;
   background-position: center;
+  border-right: 1px solid var(--border-color);
 }
 
 /* Card content */
@@ -101,11 +107,12 @@
   margin-bottom: 10px;
   font-size: 24px;
   font-weight: 600;
+  color: var(--text-main);
 }
 
 .card-content p {
   font-size: 16px;
-  color: #555;
+  color: var(--text-sub);
   margin-bottom: 14px;
 }
 
@@ -123,17 +130,17 @@
 
 .rating span {
   font-size: 16px;
-  color: #444;
+  color: var(--text-main);
 }
 
 .open-hour {
   font-size: 15px;
-  color: #777;
+  color: var(--text-sub);
 }
 
 /* Favourite button */
-.favourite{
-    margin-left: auto;
+.favourite {
+  margin-left: auto;
 }
 
 .favourite .fav-btn {
@@ -144,5 +151,5 @@
 }
 
 .favourite i {
-    color: rgb(255, 119, 119);
+  color: var(--danger);
 }

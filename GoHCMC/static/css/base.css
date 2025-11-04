@@ -11,6 +11,8 @@
   --danger: #E74C3C;        /* Đỏ cảnh báo/nguy hiểm */
   --text-main: #2C3E50;    /* Chữ chính - đen chuyên nghiệp */
   --text-sub: #7F8C8D;      /* Chữ phụ - xám */
+  --disabled-color: #ccc;
+  --disabled-border-color: #eee;
 
   --font-main: 'Segoe UI', Arial, sans-serif;
   --header-height: 64px;
@@ -29,7 +31,8 @@
   --danger: #C0392B;
   --text-main: #ECF0F1;    /* Chữ chính - trắng ngà */
   --text-sub: #95A5A6;      /* Chữ phụ - xám nhạt */
-
+   --disabled-color: #7c7c7c;
+  --disabled-border-color: #686868;
   --font-main: 'Segoe UI', Arial, sans-serif;
   --header-height: 64px;
 }

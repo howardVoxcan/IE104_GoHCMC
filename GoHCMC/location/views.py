@@ -7,6 +7,13 @@ from django.views.decorators.http import require_POST
 from datetime import datetime
 import joblib, os, spacy
 from django.conf import settings
+from django import template
+
+register = template.Library()
+
+@register.filter
+def to(value, end):
+    return range(value, end + 1)
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -89,6 +96,7 @@ def homepage(request):
     return render(request, "page/home/index.html")
 
 def locations(request):
+    # --- Xử lý POST: thêm/xóa yêu thích ---
     if request.method == "POST":
         if not request.user.is_authenticated:
             return JsonResponse({'error': 'unauthenticated'}, status=401)
@@ -103,8 +111,7 @@ def locations(request):
             return JsonResponse({'error': 'Location not found'}, status=404)
 
         user = request.user
-
-        # Thêm/xóa user vào favourited_by của Location
+        # Toggle trạng thái yêu thích
         if user in selected.favourited_by.all():
             selected.favourited_by.remove(user)
         else:
@@ -112,14 +119,22 @@ def locations(request):
 
         return redirect('locations')
 
+    # --- Xử lý GET: hiển thị danh sách địa điểm ---
     else:
         type_filter = request.GET.get('type')
         min_rating = request.GET.get('rating')
         desired_time = request.GET.get('desired_time')
         search_query = request.GET.get('search')
 
+        # --- Lấy page và limit ---
+        page = int(request.GET.get('page', 1))
+        limit = int(request.GET.get('limit', 10))
+        offset = (page - 1) * limit
+
+        # --- Base query ---
         all_of_locations = Location.objects.all()
 
+        # --- Lọc dữ liệu ---
         if type_filter:
             all_of_locations = all_of_locations.filter(type__iexact=type_filter)
 
@@ -149,8 +164,16 @@ def locations(request):
 
         all_of_locations = all_of_locations.order_by('open_time')
 
+        # --- Tính tổng số trang ---
+        total_items = all_of_locations.count()
+        total_pages = (total_items + limit - 1) // limit
+
+        # --- Lấy dữ liệu trong trang hiện tại ---
+        all_of_locations = all_of_locations[offset:offset + limit]
+
         user = request.user if request.user.is_authenticated else None
 
+        # --- Xử lý dữ liệu cho template ---
         processed_locations = []
         for loc in all_of_locations:
             rating = (round(loc.rating * 2)) / 2
@@ -171,6 +194,7 @@ def locations(request):
                 if user and loc.favourited_by.filter(id=user.id).exists()
                 else '<i class="fa-regular fa-heart"></i>'
             )
+
             open_time = loc.open_time.strftime("%H:%M") if loc.open_time else "N/A"
             close_time = loc.close_time.strftime("%H:%M") if loc.close_time else "N/A"
 
@@ -192,8 +216,12 @@ def locations(request):
                 'favourite_symbol': favourite_symbol,
             })
 
+        # --- Render ra template ---
         return render(request, "page/locations/index.html", {
             'locations': processed_locations,
+            'current_page': page,
+            'total_pages': total_pages,
+            'limit': limit,
             'current_filters': {
                 'type': type_filter or '',
                 'rating': min_rating or '',

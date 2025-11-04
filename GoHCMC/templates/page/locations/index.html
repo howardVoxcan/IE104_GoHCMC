@@ -1,43 +1,71 @@
 {% extends "layout.html" %}
-
 {% load static %}
+{% load custom_tags %}
 
-{% block title %} Locations {% endblock %}
+
+{% block title %}Locations{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/locations.css' %}">
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24px 0;
+    gap: 10px;
+  }
+  .pagination a, .pagination span {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  .pagination a:hover {
+    background: #f1f1f1;
+  }
+  .pagination .active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
 <section class="filter-section">
-    <form method="get" action="{% url 'locations' %}" style="display: flex; flex-wrap: wrap; gap: 16px; width: 100%; align-items: center;">
-        <div class="filter-element">
-            <label for="type">Type:</label>
-            <select name="type" id="type">
-                <option value="">All</option>
-                <option value="Accomodation" {% if current_filters.type == "Accomodation" %}selected{% endif %}>Accomodation</option>
-                <option value="Entertainment" {% if current_filters.type == "Entertainment" %}selected{% endif %}>Entertainment</option>
-                <option value="F&B" {% if current_filters.type == "F&B" %}selected{% endif %}>F&B</option>
-                <option value="Local" {% if current_filters.type == "Local" %}selected{% endif %}>Local</option>
-                <option value="Market" {% if current_filters.type == "Market" %}selected{% endif %}>Market</option>
-                <option value="Transportation" {% if current_filters.type == "Transportation" %}selected{% endif %}>Transportation</option>
-            </select>
-        </div>
-        <div class="filter-element">
-            <label for="rating">Min Rating:</label>
-            <input type="number" name="rating" id="rating" value="{{ current_filters.rating }}" min="1" max="5" step="0.1">
-        </div>
-        <div class="filter-element">
-            <label for="desired_time">Open at:</label>
-            <input type="time" id="desired_time" name="desired_time" value="{{ current_filters.desired_time }}">
-        </div>
-        <div>
-            <button type="submit">Apply Filters</button>
-        </div>
-    </form>
+  <form method="get" action="{% url 'locations' %}"
+        style="display: flex; flex-wrap: wrap; gap: 16px; width: 100%; align-items: center;">
+    <div class="filter-element">
+      <label for="type">Type:</label>
+      <select name="type" id="type">
+        <option value="">All</option>
+        <option value="Accomodation" {% if current_filters.type == "Accomodation" %}selected{% endif %}>Accomodation</option>
+        <option value="Entertainment" {% if current_filters.type == "Entertainment" %}selected{% endif %}>Entertainment</option>
+        <option value="F&B" {% if current_filters.type == "F&B" %}selected{% endif %}>F&B</option>
+        <option value="Local" {% if current_filters.type == "Local" %}selected{% endif %}>Local</option>
+        <option value="Market" {% if current_filters.type == "Market" %}selected{% endif %}>Market</option>
+        <option value="Transportation" {% if current_filters.type == "Transportation" %}selected{% endif %}>Transportation</option>
+      </select>
+    </div>
+    <div class="filter-element">
+      <label for="rating">Min Rating:</label>
+      <input type="number" name="rating" id="rating" value="{{ current_filters.rating }}" min="1" max="5" step="0.1">
+    </div>
+    <div class="filter-element">
+      <label for="desired_time">Open at:</label>
+      <input type="time" id="desired_time" name="desired_time" value="{{ current_filters.desired_time }}">
+    </div>
+    <div>
+      <button type="submit">Apply Filters</button>
+    </div>
+  </form>
 </section>
 
 <section class="content-section">
+<!-- <<<<<<< feature/location
     <div class="card-grid">
         {% for loc in locations|slice:":10"%}
         <div class="card">
@@ -68,44 +96,111 @@
                     </div>
                 </div>
             </a>
+======= -->
+  <div class="card-grid">
+    {% for loc in locations %}
+    <div class="card">
+      <a href="{% url 'display_location' loc.code %}" style="display: flex; width: 100%; text-decoration: none; color: inherit;">
+        <div class="card-image" style="background-image: url('{{ loc.image_path }}');"></div>
+        <div class="card-content">
+          <div>
+            <div style="display: flex;">
+              <h3>{{ loc.location }}</h3>
+              <div class="favourite">
+                <button class="fav-btn" data-code="{{ loc.code }}">
+                  {% if loc.favourite_symbol == '<i class="fa-solid fa-heart"></i>' %}
+                    <i class="fa-solid fa-heart"></i>
+                  {% else %}
+                    <i class="fa-regular fa-heart"></i>
+                  {% endif %}
+                </button>
+              </div>
+            </div>
+            <p>{{ loc.description }}</p>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="rating">
+              {{ loc.star_html|safe }}
+              <span>{{ loc.rating }} / 5</span>
+            </div>
+            <div class="open-hour">Open: {{ loc.open_time }}</div>
+          </div>
+<!-- >>>>>>> main -->
         </div>
-        {% endfor %}
+      </a>
     </div>
+    {% empty %}
+      <p style="text-align:center; width:100%;">No locations found.</p>
+    {% endfor %}
+  </div>
 </section>
 
-<script>
-  document.querySelectorAll('.fav-btn').forEach(function(button) {
-    button.addEventListener('click', function (e) {
-      e.preventDefault();
-      const code = this.dataset.code;
-      const icon = this.querySelector('i');
+{% if total_pages > 1 %}
+<div class="pagination">
+  {% if current_page > 1 %}
+    <a href="?page={{ current_page|add:-1 }}&limit={{ limit }}
+      {% if current_filters.type %}&type={{ current_filters.type }}{% endif %}
+      {% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}
+      {% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}
+      {% if current_filters.search %}&search={{ current_filters.search }}{% endif %}
+    ">Previous</a>
+  {% endif %}
 
-      fetch("{% url 'locations' %}", {
-        method: 'POST',
-        headers: {
-          'X-CSRFToken': '{{ csrf_token }}',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        body: `value=${code}`
-      })
-      .then(response => {
-        if (response.status === 401) {
-          alert("Bạn cần đăng nhập để thêm vào danh sách yêu thích.");
-          window.location.href = "{% url 'login' %}";
-        } else if (response.ok) {
-          icon.classList.toggle('fa-solid');
-          icon.classList.toggle('fa-regular');
-        } else {
-          alert("Có lỗi xảy ra khi cập nhật favourite.");
-        }
-      })
-      .catch(error => {
-        console.error('Lỗi:', error);
-        alert("Không thể kết nối với server.");
-      });
+  {% for i in 1|to:total_pages %}
+    <a href="?page={{ i }}&limit={{ limit }}
+      {% if current_filters.type %}&type={{ current_filters.type }}{% endif %}
+      {% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}
+      {% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}
+      {% if current_filters.search %}&search={{ current_filters.search }}{% endif %}
+    "
+    class="{% if i == current_page %}active{% endif %}">
+      {{ i }}
+    </a>
+  {% endfor %}
+
+  {% if current_page < total_pages %}
+    <a href="?page={{ current_page|add:1 }}&limit={{ limit }}
+      {% if current_filters.type %}&type={{ current_filters.type }}{% endif %}
+      {% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}
+      {% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}
+      {% if current_filters.search %}&search={{ current_filters.search }}{% endif %}
+    ">Next</a>
+  {% endif %}
+</div>
+{% endif %}
+
+<script>
+document.querySelectorAll('.fav-btn').forEach(function(button) {
+  button.addEventListener('click', function(e) {
+    e.preventDefault();
+    const code = this.dataset.code;
+    const icon = this.querySelector('i');
+
+    fetch("{% url 'locations' %}", {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: `value=${code}`
+    })
+    .then(response => {
+      if (response.status === 401) {
+        alert("Bạn cần đăng nhập để thêm vào danh sách yêu thích.");
+        window.location.href = "{% url 'login' %}";
+      } else if (response.ok) {
+        icon.classList.toggle('fa-solid');
+        icon.classList.toggle('fa-regular');
+      } else {
+        alert("Có lỗi xảy ra khi cập nhật favourite.");
+      }
+    })
+    .catch(error => {
+      console.error('Lỗi:', error);
+      alert("Không thể kết nối với server.");
     });
   });
+});
 </script>
-
 {% endblock %}

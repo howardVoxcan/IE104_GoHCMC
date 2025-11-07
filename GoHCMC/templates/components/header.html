@@ -15,7 +15,7 @@
       <i class="fas fa-house"></i> Home
     </a>
     <a
-      href="#"
+      href="{% url 'weather' %}"
       class="nav-link {% if request.resolver_match.url_name == 'weather' %}active{% endif %}">
       <i class="fas fa-cloud-sun"></i> Weather
     </a>
@@ -25,12 +25,12 @@
       <i class="fas fa-map-pin"></i> Locations
     </a>
     <a
-      href="#"
+      href="{% url 'favourite' %}"
       class="nav-link {% if request.resolver_match.url_name == 'favourite' %}active{% endif %}">
       <i class="fas fa-heart"></i> Favourite
     </a>
     <a
-      href="#"
+      href="{% url 'trip' %}"
       class="nav-link {% if request.resolver_match.url_name == 'my_trip' %}active{% endif %}">
       <i class="fas fa-map"></i> My Trip
     </a>

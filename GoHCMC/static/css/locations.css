@@ -185,3 +185,37 @@
   border-color: var(--disabled-border-color);
   background: var(--main-bg);
 }
+
+/* Pagination input box and GO button */
+.pagination-input-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.pagination-input {
+  width: 60px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--text-main);
+  background: var(--main-bg);
+}
+
+.pagination-go-button {
+  padding: 6px 12px;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pagination-go-button:hover {
+  background: var(--secondary);
+}

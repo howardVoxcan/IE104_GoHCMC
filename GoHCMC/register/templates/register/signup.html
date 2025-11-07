@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - GoHCMC</title>
+
+  <link rel="stylesheet" href="{% static 'register/css/signup.css' %}">
+
+  <!-- Đồng bộ theme ngay khi load -->
+  <script>
+    const theme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", theme);
+  </script>
+</head>
+<body>
+  <div class="signup-background">
+    <div class="signup-container">
+
+      <!-- Bên trái: Welcome -->
+      <div class="welcome-section">
+        <div class="welcome-content">
+          <img src="{% static 'img/Logo_GoHCMC.png' %}" alt="GoHCMC Logo" class="welcome-logo">
+          <h1>Join GoHCMC!</h1>
+          <p>Start discovering Ho Chi Minh City with personalized experiences.</p>
+        </div>
+      </div>
+
+      <!-- Bên phải: Sign Up Form -->
+      <div class="form-section">
+        <div class="signup-box">
+          <h2>Sign Up</h2>
+          <form method="POST" action="">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password1" placeholder="Password" required>
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+            <button type="submit">Sign Up</button>
+          </form>
+          <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

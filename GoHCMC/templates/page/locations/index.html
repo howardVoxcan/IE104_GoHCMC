@@ -2,36 +2,10 @@
 {% load static %}
 {% load custom_tags %}
 
-
 {% block title %}Locations{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/locations.css' %}">
-<style>
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 24px 0;
-    gap: 10px;
-  }
-  .pagination a, .pagination span {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-  }
-  .pagination a:hover {
-    background: #f1f1f1;
-  }
-  .pagination .active {
-    background-color: #007bff;
-    color: white;
-    border: 1px solid #007bff;
-  }
-</style>
 {% endblock %}
 
 {% block content %}
@@ -140,35 +114,59 @@
 
 {% if total_pages > 1 %}
 <div class="pagination">
-  {% if current_page > 1 %}
-    <a href="?page={{ current_page|add:-1 }}&limit={{ limit }}
-      {% if current_filters.type %}&type={{ current_filters.type }}{% endif %}
-      {% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}
-      {% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}
-      {% if current_filters.search %}&search={{ current_filters.search }}{% endif %}
-    ">Previous</a>
-  {% endif %}
+  {% with query_params="&limit="|add:limit %}
+    {% if current_filters.type %}{% with query_params=query_params|add:"&type="|add:current_filters.type %}{% endwith %}{% endif %}
+    {% if current_filters.rating %}{% with query_params=query_params|add:"&rating="|add:current_filters.rating %}{% endwith %}{% endif %}
+    {% if current_filters.desired_time %}{% with query_params=query_params|add:"&desired_time="|add:current_filters.desired_time %}{% endwith %}{% endif %}
+    {% if current_filters.search %}{% with query_params=query_params|add:"&search="|add:current_filters.search %}{% endwith %}{% endif %}
 
-  {% for i in 1|to:total_pages %}
-    <a href="?page={{ i }}&limit={{ limit }}
-      {% if current_filters.type %}&type={{ current_filters.type }}{% endif %}
-      {% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}
-      {% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}
-      {% if current_filters.search %}&search={{ current_filters.search }}{% endif %}
-    "
-    class="{% if i == current_page %}active{% endif %}">
-      {{ i }}
+    <!-- << button -->
+    <a href="?page=1{{ query_params }}" class="pagination-icon {% if current_page == 1 %}not-allowed{% endif %}">
+      <i class="fa-solid fa-angles-left"></i>
     </a>
-  {% endfor %}
 
-  {% if current_page < total_pages %}
-    <a href="?page={{ current_page|add:1 }}&limit={{ limit }}
-      {% if current_filters.type %}&type={{ current_filters.type }}{% endif %}
-      {% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}
-      {% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}
-      {% if current_filters.search %}&search={{ current_filters.search }}{% endif %}
-    ">Next</a>
-  {% endif %}
+    <!-- < button -->
+    <a href="?page={{ current_page|add:-1 }}{{ query_params }}" class="pagination-icon {% if current_page == 1 %}not-allowed{% endif %}">
+      <i class="fa-solid fa-angle-left"></i>
+    </a>
+
+    {% if current_page == 1 %}
+      <!-- Case 1: Current page is 1 -->
+      <a href="?page=1{{ query_params }}" class="active">1</a>
+      {% if total_pages > 1 %}
+        <a href="?page=2{{ query_params }}">2</a>
+        <a href="?page=3{{ query_params }}">3</a>
+        <a href="?page=4{{ query_params }}">4</a>
+        <span>...</span>
+        <a href="?page={{ total_pages|add:-1 }}{{ query_params }}">{{ total_pages|add:-1 }}</a>
+        <a href="?page={{ total_pages }}{{ query_params }}">{{ total_pages }}</a>
+      {% endif %}
+    {% elif current_page < total_pages|add:-6 %}
+      <!-- Case 2: Current page is not 1 and less than n-6 -->
+      <a href="?page={{ current_page|add:-1 }}{{ query_params }}">{{ current_page|add:-1 }}</a>
+      <a href="?page={{ current_page }}{{ query_params }}" class="active">{{ current_page }}</a>
+      <a href="?page={{ current_page|add:1 }}{{ query_params }}">{{ current_page|add:1 }}</a>
+      <a href="?page={{ current_page|add:2 }}{{ query_params }}">{{ current_page|add:2 }}</a>
+      <span>...</span> 
+      <a href="?page={{ total_pages|add:-1 }}{{ query_params }}">{{ total_pages|add:-1 }}</a>
+      <a href="?page={{ total_pages }}{{ query_params }}">{{ total_pages }}</a>
+    {% else %}
+      <!-- Case 3: Current page is between n-6 and n -->
+      {% for i in total_pages|add:-6|to:total_pages %}
+        <a href="?page={{ i }}{{ query_params }}" class="{% if i == current_page %}active{% endif %}">{{ i }}</a>
+      {% endfor %}
+    {% endif %}
+
+    <!-- > button -->
+    <a href="?page={{ current_page|add:1 }}{{ query_params }}" class="pagination-icon {% if current_page == total_pages %}not-allowed{% endif %}">
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+
+    <!-- >> button -->
+    <a href="?page={{ total_pages }}{{ query_params }}" class="pagination-icon {% if current_page == total_pages %}not-allowed{% endif %}">
+      <i class="fa-solid fa-angles-right"></i>
+    </a>
+  {% endwith %}
 </div>
 {% endif %}
 

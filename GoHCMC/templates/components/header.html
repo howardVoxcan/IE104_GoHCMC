@@ -68,28 +68,27 @@
     {% if user.is_authenticated %}
     <button class="user-btn">
       <i class="fa-solid fa-user"></i>
-      <span class="header__username">{{ user.get_full_name }}</span>
-      <span>Nguyễn Văn A</span>
+      <span class="header__username">{{ user.get_full_name|default:user.username }}</span>
       <i class="fa-solid fa-chevron-down"></i>
     </button>
 
     <div id="userMenu" class="user-menu">
       <a href="#">
         <i class="fa-solid fa-id-card"></i>
-        <span>Thông tin cá nhân</span>
+        <span>Profile</span>
       </a>
       <a href="#">
         <i class="fa-solid fa-gear"></i>
-        <span>Cài đặt</span>
+        <span>Setting</span>
       </a>
-      <a href="#">
+      <a href="{% url 'logout' %}">
         <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Đăng xuất</span>
+        <span>Logout</span>
       </a>
     </div>
     {% else %}
-    <a href="#"><button class="button button-secondary">Sign In</button></a>
-    <a href="#"><button class="button button-primary">Sign Up</button></a>
+    <a href="/login/"><button class="button button-secondary">Login</button></a>
+    <a href="/signup/"><button class="button button-primary">Sign Up</button></a>
     {% endif %}
   </div>
 </header>

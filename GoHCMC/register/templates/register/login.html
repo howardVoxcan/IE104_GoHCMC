@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - GoHCMC</title>
+
+  <link rel="stylesheet" href="{% static 'register/css/login.css' %}">
+
+  <!-- Đồng bộ theme ngay khi load -->
+  <script>
+    const theme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", theme);
+  </script>
+</head>
+<body>
+  <div class="login-background">
+    <div class="login-container">
+
+      <!-- Bên trái: Login Form -->
+      <div class="form-section">
+        <div class="login-box">
+          <h2>Login</h2>
+          <form method="POST" action="">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <a href="{% url 'password_reset' %}" class="forgot-password">Forgot password?</a>
+            <button type="submit">Login</button>
+          </form>
+          <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+        </div>
+      </div>
+
+      <!-- Bên phải: Welcome -->
+      <div class="welcome-section">
+        <div class="welcome-content">
+          <img src="{% static 'img/Logo_GoHCMC.png' %}" alt="GoHCMC Logo" class="welcome-logo">
+          <h1>Welcome Back!</h1>
+          <p>Log in to continue exploring Ho Chi Minh City with us!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

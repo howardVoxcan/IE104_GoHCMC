@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'location',
     'weather',
     'trip',
-    'favourite'
+    'favourite',
     # 'dialogflow',
 ]
 

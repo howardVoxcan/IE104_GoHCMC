@@ -25,12 +25,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('register/', v.register, name = "register"),
     # path('login/', v.custom_login, name='login'),
+    path('', include('register.urls')),
+
     path('weather/', include('weather.urls')),
     path('trip/', include('trip.urls')),
     # path('dialogflow/', include('dialogflow.urls')),
     path('favourite/', include('favourite.urls')),
-    path('', include('django.contrib.auth.urls')),
     path('', include('location.urls')),
+
+    path('', include('django.contrib.auth.urls')),
+
 ]
 
 if settings.DEBUG:

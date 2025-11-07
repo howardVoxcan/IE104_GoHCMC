@@ -5,23 +5,30 @@ from django.contrib.auth.decorators import login_required
 from location.models import Location, Comment
 from django.views.decorators.http import require_POST
 from datetime import datetime
-import joblib, os, spacy
+import joblib
+import os
+import spacy
 from django.conf import settings
 from django import template
 
 register = template.Library()
 
+
 @register.filter
 def to(value, end):
     return range(value, end + 1)
 
+
 nlp = spacy.load("en_core_web_sm")
 
-pipeline_path = os.path.join(settings.BASE_DIR, 'location', 'svm_tfidf_pipeline.pkl')
-label_encoder_path = os.path.join(settings.BASE_DIR, 'location', 'label_encoder.pkl')
+pipeline_path = os.path.join(
+    settings.BASE_DIR, 'location', 'svm_tfidf_pipeline.pkl')
+label_encoder_path = os.path.join(
+    settings.BASE_DIR, 'location', 'label_encoder.pkl')
 
 pipeline = joblib.load(pipeline_path)
 label_encoder = joblib.load(label_encoder_path)
+
 
 def predict_sentiment(text):
     if not text or not isinstance(text, str):
@@ -39,6 +46,7 @@ def predict_sentiment(text):
     pred_label = pipeline.predict([cleaned_text])[0]
     sentiment = label_encoder.inverse_transform([pred_label])[0]
     return sentiment
+
 
 @require_POST
 @login_required
@@ -92,8 +100,44 @@ def submit_comment_ajax(request, location_code):
         'bot_reply': comment.bot_reply
     })
 
+
 def homepage(request):
-    return render(request, "page/home/index.html")
+    all_of_locations = Location.objects.order_by('-rating')[:12]
+    user = request.user if request.user.is_authenticated else None
+    top_locations = []
+    for loc in all_of_locations:
+        rating = (round(loc.rating * 2)) / 2
+        full_stars = int(rating)
+        has_half = (rating - full_stars) >= 0.5
+        star_html = '<i class="fas fa-star"></i>' * full_stars
+
+        if has_half:
+            star_html += '<i class="fas fa-star-half-alt"></i>'
+            empty_stars = 5 - full_stars - 1
+        else:
+            empty_stars = 5 - full_stars
+
+        star_html += '<i class="far fa-star"></i>' * empty_stars
+
+        favourite_symbol = (
+            '<i class="fa-solid fa-heart"></i>'
+            if user and loc.favourited_by.filter(id=user.id).exists()
+            else '<i class="fa-regular fa-heart"></i>'
+        )
+
+        top_locations.append({
+            'code': loc.code,
+            'location': loc.location,
+            'description': loc.description,
+            'image_path': loc.image_path,
+            'rating': loc.rating,
+            'star_html': star_html,
+            'favourite_symbol': favourite_symbol,
+        })
+    return render(request, "page/home/index.html", {
+        'top_locations': top_locations
+    })
+
 
 def locations(request):
     # --- Xử lý POST: thêm/xóa yêu thích ---
@@ -136,18 +180,21 @@ def locations(request):
 
         # --- Lọc dữ liệu ---
         if type_filter:
-            all_of_locations = all_of_locations.filter(type__iexact=type_filter)
+            all_of_locations = all_of_locations.filter(
+                type__iexact=type_filter)
 
         if min_rating:
             try:
                 min_rating = float(min_rating)
-                all_of_locations = all_of_locations.filter(rating__gte=min_rating)
+                all_of_locations = all_of_locations.filter(
+                    rating__gte=min_rating)
             except ValueError:
                 pass
 
         if desired_time:
             try:
-                desired_time_obj = datetime.strptime(desired_time, "%H:%M").time()
+                desired_time_obj = datetime.strptime(
+                    desired_time, "%H:%M").time()
                 all_of_locations = all_of_locations.filter(
                     open_time__lte=desired_time_obj,
                     close_time__gte=desired_time_obj
@@ -195,8 +242,10 @@ def locations(request):
                 else '<i class="fa-regular fa-heart"></i>'
             )
 
-            open_time = loc.open_time.strftime("%H:%M") if loc.open_time else "N/A"
-            close_time = loc.close_time.strftime("%H:%M") if loc.close_time else "N/A"
+            open_time = loc.open_time.strftime(
+                "%H:%M") if loc.open_time else "N/A"
+            close_time = loc.close_time.strftime(
+                "%H:%M") if loc.close_time else "N/A"
 
             if open_time == "00:00" and close_time == "23:59":
                 open_time_str = "All day"
@@ -230,7 +279,8 @@ def locations(request):
             }
         })
 
-def display_location(request, location_code): 
+
+def display_location(request, location_code):
     location = get_object_or_404(Location, code=location_code)
 
     if request.method == 'POST':
@@ -283,7 +333,8 @@ def display_location(request, location_code):
 
     else:
         # Lấy comment gốc (parent=None) và replies prefetch
-        comments = Comment.objects.filter(location=location, parent=None).prefetch_related('replies').order_by('-created_at')
+        comments = Comment.objects.filter(location=location, parent=None).prefetch_related(
+            'replies').order_by('-created_at')
 
         # Tính sao hiển thị
         rating = round(location.rating * 2) / 2 if location.rating else 0
@@ -305,8 +356,10 @@ def display_location(request, location_code):
 
         # Xử lý thời gian mở cửa
         lat, long = location.coordinate.split(", ")
-        open_time = location.open_time.strftime("%H:%M") if location.open_time else "N/A"
-        close_time = location.close_time.strftime("%H:%M") if location.close_time else "N/A"
+        open_time = location.open_time.strftime(
+            "%H:%M") if location.open_time else "N/A"
+        close_time = location.close_time.strftime(
+            "%H:%M") if location.close_time else "N/A"
 
         if open_time == "00:00" and close_time == "23:59":
             open_time_str = "All day"

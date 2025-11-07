@@ -39,7 +39,43 @@
 </section>
 
 <section class="content-section">
-  <div class="card-grid">
+    <div class="card-grid">
+        {% for loc in locations|slice:":10"%}
+        <div class="card">
+            <a href="{% url 'display_location' loc.code %}" style="display: flex; width: 100%; text-decoration: none; color: inherit;">
+              <div class="card-image" style="background-image: url('{{ loc.image_path }}');"></div>
+                <div class="card-content">
+                    <div>
+                        <div style="display: flex;">
+                          <h3>{{ loc.location }}</h3>
+                          <div class="favourite">
+                              <button class="fav-btn" data-code="{{ loc.code }}">
+                                  {% if loc.favourite_symbol == '<i class="fa-solid fa-heart"></i>' %}
+                                      <i class="fa-solid fa-heart"></i>
+                                  {% else %}
+                                      <i class="fa-regular fa-heart"></i>
+                                  {% endif %}
+                              </button>
+                          </div>
+                        </div>
+                        <p>{{ loc.description }}</p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div class="rating">
+                            {{ loc.star_html|safe }}
+                            <span>{{ loc.rating }} / 5</span>
+                        </div>
+                        <div class="open-hour">Open: {{ loc.open_time }}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+          <p style="text-align:center; width:100%;">No locations found.</p
+        {% endfor %}
+    </div>
+    
+  {% comment %} <div class="card-grid">
     {% for loc in locations %}
     <div class="card">
       <a href="{% url 'display_location' loc.code %}" style="display: flex; width: 100%; text-decoration: none; color: inherit;">
@@ -73,7 +109,7 @@
     {% empty %}
       <p style="text-align:center; width:100%;">No locations found.</p>
     {% endfor %}
-  </div>
+  </div> {% endcomment %}
 </section>
 
 {% if total_pages > 1 %}

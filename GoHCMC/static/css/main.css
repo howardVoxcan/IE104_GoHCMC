@@ -222,7 +222,8 @@
   height: 40px;
   border-radius: 50%;
   background: var(--main-bg);
-  border: 2px solid var(--primary); /* Keep border primary */
+  border: 2px solid var(--primary);
+  /* Keep border primary */
   font-size: 1.15rem;
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.12);
   transition: background 0.2s, border 0.2s, color 0.2s, transform 0.5s;
@@ -230,7 +231,8 @@
 
 .theme-switch:hover,
 .header__search-icon:hover {
-  background: var(--primary); /* Keep background primary */
+  background: var(--primary);
+  /* Keep background primary */
   border-color: var(--primary);
 }
 
@@ -243,31 +245,36 @@
 
 .theme-switch:hover .theme-switch__icon,
 .header__search-icon:hover i {
-  color: var(--accent); /* Change icon color to accent on hover */
-  transform: rotate(360deg); /* Add rotation effect */
+  color: var(--accent);
+  /* Change icon color to accent on hover */
+  transform: rotate(360deg);
+  /* Add rotation effect */
 }
 
 :root[data-theme="dark"] .theme-switch,
 :root[data-theme="dark"] .header__search-icon {
   background: var(--card-bg);
-  border-color: var(--primary); /* Keep border primary */
+  border-color: var(--primary);
+  /* Keep border primary */
 }
 
 :root[data-theme="dark"] .theme-switch:hover,
 :root[data-theme="dark"] .header__search-icon:hover {
-  background: var(--primary); /* Keep background primary */
+  background: var(--primary);
+  /* Keep background primary */
   border-color: var(--primary);
 }
 
 :root[data-theme="dark"] .theme-switch:hover .theme-switch__icon,
 :root[data-theme="dark"] .header__search-icon:hover i {
-  color: var(--accent); /* Change icon color to accent on hover */
-  transform: rotate(360deg); /* Add rotation effect */
+  color: var(--accent);
+  /* Change icon color to accent on hover */
+  transform: rotate(360deg);
+  /* Add rotation effect */
 }
 
 .main-content {
   margin-left: var(--sidebar-width);
-  margin-top: 1rem;
   padding: 2rem;
 }
 
@@ -275,7 +282,7 @@
 .footer {
   background: #333;
   color: #eee;
-  padding: 2.5rem 0 0.5rem 0;
+  padding: 2rem 0 0.5rem 0;
   font-size: 1.08rem;
   margin-top: 2rem;
 }
@@ -292,7 +299,6 @@
   gap: 5rem;
   flex-wrap: wrap;
   border-bottom: 1px solid #555;
-  padding-bottom: 1.5rem;
 }
 
 .footer-column {

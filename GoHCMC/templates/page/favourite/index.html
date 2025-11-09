@@ -1,103 +1,208 @@
 {% extends 'layout.html' %}
 {% load static %}
-{% load custom_filters %}
+{% block title %}Favourite{% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/mytrip.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	integrity="sha512-pVUHzR3GxgjYdjE8GQyx7Z6FZW2Gh3PzUMOcVvH23k9C0JzQwV4qCVnSdQYjr6q3Jf86KXIEwaldO1aY73yg2Q=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{% static 'css/favourite.css' %}">
 {% endblock %}
 
-{% block title %}My Trip{% endblock %}
-
 {% block content %}
-<div class="trip-container">
-	<h2 class="trip-header">List of created trips</h2>
+<div class="favourite-container">
+	<h2 class="favourite-header">List of favourite locations</h2>
+	{% if locations %}
+	<form method="POST" action="{% url 'my_trip' %}">
+		{% csrf_token %}
+		{% for location in locations %}
+		<div class="favourite-location-card">
+			<summary class="location-summary">
+				<label>{{ location.location }}</label>
+				<input type="checkbox" name="locations" value="{{ location.id }}">
+			</summary>
 
-	{% if trip_paths %}
-	{% for path in trip_paths %}
-	<details class="trip-card">
-		<summary class="trip-card-summary">
-			<div class="summary-left">
-				<span class="trip-name">{{ path.path_name }}</span>
+			<div id="details-section">
+				<label class="line">
+					<input type="radio" name="start_point" value="{{ location.id }}">
+					Select as start point
+				</label>
+				<br>
+				<label class="line">
+					<input type="radio" name="end_point" value="{{ location.id }}">
+					Select as end point
+				</label>
+				<div id="extra-inputs-{{ location.id }}" class="extra-inputs">
+					<label>Pin at location</label>
+					<input type="number" name="pinned_order_{{ location.id }}" min="1"
+						placeholder="Order (1, 2, 3...)"><br>
+					<label>Must go after location ID:</label>
+					<select name="precedence_after_{{ location.id }}" class="precedence-dropdown" data-current-id="{{ location.id }}">
+						<option value="">-- Select location to visit after --</option>
+						{% for loc in locations %}
+							<option value="{{ loc.id }}">{{ loc.location }}</option>
+						{% endfor %}
+					</select>
+				</div>
 			</div>
-			<div class="summary-right">
-				<span class="icon"><i class="fas fa-road"></i> {{ path.total_distance }} km</span>
-				<span class="icon"><i class="fas fa-clock"></i> {{ path.total_duration }} min</span>
-				<span class="icon" id="trip-toggle-icon"><i class="fas fa-play"></i></span>
-			</div>
-		</summary>
-
-		<div class="trip-card-body">
-			<ol type="1" class="trip-locations">
-				{% if path.start_point %}
-					<li class="start"><strong>Start:</strong> {{ path.start_point }}</li>
-				{% endif %}
-
-				{% for loc_id in path.locations %}
-				{% with location_map|get_item:loc_id as loc_name %}
-				{% if loc_name != path.start_point and loc_name != path.end_point %}
-					<li class="between-location">{{ loc_name }}</li>
-				{% endif %}
-				{% endwith %}
-				{% endfor %}
-
-				{% if path.end_point %}
-					<li class="end"><strong>End:</strong> {{ path.end_point }}</li>
-				{% endif %}
-			</ul>
-
-			<hr class="dashed-line">
-
-			<!-- Delete Button -->
-			<button type="button" class="delete-btn" data-url="{% url 'delete_tripPath' path.id %}">
-				<i class="fas fa-trash-alt"></i> Delete
-			</button>
 		</div>
-	</details>
-	{% endfor %}
+		{% endfor %}
+
+		<hr class="dashed-line">
+
+		<div class="trip">
+			<h3 class="trip-name">Trip's name</h3>
+			<input id="type-name" type="text" name="path_name" placeholder="Enter trip's name" required>
+			<input type="hidden" name="trip_list_id" value="{{ trip_list.id }}">
+			<button type="submit">Create journey</button>
+		</div>
+	</form>
 	{% else %}
-	
+	<p>No locations in the list yet.</p>
 	{% endif %}
 </div>
 
 <script>
-	// CSRF setup
-	function getCookie(name) {
-		let cookieValue = null;
-		if (document.cookie && document.cookie !== '') {
-			document.cookie.split(';').forEach(function (c) {
-				let cookie = c.trim();
-				if (cookie.startsWith(name + '=')) {
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	function updateExtraInputsVisibility() {
+		const selectedStart = document.querySelector('input[name="start_point"]:checked');
+		const selectedEnd = document.querySelector('input[name="end_point"]:checked');
+
+		const hiddenIds = new Set();
+		if (selectedStart) hiddenIds.add(selectedStart.value);
+		if (selectedEnd) hiddenIds.add(selectedEnd.value);
+
+		document.querySelectorAll('.extra-inputs').forEach(div => {
+			const locationId = div.id.replace('extra-inputs-', '');
+			if (hiddenIds.has(locationId)) {
+				div.style.display = 'none';
+			} else {
+				div.style.display = 'block';
+			}
+		});
+	}
+
+	function updateDropdownOptions() {
+		const selectedStart = document.querySelector('input[name="start_point"]:checked');
+		const selectedEnd = document.querySelector('input[name="end_point"]:checked');
+
+		const hiddenIds = new Set();
+		if (selectedStart) hiddenIds.add(selectedStart.value);
+		if (selectedEnd) hiddenIds.add(selectedEnd.value);
+
+		const selectedCheckboxes = document.querySelectorAll('input[name="locations"]:checked');
+		const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+
+		document.querySelectorAll('.precedence-dropdown').forEach(dropdown => {
+			const currentId = dropdown.getAttribute('data-current-id');
+
+			Array.from(dropdown.options).forEach(option => {
+				const optVal = option.value;
+				const shouldHide =
+					optVal === "" ||
+					optVal === currentId ||
+					!selectedIds.includes(optVal) ||
+					hiddenIds.has(optVal);
+
+				option.hidden = shouldHide;
+
+				if (shouldHide && dropdown.value === optVal) {
+					dropdown.value = "";
 				}
 			});
-		}
-		return cookieValue;
-	}
-	const csrftoken = getCookie('csrftoken');
-
-	document.querySelectorAll('.delete-btn').forEach(btn => {
-		btn.addEventListener('click', function () {
-			if (!confirm('Bạn có chắc muốn xóa lịch trình này?')) return;
-			const url = this.dataset.url;
-			fetch(url, {
-				method: 'POST',
-				headers: {
-					'X-CSRFToken': csrftoken,
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			})
-				.then(resp => {
-					if (!resp.ok) throw new Error('Network response was not ok');
-					// Remove the card from DOM
-					const card = this.closest('details');
-					card.parentNode.removeChild(card);
-				})
-				.catch(err => console.error('Delete failed:', err));
 		});
+	}
+
+	function toggleInputsDisabled(section, disable) {
+		const inputs = section.querySelectorAll('input, select');
+		inputs.forEach(input => {
+			input.disabled = disable;
+		});
+	}
+
+	function detectCycle(constraints) {
+		const graph = {};
+		const indegree = {};
+
+		const nodes = new Set();
+		constraints.forEach(([from, to]) => {
+			if (!graph[from]) graph[from] = [];
+			graph[from].push(to);
+			nodes.add(from);
+			nodes.add(to);
+			indegree[to] = (indegree[to] || 0) + 1;
+			if (!(from in indegree)) indegree[from] = 0;
+		});
+
+		const queue = [];
+		nodes.forEach(node => {
+			if (indegree[node] === 0) queue.push(node);
+		});
+
+		let visited = 0;
+		while (queue.length > 0) {
+			const node = queue.shift();
+			visited++;
+			if (graph[node]) {
+				graph[node].forEach(nei => {
+					indegree[nei]--;
+					if (indegree[nei] === 0) {
+						queue.push(nei);
+					}
+				});
+			}
+		}
+		return visited < nodes.size;
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		const checkboxes = document.querySelectorAll('input[name="locations"]');
+
+		checkboxes.forEach(checkbox => {
+			const detailsSection = checkbox.closest('summary').nextElementSibling;
+
+			if (!checkbox.checked) {
+				detailsSection.style.display = 'none';
+				toggleInputsDisabled(detailsSection, true);
+			}
+
+			checkbox.addEventListener('change', function () {
+				if (this.checked) {
+					detailsSection.style.display = 'block';
+					toggleInputsDisabled(detailsSection, false);
+				} else {
+					detailsSection.style.display = 'none';
+					toggleInputsDisabled(detailsSection, true);
+				}
+				updateDropdownOptions();
+			});
+		});
+
+		document.querySelectorAll('input[name="start_point"], input[name="end_point"]').forEach(radio => {
+			radio.addEventListener('change', () => {
+				updateExtraInputsVisibility();
+				updateDropdownOptions();
+			});
+		});
+
+		const form = document.querySelector('form');
+		form.addEventListener('submit', function (e) {
+			const constraints = [];
+
+			const dropdowns = document.querySelectorAll('.precedence-dropdown');
+			dropdowns.forEach(dropdown => {
+				const afterId = dropdown.value;
+				const currentId = dropdown.getAttribute('data-current-id');
+
+				if (afterId && !dropdown.disabled) {
+					constraints.push([afterId, currentId]);
+				}
+			});
+
+			if (detectCycle(constraints)) {
+				e.preventDefault();
+				alert("Lỗi: Có vòng lặp trong ràng buộc thứ tự giữa các địa điểm.\nHãy kiểm tra lại các lựa chọn.");
+			}
+		});
+
+		updateExtraInputsVisibility();
+		updateDropdownOptions();
 	});
 </script>
-
 {% endblock %}

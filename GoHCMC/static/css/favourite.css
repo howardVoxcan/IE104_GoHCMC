@@ -1,0 +1,114 @@
+.favourite-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.favourite-header {
+    font-size: 28px;
+    color: #05915d;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Card */
+.favourite-location-card {
+    width: 70%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    margin-top: 15px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+/* Location block */
+.location-summary {
+    background-color: #00aa6c;
+    border: 1px #00aa6c solid;
+    display: flex;
+    justify-content: space-between; /* Cách label và checkbox */
+    align-items: center;
+    padding: 10px 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.location-summary label {
+    margin: 0;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.location-summary input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+
+#toggle-checkbox {
+    color: #05915d;
+    width: 1.5rem;
+    height: 1.5rem;
+    align-items: center;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+#toggle-checkbox input:checked+span::after {
+    color: green;
+}
+
+#details-section {
+    padding: 15px;
+}
+
+.details-section .line {
+    margin: 10px 0;
+}
+
+
+
+.dashed-line {
+    width: 70%;
+    border: 1px dashed #00aa6c;
+}
+
+h3 {
+    font-size: 28px;
+    color: #05915d;
+    margin: 10px 0;
+}
+
+.trip button {
+    padding: 10px 18px;
+    background-color: #00aa6c;
+    color: white;
+    font-weight: 500;
+    border: 1px dashed #00aa6c;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.trip button:hover {
+    background-color: #05915d;
+    border: 1px solid #05915d;
+}
+
+#type-name {
+    margin-right: 10px;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    min-width: 150px;
+}
+
+.trip-card:not([open]) .delete-form {
+	display: none;
+}

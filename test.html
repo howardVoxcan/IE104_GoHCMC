@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Weather Chart — Test</title>
+
+  <style>
+    :root{
+      --bg:#2f3136; --card:#3b3d40; --accent:#FFB86C; --rain:#4FC3F7; --muted:#bfc7cf; --text:#f3f6f8;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    body { margin:20px; background:linear-gradient(#232428,#2a2c2f); color:var(--text); }
+    .wrapper { max-width:1100px; margin:0 auto; }
+    h2 { margin:0 0 6px 0; }
+    .weather-chart-container { display:flex; gap:18px; align-items:stretch; }
+    .chart-area { flex:3; background:var(--card); padding:14px; border-radius:12px; height:420px; box-shadow:0 6px 18px rgba(0,0,0,0.45);}
+    canvas { width:100% !important; height:100% !important; display:block; }
+    .info-panel { flex:1; background:var(--card); border-radius:12px; padding:14px; opacity:0.85; min-width:220px; }
+    .info-panel h3{ margin-top:0 }
+    .info-row { margin:8px 0; color:var(--muted); }
+    .info-val { font-weight:700; color:var(--text); }
+    .info-icon { width:64px; height:64px; display:block; margin-top:10px; }
+    .note { margin-top:10px; color:var(--muted); font-size:13px; text-align:right; }
+    @media (max-width:800px){ .weather-chart-container{flex-direction:column} .info-panel{min-width:auto} }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h2>Dự báo (24 điểm / ngày) — Test</h2>
+    <p style="color:var(--muted); margin-top:4px">Hover lên đường để xem chi tiết ở ô bên phải (panel)</p>
+
+    <div class="weather-chart-container">
+      <div class="chart-area">
+        <canvas id="weatherChart" aria-label="weather chart"></canvas>
+      </div>
+
+      <div class="info-panel" id="infoPanel">
+        <h3>Chi tiết</h3>
+        <div class="info-row">Giờ: <span id="info-time" class="info-val">--:--</span></div>
+        <div class="info-row">Nhiệt độ: <span id="info-temp" class="info-val">-- °C</span></div>
+        <div class="info-row">Mưa: <span id="info-rain" class="info-val">-- mm</span></div>
+        <div class="info-row">Tình trạng: <span id="info-cond" class="info-val">--</span></div>
+        <img id="info-icon" class="info-icon" src="" alt="icon" />
+        <div class="note">Demo data nếu backend chưa inject</div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:12px">Mở DevTools → Console nếu không thấy chart.</div>
+  </div>
+
+  <!-- Chart.js (umd) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <script>
+  // ======= FALLBACK DEMO DATA (24 points) - will run if backend doesn't set `weatherData` =======
+  if (typeof weatherData === 'undefined') {
+    const now = new Date(); now.setMinutes(0,0,0);
+    const demo = [];
+    for (let h=0; h<24; h++){
+      const t = 22 + 6*Math.sin((h/24)*Math.PI*2) + (Math.random()-0.5)*0.8;
+      const rain = (h>=13 && h<=16) ? Math.round(Math.random()*5) : 0;
+      demo.push({
+        time: String(h).padStart(2,'0') + ':00',
+        temp_c: Math.round(t*10)/10,
+        precip_mm: rain,
+        condition: rain? 'Rain':'Clouds',
+        icon: rain ? 'https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-showers-scattered-icon.png' : 'https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-clear-icon.png'
+      });
+    }
+    window.weatherData = demo;
+    console.log('Using demo weatherData (24 points).');
+  } else {
+    console.log('Using injected weatherData', weatherData);
+  }
+
+  // Robust checks
+  if (!Array.isArray(weatherData) || weatherData.length === 0) {
+    console.error('weatherData missing or empty — chart cannot render.');
+  }
+
+  // Build arrays
+  const labels = weatherData.map(d => d.time);
+  const temps = weatherData.map(d => d.temp_c);
+  const rains = weatherData.map(d => d.precip_mm || 0);
+
+  // ensure canvas exists after DOM load
+  document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('weatherChart').getContext('2d');
+
+    // Chart config: two y axes
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Nhiệt độ (°C)',
+            data: temps,
+            borderColor: '#FFB86C',
+            backgroundColor: 'rgba(255,184,108,0.12)',
+            yAxisID: 'yTemp',
+            tension: 0.35,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            fill: true,
+          },
+          {
+            label: 'Mưa (mm)',
+            data: rains,
+            borderColor: '#4FC3F7',
+            backgroundColor: 'rgba(79,195,247,0.12)',
+            yAxisID: 'yRain',
+            tension: 0.3,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            stepped: false,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#ddd' } },
+          tooltip: { enabled: false } // disabled default tooltip; we use onHover to update side panel
+        },
+        scales: {
+          x: {
+            ticks: { color: '#cfd8de' },
+            grid: { color: 'rgba(255,255,255,0.03)' }
+          },
+          yTemp: {
+            position: 'left',
+            ticks: { color: '#FFC985' },
+            grid: { color: 'rgba(255,255,255,0.03)' }
+          },
+          yRain: {
+            position: 'right',
+            ticks: { color: '#4FC3F7' },
+            grid: { drawOnChartArea: false },
+            suggestedMax: Math.max(...rains) > 0 ? Math.max(...rains) * 1.4 : 5
+          }
+        },
+        // onHover gets elements (array of points under cursor)
+        onHover: (evt, elements) => {
+          if (elements && elements.length) {
+            const idx = elements[0].index;
+            showPanel(idx);
+          }
+        },
+        // when leaving the canvas, hide panel (you can keep it if you prefer)
+        onLeave: () => { hidePanel(); }
+      }
+    });
+
+    // Click also updates panel (for touch)
+    document.getElementById('weatherChart').addEventListener('click', e => {
+      const points = myChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+      if (points.length) showPanel(points[0].index);
+    });
+
+    // Panel functions
+    const pTime = document.getElementById('info-time');
+    const pTemp = document.getElementById('info-temp');
+    const pRain = document.getElementById('info-rain');
+    const pCond = document.getElementById('info-cond');
+    const pIcon = document.getElementById('info-icon');
+    const panel = document.getElementById('infoPanel');
+
+    function showPanel(index){
+      const d = weatherData[index];
+      if(!d) return;
+      pTime.textContent = d.time;
+      pTemp.textContent = (d.temp_c !== undefined ? d.temp_c + ' °C' : '--');
+      pRain.textContent = (d.precip_mm !== undefined ? d.precip_mm + ' mm' : '0 mm');
+      pCond.textContent = d.condition || '';
+      pIcon.src = d.icon || '';
+      panel.style.opacity = '1';
+    }
+    function hidePanel(){
+      panel.style.opacity = '0.85';
+    }
+
+    // Optional: show first point by default
+    showPanel(12);
+  }); // DOMContentLoaded
+  </script>
+</body>
+</html>

@@ -1,172 +1,267 @@
-:root {
-  --bg: #0f1724;
-  --card: #0b1220;
-  --muted: #9aa6b2;
-  --accent: #60a5fa;
-  --temp: #ffb86b;
-  --rain: #60c5ff;
-  --text-main: #e6eef6;
-  --text-sub: #9aa6b2;
-  --primary: #0f1724;
-  --secondary: #e2e8f0;
-  --main-bg: linear-gradient(180deg,#071429 0%, #0b1626 100%);
-  --font-main: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  --header-height: 64px;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  font-family: var(--font-main);
-  color: var(--text-main);
-  background: var(--main-bg);
-}
-
-/* Layout */
-.weather-fullscreen {
-  display: flex;
-  overflow: hidden;
-  min-height: calc(100vh - var(--header-height));
-}
-
-/* Left: Day tabs */
-.day-tabs {
-  width: 220px;
-  background-color: rgba(255,255,255,0.02);
+.weather-container {
   display: flex;
   flex-direction: column;
-  height: 600px;
-  box-sizing: border-box;
-  overflow: hidden;
-  border-right: 2px solid rgba(255,255,255,0.03);
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  background: var(--main-bg);
+  color: var(--text-main);
+}
+
+/* ==== SELECTION 3 NGÀY ==== */
+.weather-day-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.weather-day-btn {
+  border: 2px solid var(--primary);
+  border-radius: 32px;
+  padding: 0.6rem 1.2rem;
+  background: var(--main-bg);
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-size: 1rem;
+}
+
+.weather-day-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.weather-day-btn.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+}
+
+/* ==== KHUNG NGÀY ==== */
+.weather-day {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.08);
+  padding: 1rem 1.5rem;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.weather-day:hover {
+  background: var(--hover-bg);
+  transform: translateY(-3px);
+}
+
+.weather-day__label {
+  flex: 0 0 100px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid var(--border-color);
+  text-align: center;
+}
+
+/* ==== BIỂU ĐỒ ==== */
+.weather-chart {
+  flex: 1;
+  min-height: 260px;
+  max-width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--main-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.06);
+  padding: 0.8rem;
+}
+
+/* ==== BOX CHI TIẾT ==== */
+.weather-details-box {
+  flex: 0 0 260px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.08);
+  font-size: 0.95rem;
+  color: var(--text-sub);
+}
+
+.weather-details-box h4 {
+  color: var(--text-main);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.3rem;
+}
+
+.weather-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--main-bg);
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border-color);
+  transition: background 0.2s;
+}
+
+.weather-detail-item:hover {
+  background: var(--hover-bg);
+}
+
+.weather-detail-time {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.weather-detail-temp {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 1024px) {
+  .weather-day {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .weather-chart {
+    max-width: 100%;
+    min-height: 220px;
+  }
+
+  .weather-details-box {
+    width: 90%;
+  }
+
+  .weather-day__label {
+    border-right: none;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 1rem;
+  }
+}
+
+
+body {
+    background-color: #0b1622;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Tổng layout chia 2 cột */
+.weather-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+/* Cột trái: danh sách ngày */
+.day-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .tab-btn {
-  background: transparent;
-  color: var(--text-main);
-  padding: 18px;
-  text-align: center;
-  font-size: 14px;
-  cursor: pointer;
-  user-select: none;
-  flex-grow: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+    background-color: #e0e0e0;
+    color: #333;
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    width: 130px;
+    text-align: center;
+    transition: all 0.25s ease;
 }
-
-.tab-btn:hover { transform: translateX(4px); }
-
 .tab-btn.active {
-  background: rgba(233,247,239,0.95);
-  color: var(--secondary);
+    background-color: #007bff;
+    color: #fff;
+    transform: scale(1.05);
+}
+.tab-btn:hover {
+    background-color: #d0d0d0;
 }
 
-.tab-day { font-weight: 700; font-size: 16px; }
-.tab-date { font-size: 12px; color: var(--muted); }
-
-/* Right column */
-.forecast-right {
-  margin-left: 0;
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Cột phải: chart + box chi tiết */
+.forecast-display {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
 }
 
-/* Header */
-.header-row {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
+/* Chart bên trái */
+.chart-image-container {
+    flex: 1;
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 1rem;
+}
+.chart-image-container img {
+    width: 100%;
+    border-radius: 8px;
 }
 
-.title-area .title { font-size:18px; font-weight:700; color:var(--text-main); }
-.title-area .subtitle { font-size:13px; color:var(--muted); }
-.updated { font-size:13px; color:var(--muted); }
-
-/* Chart */
-.svg-wrap { position:relative; padding:12px 6px 6px; background: rgba(255,255,255,0.02); border-radius:10px; border:1px solid rgba(255,255,255,0.03); }
-svg { width:100%; height:300px; overflow:visible; }
-
-.y-labels { font-size:12px; fill:var(--muted); }
-.x-label { font-size:12px; fill:var(--muted); text-anchor:middle; }
-.grid-line { stroke: rgba(255,255,255,0.03); stroke-width:1; }
-.temp-line { fill:none; stroke: var(--temp); stroke-width:2.8; stroke-linejoin:round; stroke-linecap:round; }
-.temp-area { fill: url(#tempGradient); opacity:0.28; }
-.rain-bar { fill: var(--rain); opacity:0.9; }
-.dot { stroke: white; stroke-width:1; r:4; cursor:pointer; fill: var(--temp); }
-
-/* Tooltip */
-.tooltip {
-  position:absolute;
-  pointer-events:none;
-  background: linear-gradient(180deg, #0b1220, #071422);
-  color:var(--text-main);
-  padding:8px 10px;
-  border-radius:8px;
-  font-size:13px;
-  border:1px solid rgba(255,255,255,0.04);
-  box-shadow:0 6px 18px rgba(0,0,0,0.6);
-  transform:translate(-50%, -120%);
-  white-space:nowrap;
-  display:none;
-  z-index:10;
+/* Box chi tiết bên phải */
+.detail-box {
+    flex: 0 0 28%;
+    background-color: #f9f9f9;
+    color: #111;
+    border-radius: 12px;
+    padding: 1rem;
+    max-height: 500px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
-
-/* Legend */
-.legend { display:flex; gap:12px; align-items:center; margin-top:6px; color:var(--muted); font-size:13px; }
-.swatch { width:12px; height:8px; border-radius:2px; display:inline-block; }
-.sw-temp { background: linear-gradient(90deg,var(--temp), #ff7a7a); }
-.sw-rain { background: var(--rain); }
-
-/* Period cards (details) */
-.period-cards { margin-top:12px; }
-.period-title { margin:8px 6px; color:var(--text-main); font-size:16px; }
-.period-grid { display:flex; flex-wrap:wrap; gap:12px; }
 
 .forecast-period {
-  background-color: rgba(255,255,255,0.98);
-  color: #111827;
-  border-radius: 10px;
-  width: 170px;
-  padding: 12px;
-  text-align: center;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.15);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+    text-align: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
 }
-.forecast-period:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(2,6,23,0.18); }
-.forecast-period img { width:48px; height:48px; object-fit:contain; margin-bottom:6px; }
-.forecast-period .time { margin:4px 0; font-weight:600; color:#0f1724; }
-.forecast-period .temp { margin:6px 0; font-weight:700; font-size:16px; color:#0f1724; }
-.forecast-period .cond { margin:2px 0; font-size:13px; color:#475569; }
+.forecast-period img {
+    width: 40px;
+    height: 40px;
+}
 
-/* Responsiveness */
-@media (max-width: 920px) {
-  .day-tabs { width: 140px; }
-  .forecast-period { width: 140px; }
-  svg { height:260px; }
-}
-@media (max-width: 768px) {
-  .weather-fullscreen { flex-direction: column; }
-  .day-tabs {
-    flex-direction: row;
-    height: auto;
-    width: 100%;
-    border-right: none;
-    border-bottom: 2px solid rgba(255,255,255,0.03);
-  }
-  .tab-btn { flex:1; padding:8px; font-size:13px; border-right: 1px solid rgba(255,255,255,0.03); border-bottom: none; }
-  .forecast-right { margin-left: 0; padding:12px; }
-  svg { height:240px; }
+/* Responsive nhỏ */
+@media (max-width: 900px) {
+    .weather-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .day-tabs {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .forecast-display {
+        flex-direction: column;
+        align-items: center;
+    }
+    .chart-image-container, .detail-box {
+        width: 90%;
+    }
 }

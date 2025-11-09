@@ -280,7 +280,7 @@ def locations(request):
         })
 
 
-def display_location(request, location_code):
+def location_detail(request, location_code):
     location = get_object_or_404(Location, code=location_code)
 
     if request.method == 'POST':
@@ -288,7 +288,7 @@ def display_location(request, location_code):
         rating = request.POST.get('rating')
 
         if not content:
-            return redirect('display_location', location_code=location_code)
+            return redirect('location_detail', location_code=location_code)
 
         bot_reply = "Thanks for your comment!"  # Default fallback reply
 
@@ -368,7 +368,7 @@ def display_location(request, location_code):
         else:
             open_time_str = f"{open_time} - {close_time}"
 
-        return render(request, "display.html", {
+        return render(request, "page/locations/detail.html", {
             "code": location.code,
             "location_name": location.location,
             "type": location.type,

@@ -1,73 +1,63 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block title %}Detail{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/locations.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="location-container">
-    <div class="location-name">
+<div class="container">
+    <div class="title">
         {{ location_name }}
     </div>
 
-    <div class="text">
-        <div class="location-rating">
+    <div class="info">
+        <div class="rating">
             <strong>Rating:</strong> {{ star_html|safe }}
         </div>
     </div>
 
-    <div class="text">
-        <div class="location-address">
-            <strong>Address:</strong>{{ address }}
+    <div class="info">
+        <div class="address">
+            <strong>Address:</strong> {{ address }}
         </div>
     </div>
 
-    <div class="location-img">
+    <div class="image">
         <img src="{{ image_path }}" alt="{{ location_name }}">
     </div>
 
-    <div class="text">
-        <div class="time-info">
-            <strong>Open hour: </strong> {{ open_time }}
+    <div class="info">
+        <div class="time">
+            <strong>Open hour:</strong> {{ open_time }}
         </div>
     </div>
 
-    <div class="text">
-        <div class="location-ticket-info">
-            <strong>Price:</strong>{{ ticket_info }}
+    <div class="info">
+        <div class="price">
+            <strong>Price:</strong> {{ ticket_info }}
         </div>
     </div>
 
-    <div class="text">
-        <div class="location-description">
-            <strong>Description:</strong>{{ long_description }}
+    <div class="info">
+        <div class="description">
+            <strong>Description:</strong> {{ long_description }}
         </div>
     </div>
-
 
     <iframe id="map" loading="lazy" allowfullscreen
         src="https://maps.google.com/maps?q={{ lat }},{{ long }}&z=15&output=embed">
     </iframe>
 
-
-    <div class="favourite-block">
-        <div class="favourite-location">
-            <form method="post" action="{% url 'locations' %}" class="fav-form" style="display:inline;">
-                {% csrf_token %}
-                <input type="hidden" name="value" value="{{ code }}">
-                <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                    {{ favourite_symbol|safe }}
-                </button>
-            </form>
-        </div>
-    </div>
-   <hr>
-
-<hr>
-<h3>Post a comment</h3>
+    <hr>
+    <h3>Post a comment</h3>
 
     {% if user.is_authenticated %}
     <form id="comment-form">
         {% csrf_token %}
-        <textarea type="text" name="content" placeholder="Write your comment..." required></textarea>
-        <div class="bla">
+        <textarea name="content" placeholder="Write your comment..." required></textarea>
+        <div class="form-group">
             <label for="rating">Rate this location:</label>
             <select name="rating" id="rating">
                 <option value="">-- Optional --</option>
@@ -77,36 +67,34 @@
                 <option value="2">2 - Poor</option>
                 <option value="1">1 - Terrible</option>
             </select>
-            <button id="submit" type="submit">Submit Comment <i class="fas fa-paper-plane"></i>
-            </button>
+            <button id="submit" type="submit" class="btn">Submit Comment <i class="fas fa-paper-plane"></i></button>
         </div>
     </form>
     {% else %}
-    <p style="font-style: italic; color: gray;">
-        You must <a href="{% url 'login' %}" style="color: #05915d; text-decoration: underline;">log in</a> to post a comment.
+    <p class="login-reminder">
+        You must <a href="{% url 'login' %}">log in</a> to post a comment.
     </p>
     {% endif %}
 
-    <div id="new-comment-result"></div>
+    <div id="comments">
+        {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+            <p><em>Bot reply:</em> {{ comment.bot_reply }}</p>
 
-    {% for comment in comments %}
-    <div class="comment">
-        <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
-        <p><em>Bot reply:</em> {{ comment.bot_reply }}</p>
-
-        <!-- Displaying replies if they exist -->
-        {% if comment.replies.all %}
-        <div class="replies">
-            {% for reply in comment.replies.all %}
-            <div class="reply">
-                <p><strong>{{ reply.user.username }}</strong>: {{ reply.content }}</p>
-                <p><em>{{ location_name }}'s manager reply:</em> {{ reply.bot_reply }}</p>
+            {% if comment.replies.all %}
+            <div class="replies">
+                {% for reply in comment.replies.all %}
+                <div class="reply">
+                    <p><strong>{{ reply.user.username }}</strong>: {{ reply.content }}</p>
+                    <p><em>Manager reply:</em> {{ reply.bot_reply }}</p>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            {% endif %}
         </div>
-        {% endif %}
+        {% endfor %}
     </div>
-    {% endfor %}
 
     <script>
         document.getElementById("comment-form").addEventListener("submit", function (e) {
@@ -131,8 +119,7 @@
                             <p><em>Bot reply:</em> ${data.bot_reply}</p>
                         </div>
                     `;
-                        // Append the new comment at the bottom of the comment section
-                        document.getElementById("new-comment-result").insertAdjacentHTML('beforeend', commentHTML);
+                        document.getElementById("comments").insertAdjacentHTML('beforeend', commentHTML);
                         form.reset();
                     }
                 })

@@ -9,10 +9,9 @@
 {% endblock %}
 
 {% block content %}
-<section class="filter-section">
-  <form method="get" action="{% url 'locations' %}"
-        style="display: flex; flex-wrap: wrap; gap: 16px; width: 100%; align-items: center;">
-    <div class="filter-element">
+<section class="filter">
+  <form method="get" action="{% url 'locations' %}" class="filter-form">
+    <div class="filter-item">
       <label for="type">Type:</label>
       <select name="type" id="type">
         <option value="" {% if not current_filters.type %}selected{% endif %}>All</option>
@@ -36,31 +35,31 @@
         </option>
       </select>
     </div>
-    <div class="filter-element">
+    <div class="filter-item">
       <label for="rating">Min Rating:</label>
       <input type="number" name="rating" id="rating" value="{{ current_filters.rating }}" min="1" max="5" step="0.1">
     </div>
-    <div class="filter-element">
+    <div class="filter-item">
       <label for="desired_time">Open at:</label>
       <input type="time" id="desired_time" name="desired_time" value="{{ current_filters.desired_time }}">
     </div>
     <div>
-      <button type="submit">Apply Filters</button>
+      <button type="submit" class="btn">Apply</button>
     </div>
   </form>
 </section>
 
-<section class="content-section">
-  <div class="card-grid">
+<section class="content">
+  <div class="grid">
     {% for loc in locations %}
     <div class="card">
-      <a href="{% url 'display_location' loc.code %}" style="display: flex; width: 100%; text-decoration: none; color: inherit;">
-        <div class="card-image" style="background-image: url('{{ loc.image_path }}');"></div>
-        <div class="card-content">
+      <a href="{% url 'display_location' loc.code %}" class="card-link">
+        <div class="card-img" style="background-image: url('{{ loc.image_path }}');"></div>
+        <div class="card-body">
           <div>
-            <div style="display: flex;">
+            <div class="card-header">
               <h3>{{ loc.location }}</h3>
-              <div class="favourite">
+              <div class="fav-container">
                 <button class="fav-btn" data-code="{{ loc.code }}">
                   {% if loc.favourite_symbol == '<i class="fa-solid fa-heart"></i>' %}
                     <i class="fa-solid fa-heart"></i>
@@ -72,7 +71,7 @@
             </div>
             <p>{{ loc.description }}</p>
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div class="card-footer">
             <div class="rating">
               {{ loc.star_html|safe }}
               <span>{{ loc.rating }} / 5</span>
@@ -83,7 +82,7 @@
       </a>
     </div>
     {% empty %}
-      <p style="text-align:center; width:100%;">No locations found.</p>
+      <p class="empty">No locations found.</p>
     {% endfor %}
   </div>
 </section>
@@ -113,8 +112,8 @@
       <a href="?page=3{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">3</a>
       <a href="?page=4{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">4</a>
       <span>...</span>
-      <a href="?page={{ total_pages|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ total_pages|add:-1 }}</a>
-      <a href="?page={{ total_pages }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ total_pages }}</a>
+      <a href="?page={{ total_pages|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages|add:-1 }}</a>
+      <a href="?page={{ total_pages }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages }}</a>
     {% endif %}
   {% elif current_page < total_pages|add:-6 %}
     <!-- Case 2: Current page is not 1 and less than n-6 -->
@@ -123,8 +122,8 @@
     <a href="?page={{ current_page|add:1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ current_page|add:1 }}</a>
     <a href="?page={{ current_page|add:2 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ current_page|add:2 }}</a>
     <span>...</span>
-    <a href="?page={{ total_pages|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ total_pages|add:-1 }}</a>
-    <a href="?page={{ total_pages }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ total_pages }}</a>
+    <a href="?page={{ total_pages|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages|add:-1 }}</a>
+    <a href="?page={{ total_pages }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages }}</a>
   {% else %}
     <!-- Case 3: Current page is between n-6 and n -->
     {% for i in total_pages|add:-6|to:total_pages %}

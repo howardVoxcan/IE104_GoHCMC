@@ -11,27 +11,27 @@
   <nav class="header__nav-tabs">
     <a
       href="{% url 'homepage' %}"
-      class="nav-link {% if request.resolver_match.url_name == 'homepage' %}active{% endif %}">
+      class="nav-link {% if request.path == '/' %}active{% endif %}">
       <i class="fas fa-house"></i> Home
     </a>
     <a
       href="{% url 'weather' %}"
-      class="nav-link {% if request.resolver_match.url_name == 'weather' %}active{% endif %}">
+      class="nav-link {% if '/weather' in request.path %}active{% endif %}">
       <i class="fas fa-cloud-sun"></i> Weather
     </a>
     <a
       href="{% url 'locations' %}"
-      class="nav-link {% if request.resolver_match.url_name == 'locations' %}active{% endif %}">
+      class="nav-link {% if '/locations' in request.path %}active{% endif %}">
       <i class="fas fa-map-pin"></i> Locations
     </a>
     <a
       href="{% url 'favourite' %}"
-      class="nav-link {% if request.resolver_match.url_name == 'favourite' %}active{% endif %}">
+      class="nav-link {% if '/favourite' in request.path %}active{% endif %}">
       <i class="fas fa-heart"></i> Favourite
     </a>
     <a
       href="{% url 'trip' %}"
-      class="nav-link {% if request.resolver_match.url_name == 'my_trip' %}active{% endif %}">
+      class="nav-link {% if '/trip' in request.path %}active{% endif %}">
       <i class="fas fa-map"></i> My Trip
     </a>
   </nav>

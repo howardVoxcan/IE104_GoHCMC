@@ -1,0 +1,137 @@
+{
+  "name": "trip.create.add.location",
+  "auto": true,
+  "responses": [
+    {
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": [
+            "Okay, I've added the location(s) to your trip."
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "locations",
+          "dataType": "@locations",
+          "value": "$locations",
+          "isList": true
+        }
+      ]
+    }
+  ],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Add ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Can you add ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "?",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to add ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Please include ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Put ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": " in my list",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    }
+  ]
+}

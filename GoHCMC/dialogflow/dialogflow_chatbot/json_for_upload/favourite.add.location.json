@@ -1,0 +1,137 @@
+{
+  "name": "favourite.add.location",
+  "auto": true,
+  "responses": [
+    {
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": [
+            "Okay, I've added the location(s) to your favourites."
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "locations",
+          "dataType": "@locations",
+          "value": "$locations",
+          "isList": true
+        }
+      ]
+    }
+  ],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Add ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Can you add ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "?",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to add ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Please include ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Put ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": " in my list",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    }
+  ]
+}

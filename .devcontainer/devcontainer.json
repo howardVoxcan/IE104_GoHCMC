@@ -15,7 +15,7 @@
 	"forwardPorts": [8000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "python3 -m pip install -r requirements.txt",
+	"postCreateCommand": "python3 -m pip install -r requirements.txt && python3 -m spacy download en_core_web_sm",
 
 	// Configure tool-specific properties.
 	"customizations": {

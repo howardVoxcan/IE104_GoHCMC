@@ -1,0 +1,115 @@
+{
+  "name": "trip.create.remove.location",
+  "auto": true,
+  "responses": [
+    {
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": [
+            "Got it. I've removed the location(s) from your trip."
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "locations",
+          "dataType": "@locations",
+          "value": "$locations",
+          "isList": true
+        }
+      ]
+    }
+  ],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Remove ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Can you remove ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "?",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to remove ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Please delete ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    }
+  ]
+}

@@ -12,6 +12,8 @@ django-crispy-forms>=2.0
 crispy-bootstrap5>=0.7
 django-widget-tweaks>=1.4.1
 sympy
+spacy
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
 # Nếu dùng PostgreSQL, thêm dòng sau:
 # psycopg2-binary>=2.9.9

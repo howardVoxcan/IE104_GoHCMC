@@ -51,13 +51,14 @@ body {
 ================================ */
 .welcome-section {
   flex: 1;
-  background: rgba(46,204,113,0.95);
+  background: rgba(46, 204, 113, 0.85); /* bớt sáng, trong suốt */
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 50px 30px;
   text-align: center;
+  backdrop-filter: blur(5px); /* làm mờ nền phía sau */
 }
 
 .welcome-content {
@@ -65,9 +66,9 @@ body {
 }
 
 .welcome-logo {
-  width: 90px;
+  width: 180px; /* logo to hơn */
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .welcome-section h1 {
@@ -81,8 +82,9 @@ body {
   line-height: 1.6;
 }
 
+/* Dark Mode */
 [data-theme="dark"] .welcome-section {
-  background: rgba(34,139,84,0.95);
+  color: #000000;
 }
 
 /* ================================
@@ -163,7 +165,7 @@ body {
   text-decoration: underline;
 }
 
-/* Dark Mode */
+/* Dark Mode cho form */
 [data-theme="dark"] .form-section {
   background: #121212;
   color: #f1f1f1;
@@ -179,15 +181,36 @@ body {
   box-shadow: 0 0 4px #2ecc71;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .signup-container {
-    flex-direction: column;
-  }
-  .welcome-section, .form-section {
-    padding: 30px 20px;
-  }
-  .welcome-section {
-    order: -1;
-  }
+/* ================================
+   🔹 Toast Notifications
+================================ */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
+.toast {
+  display: flex;
+  align-items: center;
+  background-color: #f8d7da; /* đỏ nhẹ */
+  color: #721c24; /* chữ đỏ đậm */
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-size: 0.95rem;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.toast-icon {
+  margin-right: 8px;
+  font-weight: bold;
+  color: #b71c1c; /* đỏ đậm */
+  font-size: 1.1rem;
+}
+

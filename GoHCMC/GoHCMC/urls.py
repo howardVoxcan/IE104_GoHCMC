@@ -26,20 +26,12 @@ urlpatterns = [
     # path('register/', v.register, name = "register"),
     # path('login/', v.custom_login, name='login'),
     path('', include('register.urls')),
-
     path('weather/', include('weather.urls')),
-    path('trip/', include('trip.urls')),
     # path('dialogflow/', include('dialogflow.urls')),
     path('favourite/', include('favourite.urls')),
+    path('trip/', include('trip.urls')),
     path('', include('location.urls')),
-
     path('', include('django.contrib.auth.urls')),
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='register/password_reset.html'), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='register/password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='register/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='register/password_reset_complete.html'), name='password_reset_complete'),
-
-
 ]
 
 if settings.DEBUG:

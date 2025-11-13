@@ -2,8 +2,7 @@
 {% load static %}
 {% block title %}Trang chủ{% endblock %}
 {% block content %}
-  <link rel="stylesheet" href="{% static 'css/banner.css' %}">
-  <link rel="stylesheet" href="{% static 'css/palace_block.css' %}">
+  <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
   <div class="banner" id="banner">
     <img id="banner-img" class="banner-img" src="" alt="Banner" />
     <div class="banner-overlay">
@@ -30,54 +29,64 @@
             idx = (idx + 1) % banners.length;
             showBanner(idx);
           }, 5000);
-        });
-
-      const palaces = [
-        {
-          name: "Dinh Độc Lập",
-          image_url: "https://statics.vinpearl.com/Where-is-ho-chi-minh-city-01_1684509272.jpg",
-          description: "Biểu tượng lịch sử của TP.HCM, nơi diễn ra nhiều sự kiện quan trọng."
-        },
-        {
-          name: "Chợ Bến Thành",
-          image_url: "https://statics.vinpearl.com/Where-is-ho-chi-minh-city-01_1684509272.jpg",
-          description: "Chợ truyền thống nổi tiếng với đa dạng hàng hóa và ẩm thực địa phương."
-        },
-        {
-          name: "Nhà thờ Đức Bà",
-          image_url: "https://statics.vinpearl.com/Where-is-ho-chi-minh-city-01_1684509272.jpg",
-          description: "Kiến trúc Pháp cổ kính giữa lòng thành phố hiện đại."
-        }
-      ];
-      const palaceList = document.getElementById('palace-list');
-      palaces.forEach(palace => {
-        const item = document.createElement('div');
-        item.className = 'palace-item';
-        item.innerHTML = `
-          <img src="${palace.image_url}" alt="${palace.name}">
-          <div class="palace-info">
-            <h4><strong>${palace.name}</strong></h4>
-            <p>${palace.description}</p>
-            <p>Rating: ⭐⭐⭐⭐⭐ 5/5</p>
-          </div>
-        `;
-        palaceList.appendChild(item);
-      });
+        });      
     });
   </script>
   {% comment %} List palace of tourist {% endcomment %}
-  <div class="palace-section">
+  <section class="palace-section">
     <h3>Địa điểm nổi bật</h3>
     <div class="palace-list" id="palace-list">
+      {%for loc in top_locations %}
+      <a href="{% url 'display_location' loc.code %}" style="text-decoration: none; color: inherit;">
+      <div class="palace-item">
+        <div>
+          <img src="{{ loc.image_path }}" alt="{{ loc.location }}" class="palace-image"/>
+          <div class="palace-info">
+            <div style="display:flex;">
+            <h4>{{ loc.location }}</h4>
+            <div class="favourite">
+              <button class="fav-btn" data-code="{{ loc.code }}">
+              {% if loc.favourite_symbol == '<i class="fa-solid fa-heart"></i>' %}
+                <i class="fa-solid fa-heart"></i>
+              {% else %}
+                <i class="fa-regular fa-heart"></i>
+              {% endif %}
+              </button>
+            </div>
+            </div>
+            <p>{{ loc.description }}</p>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="rating">
+              {{ loc.star_html|safe }}
+              <span>{{ loc.rating }} / 5</span>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% comment %} Tại sao lại chọn chúng tôi {% endcomment %}
+  <section class="why-choose-us">
+  <h2>Tại sao nên chọn chúng tôi?</h2>
+  <p>Chúng tôi mang đến trải nghiệm nhanh, chính xác và đáng tin cậy nhất.</p>
+  <div class="features">
+    <div class="feature">
+      <i class="fa-solid fa-bolt"></i>
+      <h3>Nhanh chóng & Tiện lợi</h3>
+      <p>Chỉ vài bước đơn giản để nhận kết quả tức thì.</p>
+    </div>
+    <div class="feature">
+      <i class="fa-solid fa-brain"></i>
+      <h3>Công nghệ AI hiện đại</h3>
+      <p>Phân tích dữ liệu thông minh, chính xác cao.</p>
+    </div>
+    <div class="feature">
+      <i class="fa-solid fa-headset"></i>
+      <h3>Hỗ trợ tận tâm</h3>
+      <p>Đội ngũ chăm sóc khách hàng 24/7 sẵn sàng hỗ trợ bạn.</p>
     </div>
   </div>
-  {% comment %} Tại sao lại chọn chúng tôi {% endcomment %}
-  <div class="why-choose-us">
-    <h3>Tại sao lại chọn chúng tôi</h3>
-    <ul>
-      <li>Thông tin du lịch cập nhật và chính xác.</li>
-      <li>Giao diện thân thiện, dễ sử dụng.</li>
-      <li>Hỗ trợ đa ngôn ngữ cho du khách quốc tế.</li>
-    </ul>
-  </div>
+</section>
 {% endblock %}

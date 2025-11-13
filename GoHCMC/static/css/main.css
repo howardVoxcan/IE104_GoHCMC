@@ -10,6 +10,24 @@
   height: var(--header-height);
   padding: 3rem 2em;
   gap: 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: var(--main-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Fixed header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--main-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header__logo {
@@ -222,7 +240,8 @@
   height: 40px;
   border-radius: 50%;
   background: var(--main-bg);
-  border: 2px solid var(--primary); /* Keep border primary */
+  border: 2px solid var(--primary);
+  /* Keep border primary */
   font-size: 1.15rem;
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.12);
   transition: background 0.2s, border 0.2s, color 0.2s, transform 0.5s;
@@ -230,7 +249,8 @@
 
 .theme-switch:hover,
 .header__search-icon:hover {
-  background: var(--primary); /* Keep background primary */
+  background: var(--primary);
+  /* Keep background primary */
   border-color: var(--primary);
 }
 
@@ -243,39 +263,44 @@
 
 .theme-switch:hover .theme-switch__icon,
 .header__search-icon:hover i {
-  color: var(--accent); /* Change icon color to accent on hover */
-  transform: rotate(360deg); /* Add rotation effect */
+  color: var(--accent);
+  /* Change icon color to accent on hover */
+  transform: rotate(360deg);
+  /* Add rotation effect */
 }
 
 :root[data-theme="dark"] .theme-switch,
 :root[data-theme="dark"] .header__search-icon {
   background: var(--card-bg);
-  border-color: var(--primary); /* Keep border primary */
+  border-color: var(--primary);
+  /* Keep border primary */
 }
 
 :root[data-theme="dark"] .theme-switch:hover,
 :root[data-theme="dark"] .header__search-icon:hover {
-  background: var(--primary); /* Keep background primary */
+  background: var(--primary);
+  /* Keep background primary */
   border-color: var(--primary);
 }
 
 :root[data-theme="dark"] .theme-switch:hover .theme-switch__icon,
 :root[data-theme="dark"] .header__search-icon:hover i {
-  color: var(--accent); /* Change icon color to accent on hover */
-  transform: rotate(360deg); /* Add rotation effect */
+  color: var(--accent);
+  /* Change icon color to accent on hover */
+  transform: rotate(360deg);
+  /* Add rotation effect */
 }
 
 .main-content {
-  margin-left: var(--sidebar-width);
-  margin-top: 1rem;
   padding: 2rem;
+  padding-top: 80px;
 }
 
 /* Footer */
 .footer {
   background: #333;
   color: #eee;
-  padding: 2.5rem 0 0.5rem 0;
+  padding: 2rem 0 0.5rem 0;
   font-size: 1.08rem;
   margin-top: 2rem;
 }
@@ -292,7 +317,6 @@
   gap: 5rem;
   flex-wrap: wrap;
   border-bottom: 1px solid #555;
-  padding-bottom: 1.5rem;
 }
 
 .footer-column {
@@ -342,6 +366,34 @@
   font-size: 0.98rem;
   margin-top: 1.2rem;
   padding-bottom: 0.5rem;
+}
+
+/* Back to Top button */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.back-to-top:hover {
+  background-color: var(--secondary);
+  transform: scale(1.1);
+}
+
+.back-to-top i {
+  font-size: 20px;
 }
 
 /* Responsive */

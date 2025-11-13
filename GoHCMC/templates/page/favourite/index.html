@@ -19,7 +19,7 @@
         </div>
     {% endif %}
     
-    <form method="POST" action="{% url 'my_trip' %}" id="create-trip-form">
+    <form method="POST" action="{% url 'create_trip' %}" id="create-trip-form">
         {% csrf_token %}
         
         <div class="favourite-content-wrapper">
@@ -104,7 +104,6 @@
 </div>
 
 <script>
-    // GIỮ NGUYÊN: detectCycle
     function detectCycle(constraints) {
         const graph = {};
         const indegree = {};
@@ -137,7 +136,6 @@
         return visited < nodes.size;
     }
 
-    // GIỮ NGUYÊN: toggleInputsDisabled
     function toggleInputsDisabled(section, disable) {
         const inputs = section.querySelectorAll('input, select');
         inputs.forEach(input => {
@@ -145,7 +143,6 @@
         });
     }
 
-    // SỬA: Hàm checkLocationLimit (Yêu cầu mới)
     function checkLocationLimit() {
         const limit = 8;
         const allCheckboxes = document.querySelectorAll('input[name="locations"]');
@@ -172,7 +169,6 @@
         });
     }
 
-    // SỬA: Hàm cập nhật cột bên phải
     function updateRightColumnSelections() {
         const checkboxes = document.querySelectorAll('input[name="locations"]:checked');
         const startSelect = document.getElementById('start_point_select');
@@ -201,12 +197,10 @@
 
         startSelect.value = oldStartVal;
         endSelect.value = oldEndVal;
-        
-        // SỬA: Gọi hàm check limit TẠI ĐÂY
+
         checkLocationLimit();
     }
 
-    // GIỮ NGUYÊN: updatePrecedenceDropdowns
     function updatePrecedenceDropdowns() {
         const selectedCheckboxes = document.querySelectorAll('input[name="locations"]:checked');
         const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
@@ -225,7 +219,6 @@
         });
     }
 
-    // SỬA: updatePinnedInputsVisibility (Đọc từ dropdown bên phải)
     function updatePinnedInputsVisibility() {
         const selectedStart = document.getElementById('start_point_select').value;
         const selectedEnd = document.getElementById('end_point_select').value;
@@ -235,7 +228,6 @@
         if (selectedEnd) hiddenIds.add(selectedEnd);
 
         document.querySelectorAll('.extra-inputs').forEach(div => {
-            // Tìm ID từ 'details-section' cha
             const locationId = div.closest('.details-section').id.replace('details-section-', '');
             if (hiddenIds.has(locationId)) {
                 div.style.display = 'none';
@@ -245,7 +237,6 @@
         });
     }
 
-    // SỬA: DOMContentLoaded
     document.addEventListener("DOMContentLoaded", function () {
         const checkboxes = document.querySelectorAll('input[name="locations"]');
 
@@ -254,7 +245,6 @@
             const detailsSection = document.querySelector(targetId);
             const summary = checkbox.closest('.location-summary'); // Lấy thanh summary
 
-            // Khởi tạo
             if (!checkbox.checked) {
                 detailsSection.style.display = 'none';
                 toggleInputsDisabled(detailsSection, true);
@@ -263,7 +253,6 @@
                 toggleInputsDisabled(detailsSection, false);
             }
 
-            // Gắn sự kiện "change" cho checkbox
             checkbox.addEventListener('change', function () {
                 if (this.checked) {
                     detailsSection.style.display = 'block';
@@ -272,24 +261,18 @@
                     detailsSection.style.display = 'none';
                     toggleInputsDisabled(detailsSection, true);
                 }
-                // Cập nhật CẢ HAI
-                updateRightColumnSelections(); // checkLocationLimit() được gọi BÊN TRONG hàm này
-                updatePrecedenceDropdowns();
+                updateRightColumnSelections(); 
             });
             
-            // SỬA: Gắn sự kiện click cho label (thanh summary)
             const label = checkbox.closest('.location-summary');
             if(label) {
                 label.addEventListener('click', function(e) {
-                    // Ngăn click vào link VÀ NÚT DELETE
                     if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
                         e.stopPropagation();
                         return;
                     }
                     
-                    // Chỉ toggle checkbox nếu click vào chính label (không phải checkbox)
                     if (e.target.tagName !== 'INPUT') {
-                        // Kiểm tra giới hạn TRƯỚC KHI tick
                         const checkedCount = document.querySelectorAll('input[name="locations"]:checked').length;
                         if (!checkbox.checked && checkedCount >= 8) {
                             alert("You can only select a maximum of 8 locations.");
@@ -298,7 +281,6 @@
                         }
                         
                         checkbox.checked = !checkbox.checked;
-                        // Kích hoạt sự kiện 'change'
                         checkbox.dispatchEvent(new Event('change'));
                     }
                 });

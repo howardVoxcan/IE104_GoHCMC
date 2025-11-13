@@ -133,3 +133,13 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'            # server SMTP của Gmail
+EMAIL_PORT = 587                          # port TLS
+EMAIL_USE_TLS = True                       # dùng TLS
+EMAIL_HOST_USER = 'UIT.GoHCMC@gmail.com'  # email của bạn dùng gửi
+EMAIL_HOST_PASSWORD = 'xykn ikwn jedk hqpm' # App password (nếu Gmail bật 2FA)
+DEFAULT_FROM_EMAIL = 'GoHCMC <UIT.GoHCMC@gmail.com>'

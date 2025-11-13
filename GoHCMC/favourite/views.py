@@ -11,21 +11,36 @@ import json
 # Create your views here.
 @login_required
 def favourite(request):
+    user = request.user
+
+    # --- POST Processing (Unfavourite) ---
     if request.method == 'POST' and 'location_code' in request.POST:
         location_code = request.POST.get('location_code')
 
         if location_code:
             location = Location.objects.filter(code=location_code).first()
-            if location and request.user in location.favourited_by.all():
-                location.favourited_by.remove(request.user)
-                messages.success(request, "Đã xoá địa điểm khỏi danh sách yêu thích.")
+            if location and user in location.favourited_by.all():
+                location.favourited_by.remove(user)
+                # Translated:
+                messages.success(request, "Removed location from favourites.")
                 
         return redirect('favourite')
 
-    locations = Location.objects.filter(favourited_by=request.user)
+    # --- GET Processing (Show page) ---
+    
+    # 1. Get favourite locations
+    locations = Location.objects.filter(favourited_by=user)
+    
+    # 2. Get or create TripList (NECESSARY FOR TEMPLATE)
+    trip_list_id = f"{user.username}-favourite"
+    trip_list, _ = TripList.objects.get_or_create(id=trip_list_id, defaults={
+        'user': user,
+        'name': f"{user.username}'s Favourite Trip"
+    })
 
     return render(request, "page/favourite/index.html", {
-        'locations': locations
+        'locations': locations,
+        'trip_list': trip_list  # Pass this to the template
     })
 
 @login_required
@@ -41,16 +56,20 @@ def my_trip(request):
     if request.method == 'POST':
         path_name = request.POST.get('path_name')
         if not path_name:
-            return redirect('my_trip')
+            # Translated:
+            messages.error(request, "Please enter a trip name.")
+            return redirect('favourite')
 
         selected_ids = request.POST.getlist('locations')
         if not selected_ids:
-            messages.error(request, "Vui lòng chọn ít nhất một địa điểm.")
+            # Translated:
+            messages.error(request, "Please select at least one location.")
             return redirect('favourite')
 
         locations = list(Location.objects.filter(id__in=selected_ids, favourited_by=user))
         if not locations:
-            messages.error(request, "Không tìm thấy các địa điểm đã chọn.")
+            # Translated:
+            messages.error(request, "Selected locations not found.")
             return redirect('favourite')
 
         id_to_index = {loc.id: idx for idx, loc in enumerate(locations)}
@@ -110,7 +129,8 @@ def my_trip(request):
         )
 
         if path is None:
-            messages.error(request, "Không thể tạo lịch trình hợp lệ với các ràng buộc đã chọn.")
+            # Translated:
+            messages.error(request, "Could not create a valid itinerary with the selected constraints.")
             return redirect('favourite')
 
         total_duration = sum(
@@ -123,7 +143,7 @@ def my_trip(request):
         start_point_obj = next((loc for loc in locations if loc.id == start_id), None)
         end_point_obj = next((loc for loc in locations if loc.id == end_id), None)
 
-        TripPath.objects.create(
+        trip = TripPath.objects.create(
             trip_list=trip_list,
             path_name=path_name,
             locations_ordered=json.dumps(ordered_location_ids),
@@ -132,6 +152,9 @@ def my_trip(request):
             start_point=start_point_obj,
             end_point=end_point_obj
         )
+        
+        # Add locations to ManyToManyField
+        trip.locations.set(locations)
 
         # Unfavorite the locations that were just used
         for loc in locations:
@@ -139,6 +162,7 @@ def my_trip(request):
 
         return redirect('my_trip')
 
+    # --- GET Processing (Show my_trip page) ---
     trip_paths = TripPath.objects.filter(trip_list=trip_list).order_by('-created_at')
     all_ids = []
     parsed_trip_paths = []

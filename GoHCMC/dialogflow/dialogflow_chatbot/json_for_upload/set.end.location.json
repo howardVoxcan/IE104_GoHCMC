@@ -1,0 +1,577 @@
+{
+  "name": "set.end.location",
+  "auto": true,
+  "responses": [
+    {
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": [
+            "Alright. I’ve set the ending location."
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "locations",
+          "dataType": "@locations",
+          "value": "$locations",
+          "isList": false
+        }
+      ]
+    }
+  ],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "End at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hà Nội",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "End at ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "End at ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "End at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hội An",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "End at ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Finish at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hà Nội",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Finish at ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Finish at ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Finish at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hội An",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "Finish at ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "My last stop is ",
+          "userDefined": false
+        },
+        {
+          "text": "Hà Nội",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "My last stop is ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "My last stop is ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "My last stop is ",
+          "userDefined": false
+        },
+        {
+          "text": "Hội An",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "My last stop is ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "The trip ends at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hà Nội",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "The trip ends at ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "The trip ends at ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "The trip ends at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hội An",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "The trip ends at ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to end at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hà Nội",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to end at ",
+          "userDefined": false
+        },
+        {
+          "text": "Đà Nẵng",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to end at ",
+          "userDefined": false
+        },
+        {
+          "text": "TP. Hồ Chí Minh",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to end at ",
+          "userDefined": false
+        },
+        {
+          "text": "Hội An",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    },
+    {
+      "isTemplate": false,
+      "count": 0,
+      "updated": null,
+      "data": [
+        {
+          "text": "I want to end at ",
+          "userDefined": false
+        },
+        {
+          "text": "Sa Pa",
+          "alias": "locations",
+          "meta": "@locations",
+          "userDefined": true
+        },
+        {
+          "text": "",
+          "userDefined": false
+        }
+      ],
+      "id": ""
+    }
+  ]
+}

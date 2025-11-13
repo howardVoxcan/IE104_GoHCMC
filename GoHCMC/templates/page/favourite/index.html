@@ -6,203 +6,336 @@
 <link rel="stylesheet" href="{% static 'css/favourite.css' %}">
 {% endblock %}
 
+
 {% block content %}
 <div class="favourite-container">
-	<h2 class="favourite-header">List of favourite locations</h2>
-	{% if locations %}
-	<form method="POST" action="{% url 'my_trip' %}">
-		{% csrf_token %}
-		{% for location in locations %}
-		<div class="favourite-location-card">
-			<summary class="location-summary">
-				<label>{{ location.location }}</label>
-				<input type="checkbox" name="locations" value="{{ location.id }}">
-			</summary>
+    <h2 class="favourite-header">List of favourite locations</h2>
+    
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <form method="POST" action="{% url 'my_trip' %}" id="create-trip-form">
+        {% csrf_token %}
+        
+        <div class="favourite-content-wrapper">
+            
+            <div class="location-list-column">
+                {% if locations %}
+                    {% for location in locations %}
+                    <div class="location-item-card"> 
+                        
+                        <div class="item-controls">
+                            <summary class="location-summary">
+                                <a href="{% url 'display_location' location.code %}" class="summary-location-link">
+                                    {{ location.location }}
+                                </a>
+                                
+                                <button type="submit" 
+                                        class="delete-button" 
+                                        title="Remove from favourites"
+                                        formaction="{% url 'favourite' %}"
+                                        name="location_code"
+                                        value="{{ location.code }}">
+                                    <i class="fa-solid fa-trash-alt"></i> Delete
+                                </button>
+                                
+                                <input type="checkbox" name="locations" value="{{ location.id }}" id="cb-{{ location.id }}" data-target="#details-section-{{ location.id }}" data-location-name="{{ location.location }}">
+                            </summary>
+                            
+                            <div id="details-section-{{ location.id }}" class="details-section" style="display: none;">
+                                
+                                <div id="extra-inputs-{{ location.id }}" class="extra-inputs">
+                                    <label>Pin at position</label>
+                                    <input type="number" name="pinned_order_{{ location.id }}" min="1"
+                                        placeholder="Order (1, 2, 3...)"><br>
+                                    <label>Must go after:</label>
+                                    <select name="precedence_after_{{ location.id }}" class="precedence-dropdown" data-current-id="{{ location.id }}">
+                                        <option value="">-- Select location --</option>
+                                        {% for loc in locations %}
+                                        <option value="{{ loc.id }}">{{ loc.location }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No locations in the list yet.</p>
+                {% endif %}
+            </div>
+            
+            <div class="trip-setup-column">
+                <div class="trip">
+                    <h3 class="trip-name">Trip's name</h3>
+                    <input id="type-name" type="text" name="path_name" placeholder="Enter trip's name">
+                    <input type="hidden" name="trip_list_id" value="{{ trip_list.id }}">
+                    
+                    <h4 class="selected-list-header" style="border: none; margin-top: 20px;">Select start and end points</h4>
 
-			<div id="details-section">
-				<label class="line">
-					<input type="radio" name="start_point" value="{{ location.id }}">
-					Select as start point
-				</label>
-				<br>
-				<label class="line">
-					<input type="radio" name="end_point" value="{{ location.id }}">
-					Select as end point
-				</label>
-				<div id="extra-inputs-{{ location.id }}" class="extra-inputs">
-					<label>Pin at location</label>
-					<input type="number" name="pinned_order_{{ location.id }}" min="1"
-						placeholder="Order (1, 2, 3...)"><br>
-					<label>Must go after location ID:</label>
-					<select name="precedence_after_{{ location.id }}" class="precedence-dropdown" data-current-id="{{ location.id }}">
-						<option value="">-- Select location to visit after --</option>
-						{% for loc in locations %}
-							<option value="{{ loc.id }}">{{ loc.location }}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</div>
-		</div>
-		{% endfor %}
+                    <label for="start_point_select">Start point</label>
+                    <select name="start_point" id="start_point_select">
+                        <option value="">-- Select start point --</option>
+                    </select>
+                    
+                    <label for="end_point_select">End point</label>
+                    <select name="end_point" id="end_point_select">
+                        <option value="">-- Select end point --</option>
+                    </select>
 
-		<hr class="dashed-line">
+                    <h4 class="selected-list-header">Selected locations:</h4>
+                    <ul id="selected-locations-list">
+                        <li>(No locations selected yet)</li>
+                    </ul>
 
-		<div class="trip">
-			<h3 class="trip-name">Trip's name</h3>
-			<input id="type-name" type="text" name="path_name" placeholder="Enter trip's name" required>
-			<input type="hidden" name="trip_list_id" value="{{ trip_list.id }}">
-			<button type="submit">Create journey</button>
-		</div>
-	</form>
-	{% else %}
-	<p>No locations in the list yet.</p>
-	{% endif %}
+                    <hr class="dashed-line" style="margin-top: 20px; margin-bottom: 20px;">
+                    <button type="submit" id="create-journey-button">Create journey</button>
+                </div>
+            </div>
+            
+        </div>
+    </form>
 </div>
 
 <script>
-	function updateExtraInputsVisibility() {
-		const selectedStart = document.querySelector('input[name="start_point"]:checked');
-		const selectedEnd = document.querySelector('input[name="end_point"]:checked');
+    // GIỮ NGUYÊN: detectCycle
+    function detectCycle(constraints) {
+        const graph = {};
+        const indegree = {};
+        const nodes = new Set();
+        constraints.forEach(([from, to]) => {
+            if (!graph[from]) graph[from] = [];
+            graph[from].push(to);
+            nodes.add(from);
+            nodes.add(to);
+            indegree[to] = (indegree[to] || 0) + 1;
+            if (!(from in indegree)) indegree[from] = 0;
+        });
+        const queue = [];
+        nodes.forEach(node => {
+            if (indegree[node] === 0) queue.push(node);
+        });
+        let visited = 0;
+        while (queue.length > 0) {
+            const node = queue.shift();
+            visited++;
+            if (graph[node]) {
+                graph[node].forEach(nei => {
+                    indegree[nei]--;
+                    if (indegree[nei] === 0) {
+                        queue.push(nei);
+                    }
+                });
+            }
+        }
+        return visited < nodes.size;
+    }
 
-		const hiddenIds = new Set();
-		if (selectedStart) hiddenIds.add(selectedStart.value);
-		if (selectedEnd) hiddenIds.add(selectedEnd.value);
+    // GIỮ NGUYÊN: toggleInputsDisabled
+    function toggleInputsDisabled(section, disable) {
+        const inputs = section.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.disabled = disable;
+        });
+    }
 
-		document.querySelectorAll('.extra-inputs').forEach(div => {
-			const locationId = div.id.replace('extra-inputs-', '');
-			if (hiddenIds.has(locationId)) {
-				div.style.display = 'none';
-			} else {
-				div.style.display = 'block';
-			}
-		});
-	}
+    // SỬA: Hàm checkLocationLimit (Yêu cầu mới)
+    function checkLocationLimit() {
+        const limit = 8;
+        const allCheckboxes = document.querySelectorAll('input[name="locations"]');
+        const checkedCount = document.querySelectorAll('input[name="locations"]:checked').length;
+        
+        const limitReached = (checkedCount >= limit);
 
-	function updateDropdownOptions() {
-		const selectedStart = document.querySelector('input[name="start_point"]:checked');
-		const selectedEnd = document.querySelector('input[name="end_point"]:checked');
+        allCheckboxes.forEach(cb => {
+            if (!cb.checked) { // Chỉ disable những ô CHƯA CHỌN
+                cb.disabled = limitReached;
+                
+                // Cũng vô hiệu hóa label của checkbox
+                const summary = cb.closest('.location-summary');
+                if (summary) {
+                    if (limitReached) {
+                        summary.style.opacity = '0.6';
+                        summary.style.cursor = 'not-allowed';
+                    } else {
+                        summary.style.opacity = '1';
+                        summary.style.cursor = 'pointer';
+                    }
+                }
+            }
+        });
+    }
 
-		const hiddenIds = new Set();
-		if (selectedStart) hiddenIds.add(selectedStart.value);
-		if (selectedEnd) hiddenIds.add(selectedEnd.value);
+    // SỬA: Hàm cập nhật cột bên phải
+    function updateRightColumnSelections() {
+        const checkboxes = document.querySelectorAll('input[name="locations"]:checked');
+        const startSelect = document.getElementById('start_point_select');
+        const endSelect = document.getElementById('end_point_select');
+        const selectedList = document.getElementById('selected-locations-list');
 
-		const selectedCheckboxes = document.querySelectorAll('input[name="locations"]:checked');
-		const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+        const oldStartVal = startSelect.value;
+        const oldEndVal = endSelect.value;
 
-		document.querySelectorAll('.precedence-dropdown').forEach(dropdown => {
-			const currentId = dropdown.getAttribute('data-current-id');
+        startSelect.innerHTML = '<option value="">-- Select start point --</option>';
+        endSelect.innerHTML = '<option value="">-- Select end point --</option>';
+        selectedList.innerHTML = '';
 
-			Array.from(dropdown.options).forEach(option => {
-				const optVal = option.value;
-				const shouldHide =
-					optVal === "" ||
-					optVal === currentId ||
-					!selectedIds.includes(optVal) ||
-					hiddenIds.has(optVal);
+        if (checkboxes.length === 0) {
+            selectedList.innerHTML = '<li>(No locations selected yet)</li>';
+        } else {
+            checkboxes.forEach(cb => {
+                const id = cb.value;
+                const name = cb.dataset.locationName; 
 
-				option.hidden = shouldHide;
+                startSelect.innerHTML += `<option value="${id}">${name}</option>`;
+                endSelect.innerHTML += `<option value="${id}">${name}</option>`;
+                selectedList.innerHTML += `<li>${name}</li>`;
+            });
+        }
 
-				if (shouldHide && dropdown.value === optVal) {
-					dropdown.value = "";
-				}
-			});
-		});
-	}
+        startSelect.value = oldStartVal;
+        endSelect.value = oldEndVal;
+        
+        // SỬA: Gọi hàm check limit TẠI ĐÂY
+        checkLocationLimit();
+    }
 
-	function toggleInputsDisabled(section, disable) {
-		const inputs = section.querySelectorAll('input, select');
-		inputs.forEach(input => {
-			input.disabled = disable;
-		});
-	}
+    // GIỮ NGUYÊN: updatePrecedenceDropdowns
+    function updatePrecedenceDropdowns() {
+        const selectedCheckboxes = document.querySelectorAll('input[name="locations"]:checked');
+        const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
 
-	function detectCycle(constraints) {
-		const graph = {};
-		const indegree = {};
+        document.querySelectorAll('.precedence-dropdown').forEach(dropdown => {
+            const currentId = dropdown.getAttribute('data-current-id');
+            
+            Array.from(dropdown.options).forEach(option => {
+                const optVal = option.value;
+                const shouldHide = optVal === "" || optVal === currentId || !selectedIds.includes(optVal);
+                option.hidden = shouldHide;
+                if (shouldHide && dropdown.value === optVal) {
+                    dropdown.value = "";
+                }
+            });
+        });
+    }
 
-		const nodes = new Set();
-		constraints.forEach(([from, to]) => {
-			if (!graph[from]) graph[from] = [];
-			graph[from].push(to);
-			nodes.add(from);
-			nodes.add(to);
-			indegree[to] = (indegree[to] || 0) + 1;
-			if (!(from in indegree)) indegree[from] = 0;
-		});
+    // SỬA: updatePinnedInputsVisibility (Đọc từ dropdown bên phải)
+    function updatePinnedInputsVisibility() {
+        const selectedStart = document.getElementById('start_point_select').value;
+        const selectedEnd = document.getElementById('end_point_select').value;
 
-		const queue = [];
-		nodes.forEach(node => {
-			if (indegree[node] === 0) queue.push(node);
-		});
+        const hiddenIds = new Set();
+        if (selectedStart) hiddenIds.add(selectedStart);
+        if (selectedEnd) hiddenIds.add(selectedEnd);
 
-		let visited = 0;
-		while (queue.length > 0) {
-			const node = queue.shift();
-			visited++;
-			if (graph[node]) {
-				graph[node].forEach(nei => {
-					indegree[nei]--;
-					if (indegree[nei] === 0) {
-						queue.push(nei);
-					}
-				});
-			}
-		}
-		return visited < nodes.size;
-	}
+        document.querySelectorAll('.extra-inputs').forEach(div => {
+            // Tìm ID từ 'details-section' cha
+            const locationId = div.closest('.details-section').id.replace('details-section-', '');
+            if (hiddenIds.has(locationId)) {
+                div.style.display = 'none';
+            } else {
+                div.style.display = 'block';
+            }
+        });
+    }
 
-	document.addEventListener("DOMContentLoaded", function () {
-		const checkboxes = document.querySelectorAll('input[name="locations"]');
+    // SỬA: DOMContentLoaded
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll('input[name="locations"]');
 
-		checkboxes.forEach(checkbox => {
-			const detailsSection = checkbox.closest('summary').nextElementSibling;
+        checkboxes.forEach(checkbox => {
+            const targetId = checkbox.dataset.target;
+            const detailsSection = document.querySelector(targetId);
+            const summary = checkbox.closest('.location-summary'); // Lấy thanh summary
 
-			if (!checkbox.checked) {
-				detailsSection.style.display = 'none';
-				toggleInputsDisabled(detailsSection, true);
-			}
+            // Khởi tạo
+            if (!checkbox.checked) {
+                detailsSection.style.display = 'none';
+                toggleInputsDisabled(detailsSection, true);
+            } else {
+                 detailsSection.style.display = 'block';
+                toggleInputsDisabled(detailsSection, false);
+            }
 
-			checkbox.addEventListener('change', function () {
-				if (this.checked) {
-					detailsSection.style.display = 'block';
-					toggleInputsDisabled(detailsSection, false);
-				} else {
-					detailsSection.style.display = 'none';
-					toggleInputsDisabled(detailsSection, true);
-				}
-				updateDropdownOptions();
-			});
-		});
+            // Gắn sự kiện "change" cho checkbox
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
+                    detailsSection.style.display = 'block';
+                    toggleInputsDisabled(detailsSection, false);
+                } else {
+                    detailsSection.style.display = 'none';
+                    toggleInputsDisabled(detailsSection, true);
+                }
+                // Cập nhật CẢ HAI
+                updateRightColumnSelections(); // checkLocationLimit() được gọi BÊN TRONG hàm này
+                updatePrecedenceDropdowns();
+            });
+            
+            // SỬA: Gắn sự kiện click cho label (thanh summary)
+            const label = checkbox.closest('.location-summary');
+            if(label) {
+                label.addEventListener('click', function(e) {
+                    // Ngăn click vào link VÀ NÚT DELETE
+                    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                        e.stopPropagation();
+                        return;
+                    }
+                    
+                    // Chỉ toggle checkbox nếu click vào chính label (không phải checkbox)
+                    if (e.target.tagName !== 'INPUT') {
+                        // Kiểm tra giới hạn TRƯỚC KHI tick
+                        const checkedCount = document.querySelectorAll('input[name="locations"]:checked').length;
+                        if (!checkbox.checked && checkedCount >= 8) {
+                            alert("You can only select a maximum of 8 locations.");
+                            e.preventDefault();
+                            return;
+                        }
+                        
+                        checkbox.checked = !checkbox.checked;
+                        // Kích hoạt sự kiện 'change'
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+        });
 
-		document.querySelectorAll('input[name="start_point"], input[name="end_point"]').forEach(radio => {
-			radio.addEventListener('change', () => {
-				updateExtraInputsVisibility();
-				updateDropdownOptions();
-			});
-		});
+        // Thêm listener cho các dropdown MỚI (bên phải)
+        document.getElementById('start_point_select').addEventListener('change', updatePinnedInputsVisibility);
+        document.getElementById('end_point_select').addEventListener('change', updatePinnedInputsVisibility);
 
-		const form = document.querySelector('form');
-		form.addEventListener('submit', function (e) {
-			const constraints = [];
+        // Giữ nguyên: Logic kiểm tra vòng lặp
+        const createJourneyButton = document.getElementById('create-journey-button');
+        if (createJourneyButton) {
+            createJourneyButton.addEventListener('click', function(e) {
+                const constraints = [];
+                const dropdowns = document.querySelectorAll('.precedence-dropdown');
+                
+                dropdowns.forEach(dropdown => {
+                    const afterId = dropdown.value;
+                    const currentId = dropdown.getAttribute('data-current-id');
 
-			const dropdowns = document.querySelectorAll('.precedence-dropdown');
-			dropdowns.forEach(dropdown => {
-				const afterId = dropdown.value;
-				const currentId = dropdown.getAttribute('data-current-id');
+                    if (afterId && !dropdown.disabled) {
+                        constraints.push([afterId, currentId]);
+                    }
+                });
 
-				if (afterId && !dropdown.disabled) {
-					constraints.push([afterId, currentId]);
-				}
-			});
-
-			if (detectCycle(constraints)) {
-				e.preventDefault();
-				alert("Lỗi: Có vòng lặp trong ràng buộc thứ tự giữa các địa điểm.\nHãy kiểm tra lại các lựa chọn.");
-			}
-		});
-
-		updateExtraInputsVisibility();
-		updateDropdownOptions();
-	});
+                if (detectCycle(constraints)) {
+                    e.preventDefault(); 
+                    alert("Error: A cycle was detected in the precedence constraints.\nPlease check your 'Must go after' selections.");
+                }
+            });
+        }
+        
+        // Chạy lần đầu khi tải trang
+        updateRightColumnSelections(); // checkLocationLimit() được gọi BÊN TRONG hàm này
+        updatePrecedenceDropdowns();
+        updatePinnedInputsVisibility();
+    });
 </script>
 {% endblock %}

@@ -1,3 +1,162 @@
+.favourite-content-wrapper { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 30px; 
+}
+.location-list-column { 
+    flex: 2; 
+    min-width: 350px; 
+}
+.trip-setup-column {
+    flex: 1; 
+    min-width: 300px;
+    position: sticky; 
+    top: 20px; 
+    align-self: flex-start;
+    background: var(--main-bg); 
+    padding: 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dashed-line { 
+    width: 100% !important; 
+}
+
+/* 3. CARD MỚI (CHỈ CÒN DETAILS) */
+.location-item-card { /* Đổi tên class để tránh nhầm lẫn */
+    background: var(--card-bg); 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 15px;
+    overflow: hidden; /* Quan trọng để bo góc */
+}
+html[data-theme="dark"] .location-item-card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Style cho link tên địa điểm */
+.summary-location-link {
+    margin: 0;
+    font-size: 16px;
+    flex-grow: 1;
+    font-weight: bold;
+    color: var(--text-light, white);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.summary-location-link:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    margin-right: 15px; /* Khoảng cách với checkbox */
+    background-color: var(--danger); /* Màu nền đỏ */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: background-color 0.2s, opacity 0.2s;
+    flex-shrink: 0; /* Không bị co lại */
+}
+.delete-button:hover {
+    background-color: #c0392b;
+    opacity: 0.9;
+}
+.delete-button i {
+    margin-right: 8px;
+    font-size: 1em;
+}
+
+#details-section {
+    padding: 15px;
+    background: var(--main-bg);
+    border-top: 1px solid var(--border-color); 
+}
+
+#details-section label {
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.extra-inputs {
+    border-top: none; 
+    margin: 10px 0 0 0; 
+    padding-top: 0;
+}
+
+.extra-inputs input, .extra-inputs select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color); 
+    background-color: var(--card-bg); 
+    color: var(--text-main); 
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* 5. CSS CHO CỘT BÊN PHẢI (SẠCH SẼ) */
+.trip-setup-column label {
+    font-weight: bold; display: block;
+    margin-top: 15px; margin-bottom: 5px;
+    font-size: 0.9rem; color: var(--text-main);
+    transition: color 0.3s;
+}
+.trip-setup-column select, 
+.trip-setup-column input {
+    width: 100%; padding: 8px; border-radius: 4px;
+    border: 1px solid var(--border-color); 
+    background-color: var(--card-bg); 
+    color: var(--text-main); 
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.selected-list-header {
+    font-size: 1rem; color: var(--text-main);
+    margin-top: 20px; margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 5px;
+    transition: color 0.3s, border-color 0.3s;
+}
+#selected-locations-list {
+    list-style-type: none; padding-left: 0; margin: 0;
+    font-size: 0.9rem;
+}
+#selected-locations-list li {
+    background: var(--hover-bg); 
+    color: var(--text-main); 
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* CSS CHO THÔNG BÁO LỖI/THÀNH CÔNG */
+.messages { margin-bottom: 15px; }
+.messages .error {
+    color: var(--danger);
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid var(--danger);
+    padding: 10px; border-radius: 5px;
+}
+:root[data-theme="dark"] .messages .error { background-color: rgba(192, 57, 43, 0.1); }
+.messages .success {
+    color: var(--secondary);
+    background-color: rgba(39, 174, 96, 0.1);
+    border: 1px solid var(--secondary);
+    padding: 10px; border-radius: 5px;
+}
+:root[data-theme="dark"] .messages .success { background-color: rgba(30, 132, 73, 0.1); }
+
 .favourite-container {
     max-width: 1200px;
     margin: 20px auto;
@@ -5,27 +164,14 @@
 }
 .favourite-header {
     font-size: 28px;
-    color: #05915d;
+    color: var(--primary);
     margin-bottom: 20px;
     text-align: left;
 }
 
-/* Card */
-.favourite-location-card {
-    width: 70%;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    margin-top: 15px;
-    overflow: hidden;
-    transition: transform 0.2s ease;
-}
-
-/* Location block */
 .location-summary {
-    background-color: #00aa6c;
-    border: 1px #00aa6c solid;
+    background-color: var(--secondary); 
+    border: 1px var(--secondary) solid; 
     display: flex;
     justify-content: space-between; /* Cách label và checkbox */
     align-items: center;
@@ -45,11 +191,12 @@
     height: 18px;
     margin-left: 12px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 
 #toggle-checkbox {
-    color: #05915d;
+    color: var(--primary);
     width: 1.5rem;
     height: 1.5rem;
     align-items: center;
@@ -61,33 +208,26 @@
     color: green;
 }
 
-#details-section {
-    padding: 15px;
-}
-
 .details-section .line {
     margin: 10px 0;
 }
 
-
-
 .dashed-line {
-    width: 70%;
-    border: 1px dashed #00aa6c;
+    border: 1px dashed var(--secondary);
 }
 
 h3 {
     font-size: 28px;
-    color: #05915d;
+    color: var(--primary);
     margin: 10px 0;
 }
 
 .trip button {
     padding: 10px 18px;
-    background-color: #00aa6c;
+    background-color: var(--secondary); 
     color: white;
     font-weight: 500;
-    border: 1px dashed #00aa6c;
+    border: 1px dashed var(--secondary); 
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
@@ -95,8 +235,8 @@ h3 {
 }
 
 .trip button:hover {
-    background-color: #05915d;
-    border: 1px solid #05915d;
+    background-color: var(--primary); 
+    border: 1px solid var(--primary); 
 }
 
 #type-name {
@@ -109,5 +249,5 @@ h3 {
 }
 
 .trip-card:not([open]) .delete-form {
-	display: none;
+    display: none;
 }

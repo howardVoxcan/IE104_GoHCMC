@@ -1,0 +1,34 @@
+<div class="search-bar" id="searchBar">
+  <input
+    type="text"
+    name="search"
+    placeholder="Searching..."
+    value="{{ current_filters.search|default_if_none:'' }}"
+    class="search-input"
+    id="searchInput"
+  />
+  <button type="button" class="search-button action-button">
+    <i class="fas fa-search action-button__icon"></i>
+  </button>
+</div>
+<script>
+  const searchBar = document.getElementById("searchBar");
+  const searchInput = document.getElementById("searchInput");
+
+  function toggleSearchInput() {
+    // Check if the search-bar width is less than 13rem
+    if (searchBar.offsetWidth < 130) { 
+      searchInput.style.display = "none";
+      searchBar.parentElement.style.width = "40px"; // Set parent width to 40px
+      
+    } else {
+      searchInput.style.display = "block";
+    }
+  }
+
+  // Run on page load
+  toggleSearchInput();
+
+  // Add a resize event listener to handle window resizing
+  window.addEventListener("resize", toggleSearchInput);
+</script>

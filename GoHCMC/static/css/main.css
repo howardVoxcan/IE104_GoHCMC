@@ -38,14 +38,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex: 3;
+  flex: 6;
 }
 
 .header__actions {
   display: flex;
   align-items: center;
   gap: 1rem;
-  max-width: 12rem;
+  flex: 1; 
+  max-width: 18rem;
 }
 
 .nav-link {
@@ -66,43 +67,60 @@
   background: var(--primary);
   color: #fff;
 }
-
-.search-form {
+.header__search{
+  flex: 1;
   display: flex;
   align-items: center;
-  width: 100%;
-  height: inherit;
-  background: var(--main-bg);
-  border-radius: 3.2rem;
-  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.2);
-  margin-left: 0.3rem;
-  transition: width 0.3s;
-  border: 2px solid var(--primary);
+  justify-content: flex-end;
+  position: relative;
 }
 
-:root[data-theme="dark"] .search-form {
-  border: 2px solid var(--primary);
+.search-bar {
+  display: flex;
+  align-items: center;
+  max-width: 14rem;
+  min-width: 4rem;
+  width: 100%;
+  height: 40px; 
+  background: var(--main-bg);
 }
 
 .search-input {
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 3.2rem 0 0 3.2rem;
-  outline: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--primary);
+  width: 100%;
+  height: 100%;
+  padding-left: 1rem;
+  background: transparent;
   color: var(--text-main);
-  flex: 1;
-  background: var(--main-bg);
+  font-size: 1.4rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }
 
 .search-button {
-  background: transparent;
-  color: var(--text-sub);
+  background: var(--primary);
+  color: #fff;
   border: none;
-  border-radius: 0 3.2rem 3.2rem 0;
-  padding: 0.4rem 0.8rem;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the search icon */
   cursor: pointer;
-  font-size: 1.2rem;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+
+.search-button:hover {
+  background: var(--secondary);
+  transform:  scale(1.1);
 }
 
 .button {
@@ -132,7 +150,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex: 1;
+  flex: 2;
 }
 
 .user-icon {
@@ -224,9 +242,10 @@
   text-decoration: none;
 }
 
-/* Theme-switch & search-icon: chung style, hiệu ứng */
+
+/* Theme-switch chung style, hiệu ứng */
 .theme-switch,
-.header__search-icon {
+.search-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -237,49 +256,45 @@
   background: var(--main-bg);
   border: 2px solid var(--primary);
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.12);
-  transition: background 0.2s, border 0.2s, color 0.2s, transform 0.5s;
+  transition: background 0.2s, border 0.2s, color 0.3s, transform 0.5s;
 }
 
 .theme-switch:hover,
-.header__search-icon:hover {
+.search-button:hover {
   background: var(--primary);
-  /* Keep background primary */
   border-color: var(--primary);
 }
 
 .theme-switch__icon,
-.header__search-icon i {
+.search-button i {
   font-size: 1.6rem;
   color: var(--primary);
   transition: color 0.3s, transform 0.5s;
 }
 
 .theme-switch:hover .theme-switch__icon,
-.header__search-icon:hover i {
+.search-button:hover i {
   color: var(--accent);
-  /* Change icon color to accent on hover */
   transform: rotate(360deg);
   /* Add rotation effect */
 }
 
+/* Dark theme */
 :root[data-theme="dark"] .theme-switch,
-:root[data-theme="dark"] .header__search-icon {
+:root[data-theme="dark"] .search-button {
   background: var(--card-bg);
   border-color: var(--primary);
-  /* Keep border primary */
 }
 
 :root[data-theme="dark"] .theme-switch:hover,
-:root[data-theme="dark"] .header__search-icon:hover {
+:root[data-theme="dark"] .search-button:hover {
   background: var(--primary);
-  /* Keep background primary */
   border-color: var(--primary);
 }
 
 :root[data-theme="dark"] .theme-switch:hover .theme-switch__icon,
-:root[data-theme="dark"] .header__search-icon:hover i {
+:root[data-theme="dark"] .search-button:hover i {
   color: var(--accent);
-  /* Change icon color to accent on hover */
   transform: rotate(360deg);
   /* Add rotation effect */
 }

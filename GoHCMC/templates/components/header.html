@@ -43,26 +43,8 @@
       </a>
     </nav>
     <div class="header__actions">
-      <div class="header__search-bar">
-        <button type="button" class="header__search-icon">
-          <i class="fas fa-search"></i>
-        </button>
-        {% comment %} <form
-          method="get"
-          action="#"
-          class="search-form"
-        >
-          <input
-            type="text"
-            name="search"
-            placeholder="Searching..."
-            value="{{ current_filters.search|default_if_none:'' }}"
-            class="search-input"
-          />
-          <button type="submit" class="search-button">
-            <i class="fas fa-search"></i>
-          </button>
-        </form> {% endcomment %}
+      <div class="header__search" id ="headerSearch">
+        {% include 'components/searchbar.html' %}
       </div>
       <div class="theme-switch" id="themeSwitch" title="Đổi giao diện">
         <span class="theme-switch__icon" id="themeIcon">
@@ -133,25 +115,6 @@
     const saved = localStorage.getItem("theme");
     setTheme(saved === "dark" ? "dark" : "light");
   })();
-
-  // Search toggle logic
-  const searchToggle = document.getElementById("searchToggle");
-  const searchForm = document.getElementById("searchForm");
-  searchToggle.onclick = function () {
-    searchForm.style.display = "flex";
-    searchToggle.style.display = "none";
-    searchForm.querySelector("input").focus();
-  };
-  function hideSearchForm() {
-    searchForm.style.display = "none";
-    searchToggle.style.display = "inline-flex";
-  }
-  searchForm.querySelector("input").addEventListener("blur", function () {
-    setTimeout(hideSearchForm, 150);
-  });
-  searchForm.addEventListener("submit", function (e) {
-    hideSearchForm();
-  });
 
   // User menu dropdown logic
   (function () {

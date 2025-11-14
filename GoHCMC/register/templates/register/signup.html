@@ -15,6 +15,10 @@
   </script>
 </head>
 <body>
+
+  <!-- Toast thông báo lỗi -->
+  <div id="toast-container"></div>
+
   <div class="signup-background">
     <div class="signup-container">
 
@@ -33,8 +37,8 @@
           <h2>Sign Up</h2>
           <form method="POST" action="">
             {% csrf_token %}
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="username" placeholder="Username" value="{{ username|default:'' }}" required>
+            <input type="email" name="email" placeholder="Email" value="{{ email|default:'' }}" required>
             <input type="password" name="password1" placeholder="Password" required>
             <input type="password" name="password2" placeholder="Confirm Password" required>
             <button type="submit">Sign Up</button>
@@ -45,5 +49,29 @@
 
     </div>
   </div>
+
+  <script>
+    // Hiển thị toast nếu có messages
+    const messages = [
+      {% for message in messages %}
+        "{{ message }}",
+      {% endfor %}
+    ];
+
+    function showToast(msg) {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.textContent = msg;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 500);
+      }, 5000);
+    }
+
+    messages.forEach(msg => showToast(msg));
+  </script>
 </body>
 </html>

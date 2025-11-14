@@ -291,6 +291,24 @@
   /* Add rotation effect */
 }
 
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+}
+
 .main-content {
   padding: 2rem;
   padding-top: 80px;
@@ -366,6 +384,22 @@
   font-size: 0.98rem;
   margin-top: 1.2rem;
   padding-bottom: 0.5rem;
+}
+
+/* Typography riêng cho footer */
+.footer h3 {
+  font-size: 28px;
+  color: var(--primary);
+  margin: 10px 0;
+  text-align: center;      /* nếu bạn muốn căn giữa */
+  font-weight: 700;        /* tùy, có thể bỏ */
+}
+
+.footer p {
+  margin: 4px 0;
+  color: #ECF0F1;
+  text-align: center;      /* để đồng bộ giữa các trang */
+  line-height: 1.6;
 }
 
 /* Back to Top button */

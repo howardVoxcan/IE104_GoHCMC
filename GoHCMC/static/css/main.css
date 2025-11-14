@@ -1,33 +1,23 @@
 /* Main CSS: Layout and components */
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--header-color);
-  color: var(--text-main);
-  font-size: 1.2rem;
-  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
-  height: var(--header-height);
-  padding: 3rem 2em;
-  gap: 1.5rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  background-color: var(--main-bg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Fixed header */
-.header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  height: var(--header-height);
   background-color: var(--main-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* Wrapper giới hạn nội dung */
+.header__container {
+  max-width: 120rem;
+  margin: 0 auto;           /* căn giữa khi màn hình rộng */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* Đảm bảo các phần cách đều */
 }
 
 .header__logo {
@@ -38,35 +28,36 @@
 }
 
 .header__logo-img {
-  height: 48px;
+  height: 4.8rem;
   width: auto;
   display: block;
 }
 
-.header__nav-tabs {
+.header__nav {
+  max-width: 70rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex: 1;
+  justify-content: space-between;
+  flex: 3;
 }
 
 .header__actions {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 1rem;
+  max-width: 12rem;
 }
 
 .nav-link {
   color: var(--text-main);
   text-decoration: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 16px;
+  padding: 1.2rem 1.6rem;
+  border-radius: 1.6rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: 1.8rem;
   transition: background 0.2s, color 0.2s;
 }
 
@@ -79,9 +70,10 @@
 .search-form {
   display: flex;
   align-items: center;
-  width: 180px;
+  width: 100%;
+  height: inherit;
   background: var(--main-bg);
-  border-radius: 32px;
+  border-radius: 3.2rem;
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.2);
   margin-left: 0.3rem;
   transition: width 0.3s;
@@ -95,12 +87,10 @@
 .search-input {
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: 32px 0 0 32px;
+  border-radius: 3.2rem 0 0 3.2rem;
   outline: none;
-  font-size: 0.9rem;
   color: var(--text-main);
   flex: 1;
-  min-width: 0;
   background: var(--main-bg);
 }
 
@@ -108,19 +98,19 @@
   background: transparent;
   color: var(--text-sub);
   border: none;
-  border-radius: 0 32px 32px 0;
+  border-radius: 0 3.2rem 3.2rem 0;
   padding: 0.4rem 0.8rem;
   cursor: pointer;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   transition: background 0.2s;
 }
 
 .button {
   border: 2px solid var(--primary);
-  border-radius: 32px;
-  padding: 0.6rem 1.5rem;
-  font-size: 1.15rem;
-  cursor: pointer;
+  border-radius: 3.2rem;
+  padding: 1.2rem 1.6rem;
+  font-size: 1.6rem;
+  cursor: pointer; 
   font-weight: 600;
   transition: background 0.2s, color 0.2s;
 }
@@ -131,20 +121,25 @@
 }
 
 .button-secondary {
-  background: #fff;
+  background: var(--main-bg);
   color: var(--primary);
 }
 
 .header__user {
+  min-width: 15rem;
+  max-width: 18rem;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
 }
 
-.user-btn {
+.user-icon {
   border: 2px solid var(--primary);
-  border-radius: 32px;
+  border-radius: 3.2rem;
   padding: 0.6rem 1.5rem;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   cursor: pointer;
   font-weight: 600;
   background: #fff;
@@ -163,10 +158,10 @@
   left: 0;
   top: 100%;
   margin-top: 10px;
-  min-width: 220px;
+  min-width: 22rem;
   background: #fff;
   color: var(--primary);
-  border-radius: 16px;
+  border-radius: 1.6rem;
   box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
   z-index: 100;
   padding: 0.7rem 0;
@@ -195,7 +190,7 @@
   text-align: left;
   cursor: pointer;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   transition: background 0.18s, color 0.18s;
   box-shadow: none;
 }
@@ -241,8 +236,6 @@
   border-radius: 50%;
   background: var(--main-bg);
   border: 2px solid var(--primary);
-  /* Keep border primary */
-  font-size: 1.15rem;
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.12);
   transition: background 0.2s, border 0.2s, color 0.2s, transform 0.5s;
 }
@@ -256,7 +249,7 @@
 
 .theme-switch__icon,
 .header__search-icon i {
-  font-size: 1.15rem;
+  font-size: 1.6rem;
   color: var(--primary);
   transition: color 0.3s, transform 0.5s;
 }

@@ -66,3 +66,6 @@ body {
   background: var(--main-bg);
   color: var(--text-main);
 }
+html{
+  font-size: 62.5%;
+}

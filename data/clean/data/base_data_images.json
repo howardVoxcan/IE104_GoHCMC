@@ -1,0 +1,299 @@
+{
+  "images": {
+    "AC004": {
+      "location": "Loan Vo Hostel",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744314/saigon_attractions/AC004.jpg"
+    },
+    "AC005": {
+      "location": "Rex Hotel",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744321/saigon_attractions/AC005.jpg"
+    },
+    "AC006": {
+      "location": "Hotel Majestic Saigon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744329/saigon_attractions/AC006.jpg"
+    },
+    "AC007": {
+      "location": "Lotte Hotel Saigon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744337/saigon_attractions/AC007.jpg"
+    },
+    "AC008": {
+      "location": "Fusion Suites Saigon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744346/saigon_attractions/AC008.jpg"
+    },
+    "AC009": {
+      "location": "ibis Saigon Airport",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744354/saigon_attractions/AC009.jpg"
+    },
+    "AC010": {
+      "location": "The Airport Hotel",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744362/saigon_attractions/AC010.jpg"
+    },
+    "AC011": {
+      "location": "TTC Hotel - Airport",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744370/saigon_attractions/AC011.jpg"
+    },
+    "EN001": {
+      "location": "Suoi Tien Theme Park",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744380/saigon_attractions/EN001.jpg"
+    },
+    "EN002": {
+      "location": "Dam Sen Park",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744387/saigon_attractions/EN002.jpg"
+    },
+    "EN003": {
+      "location": "Amazing Bay",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744395/saigon_attractions/EN003.jpg"
+    },
+    "EN004": {
+      "location": "Nguyen Hue Walking Street",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744402/saigon_attractions/EN004.jpg"
+    },
+    "EN005": {
+      "location": "Landmark 81",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744408/saigon_attractions/EN005.jpg"
+    },
+    "EN006": {
+      "location": "23/9 Park",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744415/saigon_attractions/EN006.jpg"
+    },
+    "EN007": {
+      "location": "Saigon River Tour",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744426/saigon_attractions/EN007.png"
+    },
+    "EN008": {
+      "location": "Snow Town Saigon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744434/saigon_attractions/EN008.jpg"
+    },
+    "EN009": {
+      "location": "Vietopia",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744445/saigon_attractions/EN009.jpg"
+    },
+    "EN010": {
+      "location": "tiNiWorld",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744451/saigon_attractions/EN010.jpg"
+    },
+    "EN011": {
+      "location": "HCMC Opera House (HBSO)",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744467/saigon_attractions/EN011.jpg"
+    },
+    "EN012": {
+      "location": "Chill Sky Bar",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744476/saigon_attractions/EN012.jpg"
+    },
+    "EN013": {
+      "location": "Bui Vien Street",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744484/saigon_attractions/EN013.jpg"
+    },
+    "EN014": {
+      "location": "Club V E-Gaming",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744489/saigon_attractions/EN014.jpg"
+    },
+    "EN015": {
+      "location": "Monte-Carlo Saigon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744496/saigon_attractions/EN015.jpg"
+    },
+    "FB001": {
+      "location": "Pho 2000",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744503/saigon_attractions/FB001.jpg"
+    },
+    "FB002": {
+      "location": "Nha Hang Ngon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744511/saigon_attractions/FB002.jpg"
+    },
+    "FB003": {
+      "location": "Banh Mi Huynh Hoa",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744518/saigon_attractions/FB003.webp"
+    },
+    "FB004": {
+      "location": "The Workshop Coffee",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744525/saigon_attractions/FB004.jpg"
+    },
+    "FB006": {
+      "location": "Bun Rieu Ganh",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744538/saigon_attractions/FB006.jpg"
+    },
+    "FB007": {
+      "location": "Bun Rieu Nguyen Canh Chan",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744545/saigon_attractions/FB007.jpg"
+    },
+    "FB008": {
+      "location": "Singapore Frog Porridge Tan Dinh",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744553/saigon_attractions/FB008.jpg"
+    },
+    "FB009": {
+      "location": "Banh Mi Bui Thi Xuan",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744559/saigon_attractions/FB009.webp"
+    },
+    "FB010": {
+      "location": "Dim Tu Tac",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744569/saigon_attractions/FB010.jpg"
+    },
+    "FB011": {
+      "location": "Quince Saigon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744576/saigon_attractions/FB011.webp"
+    },
+    "FB012": {
+      "location": "Kappou Nishiyama",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744583/saigon_attractions/FB012.jpg"
+    },
+    "FB013": {
+      "location": "Pho Phu Vuong",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744591/saigon_attractions/FB013.jpg"
+    },
+    "FB015": {
+      "location": "Kabin",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744603/saigon_attractions/FB015.jpg"
+    },
+    "FB016": {
+      "location": "Lagom Café - Belgian Beer & Coffee Lounge",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744610/saigon_attractions/FB016.jpg"
+    },
+    "FB018": {
+      "location": "Bo Kho Ganh",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744623/saigon_attractions/FB018.jpg"
+    },
+    "LC001": {
+      "location": "Ho Chi Minh City Post Office",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744633/saigon_attractions/LC001.jpg"
+    },
+    "LC002": {
+      "location": "Tao Dan Park",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744641/saigon_attractions/LC002.jpg"
+    },
+    "LC003": {
+      "location": "Book Street",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744660/saigon_attractions/LC003.webp"
+    },
+    "LC004": {
+      "location": "Notre-Dame Cathedral Basilica of Saigon",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744666/saigon_attractions/LC004.jpg"
+    },
+    "LC005": {
+      "location": "Nha Rong Wharf",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744672/saigon_attractions/LC005.jpg"
+    },
+    "LC006": {
+      "location": "Independence Palace",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744680/saigon_attractions/LC006.jpg"
+    },
+    "LC007": {
+      "location": "Saigon Zoo and Botanical Gardens",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744688/saigon_attractions/LC007.jpg"
+    },
+    "LC008": {
+      "location": "Museum of Vietnamese History",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744695/saigon_attractions/LC008.jpg"
+    },
+    "LC009": {
+      "location": "Cu Chi Tunnels",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744701/saigon_attractions/LC009.jpg"
+    },
+    "LC010": {
+      "location": "Ba Thien Hau Temple",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744710/saigon_attractions/LC010.jpg"
+    },
+    "LC011": {
+      "location": "Jade Emperor Pagoda",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744717/saigon_attractions/LC011.jpg"
+    },
+    "LC012": {
+      "location": "Ba Chieu Market",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744724/saigon_attractions/LC012.jpg"
+    },
+    "MA001": {
+      "location": "Ben Thanh Market",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744730/saigon_attractions/MA001.jpg"
+    },
+    "MA002": {
+      "location": "Aeon Mall",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744738/saigon_attractions/MA002.jpg"
+    },
+    "MA003": {
+      "location": "Takashimaya Vietnam",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744747/saigon_attractions/MA003.jpg"
+    },
+    "MA004": {
+      "location": "Diamond Plaza",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744754/saigon_attractions/MA004.jpg"
+    },
+    "MA005": {
+      "location": "Saigon Square",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744761/saigon_attractions/MA005.jpg"
+    },
+    "MA006": {
+      "location": "The Cafe Apartments",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744772/saigon_attractions/MA006.jpg"
+    },
+    "MA007": {
+      "location": "Big C Hoang Van Thu",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744778/saigon_attractions/MA007.jpg"
+    },
+    "MA008": {
+      "location": "Tan Dinh Market",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744785/saigon_attractions/MA008.jpg"
+    },
+    "TP002": {
+      "location": "Saigon Railway Station",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744799/saigon_attractions/TP002.jpg"
+    },
+    "TP003": {
+      "location": "Mien Dong Bus Station",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744806/saigon_attractions/TP003.jpg"
+    },
+    "TP004": {
+      "location": "Mien Tay Bus Station",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744812/saigon_attractions/TP004.jpg"
+    },
+    "TP005": {
+      "location": "An Suong Bus Station",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744820/saigon_attractions/TP005.jpg"
+    },
+    "TP006": {
+      "location": "Ben Thanh Bus Hub",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744826/saigon_attractions/TP006.jpg"
+    },
+    "TP007": {
+      "location": "Cho Lon Bus Station",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744834/saigon_attractions/TP007.jpg"
+    },
+    "TP008": {
+      "location": "Ben Thanh Metro Station",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744842/saigon_attractions/TP008.jpg"
+    },
+    "TP009": {
+      "location": "Suoi Tien Metro Station",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744849/saigon_attractions/TP009.jpg"
+    },
+    "TP001": {
+      "location": "Tan Son Nhat International Airport",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744965/TP001_osafjs.webp"
+    },
+    "AC001": {
+      "location": "The Hammock Hotel Fine Arts Museum",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744890/AC001_twgecw.jpg"
+    },
+    "AC002": {
+      "location": "New World Saigon Hotel",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744890/AC002_obbvgo.png"
+    },
+    "AC003": {
+      "location": "Brand New Cozy Home at the heart of SG",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744890/AC003_nctadf.webp"
+    },
+    "FB005": {
+      "location": "Café de Saigon1982",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744959/FB005_bz0jvq.jpg"
+    },
+    "FB014": {
+      "location": "Xoi Ga Number One",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744959/FB014_zmak9p.webp"
+    },
+    "FB017": {
+      "location": "Pho Bo Phu Gia",
+      "url": "https://res.cloudinary.com/dgc2a1loy/image/upload/v1761744960/FB017_dw37ow.jpg"
+    }
+  },
+
+  "failed": [
+  ]
+}

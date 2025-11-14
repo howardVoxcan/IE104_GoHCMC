@@ -5,10 +5,7 @@ from location.models import Location
 from favourite.models import TripList, TripPath
 from django.contrib import messages
 import json
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 @login_required
@@ -81,14 +78,13 @@ def trip(request):
         "location_map": location_map,
     })
 
+@require_POST
 @login_required
-def delete_tripPath(request, pk):
-    """
-    JS client dùng fetch POST để xoá; trả 204 No Content là đủ.
-    """
-    if request.method != "POST":
-        return HttpResponse(status=405)
-
-    trip = get_object_or_404(TripPath, pk=pk, trip_list__user=request.user)
-    trip.delete()
-    return HttpResponse(status=204)
+def delete_tripPath(request, path_id):
+    if request.method != 'POST' or request.headers.get('x-requested-with') != 'XMLHttpRequest':
+        return HttpResponseForbidden()
+    trip_path = get_object_or_404(TripPath, pk=path_id)
+    if trip_path.trip_list.user != request.user:
+        return HttpResponseForbidden()
+    trip_path.delete()
+    return JsonResponse({'status': 'deleted'})

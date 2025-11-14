@@ -1,95 +1,109 @@
 {% load static %}
 <header class="header">
-  <div class="header__logo">
-    <a href="{% url 'homepage' %}">
-      <img
-        src="{% static 'img/Logo_GoHCMC.png' %}"
-        alt="GoHCMC Logo"
-        class="header__logo-img" />
-    </a>
-  </div>
-  <nav class="header__nav-tabs">
-    <a
-      href="{% url 'homepage' %}"
-      class="nav-link {% if request.path == '/' %}active{% endif %}">
-      <i class="fas fa-house"></i> Home
-    </a>
-    <a
-      href="{% url 'weather' %}"
-      class="nav-link {% if '/weather' in request.path %}active{% endif %}">
-      <i class="fas fa-cloud-sun"></i> Weather
-    </a>
-    <a
-      href="{% url 'locations' %}"
-      class="nav-link {% if '/locations' in request.path %}active{% endif %}">
-      <i class="fas fa-map-pin"></i> Locations
-    </a>
-    <a
-      href="{% url 'favourite' %}"
-      class="nav-link {% if '/favourite' in request.path %}active{% endif %}">
-      <i class="fas fa-heart"></i> Favourite
-    </a>
-    <a
-      href="{% url 'trip' %}"
-      class="nav-link {% if '/trip' in request.path %}active{% endif %}">
-      <i class="fas fa-map"></i> My Trip
-    </a>
-  </nav>
-  <div class="header__actions">
-    <div class="header__search-bar" id="searchBar">
-      <button type="button" class="header__search-icon" id="searchToggle">
-        <i class="fas fa-search"></i>
-      </button>
-      <form
-        method="get"
-        action="#"
-        class="search-form"
-        id="searchForm"
-        style="display: none">
-        <input
-          type="text"
-          name="search"
-          placeholder="Searching..."
-          value="{{ current_filters.search|default_if_none:'' }}"
-          class="search-input" />
-        <button type="submit" class="search-button">
+  <div class="header__container">
+    <div class="header__logo">
+      <a href="{% url 'homepage' %}">
+        <img
+          src="{% static 'img/Logo_GoHCMC.png' %}"
+          alt="GoHCMC Logo"
+          class="header__logo-img"
+        />
+      </a>
+    </div>
+    <nav class="header__nav">
+      <a
+        href="{% url 'homepage' %}"
+        class="nav-link {% if request.path == '/' %}active{% endif %}"
+      >
+        <i class="fas fa-house"></i> Home
+      </a>
+      <a
+        href="{% url 'weather' %}"
+        class="nav-link {% if '/weather' in request.path %}active{% endif %}"
+      >
+        <i class="fas fa-cloud-sun"></i> Weather
+      </a>
+      <a
+        href="{% url 'locations' %}"
+        class="nav-link {% if '/locations' in request.path %}active{% endif %}"
+      >
+        <i class="fas fa-map-pin"></i> Locations
+      </a>
+      <a
+        href="{% url 'favourite' %}"
+        class="nav-link {% if '/favourite' in request.path %}active{% endif %}"
+      >
+        <i class="fas fa-heart"></i> Favourite
+      </a>
+      <a
+        href="{% url 'trip' %}"
+        class="nav-link {% if '/trip' in request.path %}active{% endif %}"
+      >
+        <i class="fas fa-map"></i> My Trip
+      </a>
+    </nav>
+    <div class="header__actions">
+      <div class="header__search-bar">
+        <button type="button" class="header__search-icon">
           <i class="fas fa-search"></i>
         </button>
-      </form>
+        {% comment %} <form
+          method="get"
+          action="#"
+          class="search-form"
+        >
+          <input
+            type="text"
+            name="search"
+            placeholder="Searching..."
+            value="{{ current_filters.search|default_if_none:'' }}"
+            class="search-input"
+          />
+          <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </form> {% endcomment %}
+      </div>
+      <div class="theme-switch" id="themeSwitch" title="Đổi giao diện">
+        <span class="theme-switch__icon" id="themeIcon">
+          <i class="fa-solid fa-sun" id="icon-sun"></i>
+          <i class="fa-solid fa-moon" id="icon-moon" style="display: none"></i>
+        </span>
+      </div>
     </div>
-    <div class="theme-switch" id="themeSwitch" title="Đổi giao diện">
-      <span class="theme-switch__icon" id="themeIcon">
-        <i class="fa-solid fa-sun" id="icon-sun"></i>
-        <i class="fa-solid fa-moon" id="icon-moon" style="display: none"></i>
-      </span>
-    </div>
-  </div>
-  <div class="header__user">
-    {% if user.is_authenticated %}
-    <button class="user-btn">
-      <i class="fa-solid fa-user"></i>
-      <span class="header__username">{{ user.get_full_name|default:user.username }}</span>
-      <i class="fa-solid fa-chevron-down"></i>
-    </button>
+    <div class="header__user">
+      {% if user.is_authenticated %}
+      <button class="user-icon">
+        <i class="fa-solid fa-user"></i>
+        <span class="header__username"
+          >{{ user.get_full_name|default:user.username }}</span
+        >
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
 
-    <div id="userMenu" class="user-menu">
-      <a href="#">
-        <i class="fa-solid fa-id-card"></i>
-        <span>Profile</span>
-      </a>
-      <a href="#">
-        <i class="fa-solid fa-gear"></i>
-        <span>Setting</span>
-      </a>
-      <a href="{% url 'logout' %}">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Logout</span>
-      </a>
+      <div id="userMenu" class="user-menu">
+        <a href="#">
+          <i class="fa-solid fa-id-card"></i>
+          <span>Profile</span>
+        </a>
+        <a href="#">
+          <i class="fa-solid fa-gear"></i>
+          <span>Setting</span>
+        </a>
+        <a href="{% url 'logout' %}">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+      {% else %}
+      <a href="/login/"
+        ><button class="button button-secondary">Login</button></a
+      >
+      <a href="/signup/"
+        ><button class="button button-primary">Sign Up</button></a
+      >
+      {% endif %}
     </div>
-    {% else %}
-    <a href="/login/"><button class="button button-secondary">Login</button></a>
-    <a href="/signup/"><button class="button button-primary">Sign Up</button></a>
-    {% endif %}
   </div>
 </header>
 <script>

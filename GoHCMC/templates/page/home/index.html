@@ -34,9 +34,9 @@
   </script>
   {% comment %} List palace of tourist {% endcomment %}
   <section class="palace-section">
-    <h3>Địa điểm nổi bật</h3>
+    <h3>Famous destination</h3>
     <div class="palace-list" id="palace-list">
-      {%for loc in top_locations %}
+      {%for loc in top_locations|slice:":6" %}
       <a href="{% url 'display_location' loc.code %}" style="text-decoration: none; color: inherit;">
       <div class="palace-item">
         <div>
@@ -64,29 +64,48 @@
         </div>
         </div>
       </div>
+      </a>
       {% endfor %}
     </div>
   </section>
-  {% comment %} Tại sao lại chọn chúng tôi {% endcomment %}
-  <section class="why-choose-us">
-  <h2>Tại sao nên chọn chúng tôi?</h2>
-  <p>Chúng tôi mang đến trải nghiệm nhanh, chính xác và đáng tin cậy nhất.</p>
-  <div class="features">
-    <div class="feature">
-      <i class="fa-solid fa-bolt"></i>
-      <h3>Nhanh chóng & Tiện lợi</h3>
-      <p>Chỉ vài bước đơn giản để nhận kết quả tức thì.</p>
+  {% comment %} Why choosing us {% endcomment %}
+  <section class="why-choose-us" aria-labelledby="why-title">
+    <h2 id="why-title">Why choose us?</h2>
+    <p class="why-lead">
+      Tourist Guide helps you quickly discover where to go, what to do, and what fits you best.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <i class="fa-solid fa-bolt"></i>
+        <h3>Find the right place in seconds</h3>
+        <p>
+          See popular destinations with photos, ratings, and short highlights.  
+          You can compare several places at a glance instead of reading long articles.  
+          It saves you time when you just want quick, clear answers.
+        </p>
+      </div>
+
+      <div class="feature">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <h3>Clear and reliable information</h3>
+        <p>
+          Each location shows what it is like, who it suits, and why people enjoy it.  
+          Important details are easy to spot without scrolling too much.  
+          You can feel more confident when choosing where to go.
+        </p>
+      </div>
+
+      <div class="feature">
+        <i class="fa-solid fa-compass"></i>
+        <h3>Smooth experience on any device</h3>
+        <p>
+          The website is designed to be simple and comfortable to use on both phone and laptop.  
+          Text and buttons are easy to read and tap, even when you are on the move.  
+          You can explore and plan trips without feeling overwhelmed.
+        </p>
+      </div>
     </div>
-    <div class="feature">
-      <i class="fa-solid fa-brain"></i>
-      <h3>Công nghệ AI hiện đại</h3>
-      <p>Phân tích dữ liệu thông minh, chính xác cao.</p>
-    </div>
-    <div class="feature">
-      <i class="fa-solid fa-headset"></i>
-      <h3>Hỗ trợ tận tâm</h3>
-      <p>Đội ngũ chăm sóc khách hàng 24/7 sẵn sàng hỗ trợ bạn.</p>
-    </div>
-  </div>
-</section>
+  </section>
+
 {% endblock %}

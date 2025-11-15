@@ -1,0 +1,95 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}Trang chủ{% endblock %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+  <div class="banner" id="banner">
+    <img id="banner-img" class="banner-img" src="" alt="Banner" />
+    <div class="banner-overlay">
+      <h1 id="banner-title"></h1>
+      <p id="banner-desc"></p>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/static/data/Banner.json')
+        .then(res => res.json())
+        .then(banners => {
+          let idx = 0;
+          const img = document.getElementById('banner-img');
+          const title = document.getElementById('banner-title');
+          const desc = document.getElementById('banner-desc');
+          function showBanner(i) {
+            img.src = banners[i].img;
+            title.textContent = banners[i].title;
+            desc.textContent = banners[i].desc;
+          }
+          showBanner(idx);
+          setInterval(() => {
+            idx = (idx + 1) % banners.length;
+            showBanner(idx);
+          }, 5000);
+        });      
+    });
+  </script>
+  {% comment %} List palace of tourist {% endcomment %}
+    <section class="content-section">
+        <div class="card-grid">
+            {% for loc in top_locations|slice:":6" %}
+            <div class="card">
+                <a href = "{% url 'display_location' loc.code %}">
+                    <img src="{{ loc.image_path }}" alt="{{ loc.location }}" class="card-image"/>
+                    <div class="card-content">
+                        <h2>{{ loc.location }}</h2>
+                        <p>{{ loc.description }}</p>
+                        <div class="rating" >
+                            {{ loc.star_html|safe }}
+                            <span>Rating: {{ loc.rating }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>    
+  {% comment %} Why choosing us {% endcomment %}
+  <section class="why-choose-us" aria-labelledby="why-title">
+    <h2 id="why-title">Why choose us?</h2>
+    <p class="why-lead">
+      Tourist Guide helps you quickly discover where to go, what to do, and what fits you best.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <i class="fa-solid fa-bolt"></i>
+        <h3>Find the right place in seconds</h3>
+        <p>
+          See popular destinations with photos, ratings, and short highlights.  
+          You can compare several places at a glance instead of reading long articles.  
+          It saves you time when you just want quick, clear answers.
+        </p>
+      </div>
+
+      <div class="feature">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <h3>Clear and reliable information</h3>
+        <p>
+          Each location shows what it is like, who it suits, and why people enjoy it.  
+          Important details are easy to spot without scrolling too much.  
+          You can feel more confident when choosing where to go.
+        </p>
+      </div>
+
+      <div class="feature">
+        <i class="fa-solid fa-compass"></i>
+        <h3>Smooth experience on any device</h3>
+        <p>
+          The website is designed to be simple and comfortable to use on both phone and laptop.  
+          Text and buttons are easy to read and tap, even when you are on the move.  
+          You can explore and plan trips without feeling overwhelmed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

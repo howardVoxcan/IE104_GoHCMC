@@ -1,0 +1,1 @@
+web: gunicorn GoHCMC.wsgi --log-file -

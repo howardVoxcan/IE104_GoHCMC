@@ -1,0 +1,168 @@
+{% load static %}
+<header class="header">
+  <div class="header__logo">
+    <a href="{% url 'homepage' %}">
+      <img
+        src="{% static 'img/Logo_GoHCMC.png' %}"
+        alt="GoHCMC Logo"
+        class="header__logo-img" />
+    </a>
+  </div>
+  <nav class="header__nav-tabs">
+    <a
+      href="{% url 'homepage' %}"
+      class="nav-link {% if request.path == '/' %}active{% endif %}">
+      <i class="fas fa-house"></i> Home
+    </a>
+    <a
+      href="{% url 'weather' %}"
+      class="nav-link {% if '/weather' in request.path %}active{% endif %}">
+      <i class="fas fa-cloud-sun"></i> Weather
+    </a>
+    <a
+      href="{% url 'locations' %}"
+      class="nav-link {% if '/locations' in request.path %}active{% endif %}">
+      <i class="fas fa-map-pin"></i> Locations
+    </a>
+    <a
+      href="{% url 'favourite' %}"
+      class="nav-link {% if '/favourite' in request.path %}active{% endif %}">
+      <i class="fas fa-heart"></i> Favourite
+    </a>
+    <a
+      href="{% url 'trip' %}"
+      class="nav-link {% if '/trip' in request.path %}active{% endif %}">
+      <i class="fas fa-map"></i> My Trip
+    </a>
+  </nav>
+  <div class="header__actions">
+    <div class="header__search-bar" id="searchBar">
+      <button type="button" class="header__search-icon" id="searchToggle">
+        <i class="fas fa-search"></i>
+      </button>
+      <form
+        method="get"
+        action="#"
+        class="search-form"
+        id="searchForm"
+        style="display: none">
+        <input
+          type="text"
+          name="search"
+          placeholder="Searching..."
+          value="{{ current_filters.search|default_if_none:'' }}"
+          class="search-input" />
+        <button type="submit" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+    <div class="theme-switch" id="themeSwitch" title="Đổi giao diện">
+      <span class="theme-switch__icon" id="themeIcon">
+        <i class="fa-solid fa-sun" id="icon-sun"></i>
+        <i class="fa-solid fa-moon" id="icon-moon" style="display: none"></i>
+      </span>
+    </div>
+  </div>
+  <div class="header__user">
+    {% if user.is_authenticated %}
+    <button class="user-btn">
+      <i class="fa-solid fa-user"></i>
+      <span class="header__username">{{ user.get_full_name|default:user.username }}</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </button>
+
+    <div id="userMenu" class="user-menu">
+      <a href="{% url 'logout' %}">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+    {% else %}
+    <a href="/login/"><button class="button button-secondary">Login</button></a>
+    <a href="/signup/"><button class="button button-primary">Sign Up</button></a>
+    {% endif %}
+  </div>
+</header>
+<script>
+  // Theme switch logic
+  const themeSwitch = document.getElementById("themeSwitch");
+  const themeIconSun = document.getElementById("icon-sun");
+  const themeIconMoon = document.getElementById("icon-moon");
+  function setTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    if (theme === "dark") {
+      themeIconSun.style.display = "none";
+      themeIconMoon.style.display = "inline";
+      themeSwitch.setAttribute("data-theme", "dark");
+    } else {
+      themeIconSun.style.display = "inline";
+      themeIconMoon.style.display = "none";
+      themeSwitch.setAttribute("data-theme", "light");
+    }
+    localStorage.setItem("theme", theme);
+  }
+  themeSwitch.onclick = function () {
+    const current = document.documentElement.getAttribute("data-theme");
+    setTheme(current === "dark" ? "light" : "dark");
+  };
+  // Load theme from localStorage
+  (function () {
+    const saved = localStorage.getItem("theme");
+    setTheme(saved === "dark" ? "dark" : "light");
+  })();
+
+  // Search toggle logic
+  const searchToggle = document.getElementById("searchToggle");
+  const searchForm = document.getElementById("searchForm");
+  searchToggle.onclick = function () {
+    searchForm.style.display = "flex";
+    searchToggle.style.display = "none";
+    searchForm.querySelector("input").focus();
+  };
+  function hideSearchForm() {
+    searchForm.style.display = "none";
+    searchToggle.style.display = "inline-flex";
+  }
+  searchForm.querySelector("input").addEventListener("blur", function () {
+    setTimeout(hideSearchForm, 150);
+  });
+  searchForm.addEventListener("submit", function (e) {
+    hideSearchForm();
+  });
+
+  // User menu dropdown logic
+  (function () {
+    const userBtn = document.querySelector(".header__user button");
+    const userMenu = document.getElementById("userMenu");
+    if (!userBtn || !userMenu) return;
+
+    function showMenu() {
+      userMenu.classList.add("open");
+      userMenu.setAttribute("aria-hidden", "false");
+    }
+    function hideMenu() {
+      userMenu.classList.remove("open");
+      userMenu.setAttribute("aria-hidden", "true");
+    }
+
+    userBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (userMenu.classList.contains("open")) {
+        hideMenu();
+      } else {
+        showMenu();
+      }
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!userMenu.contains(e.target) && !userBtn.contains(e.target)) {
+        hideMenu();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") hideMenu();
+    });
+  })();
+</script>

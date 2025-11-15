@@ -1,0 +1,72 @@
+:root {
+  --main-bg: #f3fff4;
+  /* Nền tổng thể */
+  --header-color: #FFFFFF;
+  /* Nền Header (sẽ dùng shadow để tách biệt) */
+  --card-bg: #FFFFFF;
+  /* Nền Card (cũng dùng shadow) */
+  --border-color: #E0E0E0;
+  /* Màu viền/phân cách */
+  --hover-bg: #F5F5F5;
+  /* Màu hover (xám rất nhạt) */
+
+  --primary: #2ECC71;
+  /* Xanh ngọc lục bảo - chủ đạo */
+  --secondary: #27AE60;
+  /* Xanh rừng - màu phụ */
+  --accent: #E67E22;
+  /* Cam nhấn */
+  --danger: #E74C3C;
+  /* Đỏ cảnh báo/nguy hiểm */
+  --text-main: #2C3E50;
+  /* Chữ chính - đen chuyên nghiệp */
+  --text-sub: #7F8C8D;
+  /* Chữ phụ - xám */
+  --disabled-color: #ccc;
+  --disabled-border-color: #eee;
+
+  --font-main: 'Segoe UI', Arial, sans-serif;
+  --header-height: 64px;
+  
+  --star-color: #fbb002;
+}
+
+:root[data-theme="dark"] {
+  --main-bg: #4c4c4c;
+  /* Nền tổng thể */
+  --header-color: #1F1F1F;
+  /* Nền Header (tối hơn nền chính) */
+  --card-bg: #2C2C2C;
+  /* Nền Card (tối, nhưng khác header) */
+  --border-color: #555555;
+  /* Màu viền/phân cách */
+  --hover-bg: #4A4A4A;
+  /* Màu hover (sáng hơn nền card/main) */
+
+  --primary: #27AE60;
+  --secondary: #1E8449;
+  --accent: #D35400;
+  --danger: #C0392B;
+  --text-main: #ECF0F1;
+  /* Chữ chính - trắng ngà */
+  --text-sub: #95A5A6;
+  /* Chữ phụ - xám nhạt */
+  --disabled-color: #7c7c7c;
+  --disabled-border-color: #686868;
+  --font-main: 'Segoe UI', Arial, sans-serif;
+  --header-height: 64px;
+
+  --star-color: #fbb002;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--main-bg);
+  color: var(--text-main);
+}

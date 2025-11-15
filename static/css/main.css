@@ -1,0 +1,445 @@
+/* Main CSS: Layout and components */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--header-color);
+  color: var(--text-main);
+  font-size: 1.2rem;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
+  height: var(--header-height);
+  padding: 3rem 2em;
+  gap: 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: var(--main-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Fixed header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--main-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.header__logo-img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.header__nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.header__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  width: 180px;
+  background: var(--main-bg);
+  border-radius: 32px;
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.2);
+  margin-left: 0.3rem;
+  transition: width 0.3s;
+  border: 2px solid var(--primary);
+}
+
+:root[data-theme="dark"] .search-form {
+  border: 2px solid var(--primary);
+}
+
+.search-input {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 32px 0 0 32px;
+  outline: none;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  flex: 1;
+  min-width: 0;
+  background: var(--main-bg);
+}
+
+.search-button {
+  background: transparent;
+  color: var(--text-sub);
+  border: none;
+  border-radius: 0 32px 32px 0;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: background 0.2s;
+}
+
+.button {
+  border: 2px solid var(--primary);
+  border-radius: 32px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.15rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+.button-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.button-secondary {
+  background: #fff;
+  color: var(--primary);
+}
+
+.header__user {
+  position: relative;
+  display: inline-block;
+}
+
+.user-btn {
+  border: 2px solid var(--primary);
+  border-radius: 32px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.15rem;
+  cursor: pointer;
+  font-weight: 600;
+  background: #fff;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+  min-width: 140px;
+  box-sizing: border-box;
+}
+
+.user-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 10px;
+  min-width: 220px;
+  background: #fff;
+  color: var(--primary);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
+  z-index: 100;
+  padding: 0.7rem 0;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 1.08rem;
+  border: 1.5px solid #f0f0f0;
+}
+
+.user-menu.open {
+  display: flex;
+}
+
+.user-menu a,
+.user-menu button {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  width: 100%;
+  padding: 0.7em 1.4em;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 1.08rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.18s, color 0.18s;
+  box-shadow: none;
+}
+
+.user-menu a:hover,
+.user-menu a:focus,
+.user-menu button:hover,
+.user-menu button:focus {
+  background: var(--primary);
+  color: #fff !important;
+  outline: none;
+  text-decoration: none;
+}
+
+.user-menu i {
+  font-size: 1.15em;
+  min-width: 1.3em;
+  text-align: center;
+  color: inherit !important;
+  transition: color 0.18s;
+}
+
+.user-menu a:active,
+.user-menu button:active {
+  background: var(--secondary);
+  color: #fff;
+}
+
+.user-menu a:visited {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* Theme-switch & search-icon: chung style, hiệu ứng */
+.theme-switch,
+.header__search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--main-bg);
+  border: 2px solid var(--primary);
+  /* Keep border primary */
+  font-size: 1.15rem;
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.12);
+  transition: background 0.2s, border 0.2s, color 0.2s, transform 0.5s;
+}
+
+.theme-switch:hover,
+.header__search-icon:hover {
+  background: var(--primary);
+  /* Keep background primary */
+  border-color: var(--primary);
+}
+
+.theme-switch__icon,
+.header__search-icon i {
+  font-size: 1.15rem;
+  color: var(--primary);
+  transition: color 0.3s, transform 0.5s;
+}
+
+.theme-switch:hover .theme-switch__icon,
+.header__search-icon:hover i {
+  color: var(--accent);
+  /* Change icon color to accent on hover */
+  transform: rotate(360deg);
+  /* Add rotation effect */
+}
+
+:root[data-theme="dark"] .theme-switch,
+:root[data-theme="dark"] .header__search-icon {
+  background: var(--card-bg);
+  border-color: var(--primary);
+  /* Keep border primary */
+}
+
+:root[data-theme="dark"] .theme-switch:hover,
+:root[data-theme="dark"] .header__search-icon:hover {
+  background: var(--primary);
+  /* Keep background primary */
+  border-color: var(--primary);
+}
+
+:root[data-theme="dark"] .theme-switch:hover .theme-switch__icon,
+:root[data-theme="dark"] .header__search-icon:hover i {
+  color: var(--accent);
+  /* Change icon color to accent on hover */
+  transform: rotate(360deg);
+  /* Add rotation effect */
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.main-content {
+  padding: 2rem;
+  padding-top: 80px;
+}
+
+/* Footer */
+.footer {
+  background: #333;
+  color: #eee;
+  padding: 2rem 0 0.5rem 0;
+  font-size: 1.08rem;
+  margin-top: 2rem;
+}
+
+.footer-container {
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #555;
+}
+
+.footer-column {
+  flex: 1 1 260px;
+  min-width: 220px;
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-column h3,
+.footer-column p {
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #555;
+  color: #eee;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  transition: background 0.2s, color 0.2s, transform 0.18s;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-2px) scale(1.08);
+}
+
+.footer-bottom {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.98rem;
+  margin-top: 1.2rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Typography riêng cho footer */
+.footer h3 {
+  font-size: 28px;
+  color: var(--primary);
+  margin: 10px 0;
+  text-align: center;      /* nếu bạn muốn căn giữa */
+  font-weight: 700;        /* tùy, có thể bỏ */
+}
+
+.footer p {
+  margin: 4px 0;
+  color: #ECF0F1;
+  text-align: center;      /* để đồng bộ giữa các trang */
+  line-height: 1.6;
+}
+
+/* Back to Top button */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.back-to-top:hover {
+  background-color: var(--secondary);
+  transform: scale(1.1);
+}
+
+.back-to-top i {
+  font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .footer-column {
+    min-width: 0;
+  }
+}

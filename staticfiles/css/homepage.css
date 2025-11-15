@@ -1,0 +1,316 @@
+/* ---------- Banner ---------- */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 8px;
+}
+
+.banner-img,
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 80%;
+  filter: brightness(0.6);
+  display: block;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0; /* top:0; left:0; right:0; bottom:0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+  background-color: rgba(0,0,0,0.2);
+}
+
+.banner-overlay h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.banner-overlay p {
+  font-size: 1.5rem;
+  margin-top: 16px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* ---------- Palace / Top locations ---------- */
+.palace-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.palace-section h3 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.palace-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  text-align: left;
+  grid-column: auto / span 3;
+}
+
+.palace-item {
+  width: clamp(420px, 42vw, 560px);
+  height: auto;
+  margin: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: var(--card-bg);
+}
+
+.palace-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.palace-item .palace-image,
+.palace-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.palace-info {
+  padding: 16px 18px;
+  min-height: 140px;
+  height: auto;
+}
+
+.palace-item h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.15rem;
+}
+
+.palace-item p {
+  margin: 6px 0 10px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Favorite button */
+.favourite {
+  margin-left: auto;
+}
+
+.favourite .fav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.favourite i {
+  color: var(--danger);
+}
+
+/* ---------- Why choose us / features ---------- */
+.why-choose-us {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: var(--main-bg);
+}
+
+.why-choose-us h2 {
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.why-choose-us .why-lead {
+  max-width: 820px;
+  margin: 0 auto;
+  font-size: 1.6rem;
+  line-height: 1.8;
+  color: var(--text-sub);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px,1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
+@media (max-width: 992px) {
+  .features { grid-template-columns: repeat(2, minmax(260px,1fr)); }
+}
+@media (max-width: 640px) {
+  .features { grid-template-columns: 1fr; }
+}
+
+.feature {
+  background-color: var(--card-bg);
+  padding: 24px 22px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  min-height: 260px;
+}
+
+.feature:hover { transform: translateY(-5px); }
+
+.feature i {
+  font-size: 42px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.feature h3 {
+  font-size: 1.4rem;
+  margin: 8px 0 12px;
+}
+
+.feature p {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  color: var(--text-sub);
+}
+
+.feature a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.feature a:hover { color: var(--secondary); }
+
+/* ---------- Generic content / cards (refactored with variables) ---------- */
+.content-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Card base: anchor fills card, card-content grows, rating sticks bottom */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+/* Hover visual (uses hover shadow variable) */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Anchor covers whole card and behaves as column flex container */
+.card > a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;           /* inherit text color (var(--text-main) from body) */
+  text-decoration: none;
+  outline: none;
+}
+
+/* Image: fixed visual height, doesn't stretch */
+.card-image,
+.card > a img {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Content grows and is column so rating can be pushed to bottom */
+.card-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 16px;
+  padding-bottom: 12px; /* tweak space under rating if needed */
+  height: 100%;
+  color: var(--text-main); /* text color inside card */
+}
+
+/* Title & paragraph */
+.card h2 {
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: var(--text-main);
+}
+
+.card p {
+  color: var(--text-sub);
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Rating: key rules to keep it at bottom */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 0;
+  height: auto !important;
+}
+
+.rating i {
+  color: var(--star-color);
+  margin-right: 5px;
+}
+
+.rating span {
+  color: var(--text-sub);
+}
+
+/* Accessibility: focus outline for anchor (uses focus outline variable) */
+.card > a:focus {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Ensure no text-decoration appears inside anchored card */
+.card > a img,
+.card > a h2,
+.card > a p,
+.card > a .rating {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Responsive tweak: smaller image height on small screens */
+@media (max-width: 600px) {
+  .card-image { height: 220px; }
+  .card-content { padding: 14px; padding-bottom: 10px; }
+}

@@ -12,3 +12,4 @@ idna==3.8
 sympy>=1.7.1
 whitenoise==6.5.0
 matplotlib==3.10.6
+spacy==3.5.4

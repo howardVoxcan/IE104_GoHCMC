@@ -1,22 +1,37 @@
-# Sử dụng image Python nhẹ
 FROM python:3.11-slim
 
-# Biến môi trường
+ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Thư mục làm việc
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        gcc \
+        g++ \
+        libpq-dev \
+        curl \
+        git \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Cài đặt thư viện
-COPY requirements.txt .
+COPY requirements.txt /app/
+
+RUN pip install --upgrade pip setuptools wheel
+
+# Numpy trước để tránh lỗi thinc / spaCy
+RUN pip install --no-cache-dir numpy==1.26.1
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy toàn bộ project
-COPY . .
+# 🔥 ***THÊM DÒNG NÀY để tải model spaCy***
+RUN python -m spacy download en_core_web_sm
 
-# Collect static (nếu có)
-RUN python manage.py collectstatic --noinput || true
+COPY . /app/
 
-# Chạy server Django
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN python manage.py collectstatic --noinput
+
+EXPOSE 8000
+
+CMD ["gunicorn", "GoHCMC.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]

@@ -12,92 +12,116 @@
 {% block title %}My Trip{% endblock %}
 
 {% block content %}
-<div class="trip-container">
-	<h2 class="trip-header">List of created trips</h2>
-
+<div class="trip-container{% if not trip_paths %} is-empty{% endif %}">
 	{% if trip_paths %}
-	{% for path in trip_paths %}
-	<details class="trip-card">
-		<summary class="trip-card-summary">
-			<div class="summary-left">
-				<span class="trip-name">{{ path.path_name }}</span>
-			</div>
-			<div class="summary-right">
-				<span class="icon"><i class="fas fa-road"></i> {{ path.total_distance }} m</span>
-				<span class="icon"><i class="fas fa-clock"></i> {{ path.total_duration }} s</span>
-				<span class="icon" id="trip-toggle-icon"><i class="fas fa-play"></i></span>
-			</div>
-		</summary>
+	<div class="trip-layout">
+		<div class="trip-main">
+			<h2 class="trip-header">List of created trips</h2>
+			{% for path in trip_paths %}
+			<details class="trip-card" data-trip-id="{{ path.id }}" data-trip-name="{{ path.path_name }}"
+				data-distance="{{ path.total_distance|default:0 }}" data-duration="{{ path.total_duration|default:0 }}">
+				<summary class="trip-card-summary">
+					<div class="summary-left">
+						<span class="trip-name">{{ path.path_name }}</span>
+					</div>
+					<div class="summary-right">
+						<span class="icon"><i class="fas fa-road"></i> {{ path.total_distance }} m</span>
+						<span class="icon"><i class="fas fa-clock"></i> {{ path.total_duration }} s</span>
+						<span class="summary-toggle" aria-label="Open details">
+							<span class="toggle-text">Details</span>
+							<i class="fas fa-chevron-down"></i>
+						</span>
+					</div>
+				</summary>
 
-		<div class="trip-card-body">
-			<ol type="1" class="trip-locations">
-				{% if path.start_point %}
-					<li class="start"><strong>Start:</strong> {{ path.start_point }}</li>
-				{% endif %}
+				<div class="trip-card-body">
+					<ol type="1" class="trip-locations">
+						{% if path.start_point %}
+						<li class="start"><strong>Start:</strong> {{ path.start_point }}</li>
+						{% endif %}
 
-				{% for loc_id in path.locations %}
-				{% with location_map|get_item:loc_id as loc_name %}
-				{% if loc_name != path.start_point and loc_name != path.end_point %}
-					<li class="between-location">{{ loc_name }}</li>
-				{% endif %}
-				{% endwith %}
-				{% endfor %}
+						{% for loc_id in path.locations %}
+						{% with location_map|get_item:loc_id as loc_name %}
+						{% if loc_name != path.start_point and loc_name != path.end_point %}
+						<li class="between-location">{{ loc_name }}</li>
+						{% endif %}
+						{% endwith %}
+						{% endfor %}
 
-				{% if path.end_point %}
-					<li class="end"><strong>End:</strong> {{ path.end_point }}</li>
-				{% endif %}
-			</ul>
+						{% if path.end_point %}
+						<li class="end"><strong>End:</strong> {{ path.end_point }}</li>
+						{% endif %}
+					</ol>
 
-			<hr class="dashed-line">
+					<hr class="dashed-line">
 
-			<!-- Delete Button -->
-			<button type="button" class="delete-btn" data-url="{% url 'delete_tripPath' path.id %}">
-				<i class="fas fa-trash-alt"></i> Delete
-			</button>
+					<!-- Delete Button -->
+					<button type="button" class="delete-btn" data-url="{% url 'delete_tripPath' path.id %}">
+						<i class="fas fa-trash-alt"></i> Delete
+					</button>
+				</div>
+			</details>
+			{% endfor %}
 		</div>
-	</details>
-	{% endfor %}
+	</div>
 	{% else %}
-	
+	<section class="trip-empty-state">
+		<div class="trip-empty-card">
+			<div class="empty-icon">
+				<i class="fa-solid fa-map-location-dot"></i>
+			</div>
+			<h2>No trips have been created yet</h2>
+			<p>To set up My Trip, mark favourite spots and build a route in Favourite.</p>
+			<ul class="trip-empty-steps">
+				<li>1. Go to Locations and add the must-visit places.</li>
+				<li>2. Open Favourite to name the trip, pick Start/End, then save it.</li>
+				<li>3. Come back here to view, manage, and delete trips.</li>
+			</ul>
+			<div class="trip-empty-actions">
+				<a class="empty-primary" href="{% url 'favourite' %}">
+					<i class="fa-solid fa-heart-circle-plus"></i> Create trip from Favourite
+				</a>
+				<a class="empty-secondary" href="{% url 'locations' %}">
+					Explore Locations
+				</a>
+			</div>
+		</div>
+	</section>
 	{% endif %}
 </div>
 
 <script>
-	// CSRF setup
-	function getCookie(name) {
-		let cookieValue = null;
-		if (document.cookie && document.cookie !== '') {
-			document.cookie.split(';').forEach(function (c) {
-				let cookie = c.trim();
-				if (cookie.startsWith(name + '=')) {
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-				}
-			});
+	(() => {
+		function getCookie(name) {
+			let cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				document.cookie.split(';').forEach(cookieStr => {
+					const cookie = cookieStr.trim();
+					if (cookie.startsWith(name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					}
+				});
+			}
+			return cookieValue;
 		}
-		return cookieValue;
-	}
-	const csrftoken = getCookie('csrftoken');
 
-	document.querySelectorAll('.delete-btn').forEach(btn => {
-		btn.addEventListener('click', function () {
-			if (!confirm('Bạn có chắc muốn xóa lịch trình này?')) return;
-			const url = this.dataset.url;
-			fetch(url, {
-				method: 'POST',
-				headers: {
-					'X-CSRFToken': csrftoken,
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			})
-				.then(resp => {
-					if (!resp.ok) throw new Error('Network response was not ok');
-					// Remove the card from DOM
-					const card = this.closest('details');
-					card.parentNode.removeChild(card);
-				})
-				.catch(err => console.error('Delete failed:', err));
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelectorAll('.delete-btn').forEach(btn => {
+				btn.addEventListener('click', function () {
+					if (!confirm('Are you sure you want to delete this trip?')) return;
+					fetch(this.dataset.url, {
+						method: 'POST',
+						headers: {
+							'X-CSRFToken': getCookie('csrftoken'),
+							'X-Requested-With': 'XMLHttpRequest'
+						}
+					}).then(resp => {
+						if (!resp.ok) throw new Error('Delete failed');
+						this.closest('details')?.remove();
+					}).catch(err => console.error(err));
+				});
+			});
 		});
-	});
+	})();
 </script>
-
 {% endblock %}

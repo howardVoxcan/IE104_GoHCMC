@@ -4,7 +4,6 @@ psycopg2-binary==2.9.10
 django-crispy-forms==2.4
 crispy-bootstrap5
 django-import-export==4.3.7
-osmnx==1.9.4
 scikit-learn==1.6.1
 pandas==2.2.2
 spacy==3.8.5

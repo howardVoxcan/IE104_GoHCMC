@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
-    'widget_tweaks',
     'location',
     'weather',
     'trip',

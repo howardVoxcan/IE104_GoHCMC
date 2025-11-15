@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}GoHCMC{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {% block css %}
+  {% endblock %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  {% include 'components/header.html' %}
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+  <button id="back-to-top" class="back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+  {% include 'components/footer.html' %}
+  <script>
+    // Back to Top Button Logic
+    const backToTopButton = document.getElementById("back-to-top");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = "block";
+      } else {
+        backToTopButton.style.display = "none";
+      }
+    });
+
+    backToTopButton.addEventListener("click", (e) => {
+      e.preventDefault(); // Prevent default behavior
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>

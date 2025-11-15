@@ -1,0 +1,245 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Weather{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/weather.css' %}?v={{ timestamp }}">
+{% endblock %}
+
+{% block content %}
+<div class="weather-wrapper">
+    <!-- Cột trái: các ngày -->
+    <div class="day-tabs">
+        {% for day in forecast %}
+        <button class="tab-btn {% if forloop.first %}active{% endif %}" data-day="{{ forloop.counter0 }}">
+            {{ day.date }}
+        </button>
+        {% endfor %}
+    </div>
+
+    <!-- Cột phải: Chart + Box chi tiết -->
+    <div class="forecast-right">
+        {% for day in forecast %}
+        <div class="forecast-display {% if forloop.first %}active{% endif %}" id="day-panel-{{ forloop.counter0 }}">
+        <!-- Biểu đồ -->
+        <div class="chart-image-container">
+            <!-- 2 ảnh sẵn sàng, CSS sẽ chỉ hiện ảnh đúng theme -->
+            <img class="chart-img chart-img--light"
+                src="{{ day.chart_image_light }}"
+                alt="Weather Chart (Light) {{ day.date }}"
+                loading="lazy" decoding="async" />
+            <img class="chart-img chart-img--dark"
+                src="{{ day.chart_image_dark }}"
+                alt="Weather Chart (Dark) {{ day.date }}"
+                loading="lazy" decoding="async" />
+        </div>
+
+        <!-- detail-box của NGÀY NÀY -->
+        <div class="detail-box">
+            <button class="scroll-btn-left"  data-day="{{ forloop.counter0 }}" data-direction="-2" id="scroll-left-{{ forloop.counter0 }}">‹</button>
+            <div class="detail-box-container" id="hourly-container-{{ forloop.counter0 }}">
+            {% for period in day.periods %}
+            <div class="forecast-period"
+                data-hour="{{ period.hour }}"
+                data-date="{{ day.date_iso }}"
+                data-time="{{ period.time }}">
+                <p class="period-time">{{ period.time }}</p>
+                <img src="{{ period.icon }}" alt="{{ period.condition }}">
+                <p class="period-temp">{{ period.temp_c }}°</p>
+                <p class="period-condition">{{ period.condition }}</p>
+                <p class="period-humidity">💧 {{ period.humidity }}%</p>
+            </div>
+            {% endfor %}
+            </div>
+            <button class="scroll-btn-right" data-day="{{ forloop.counter0 }}" data-direction="2" id="scroll-right-{{ forloop.counter0 }}">›</button>
+        </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<script>
+    // ===== HÀM HIỂN THỊ "NOW" VÀO BOX CÓ THỜI GIAN TRÙNG VỚI THỜI GIAN THỰC =====
+    function updateNowIndicator() {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentDate = now.toISOString().split('T')[0];
+
+        console.log('Current Time:', now);
+        console.log('Current Hour:', currentHour);
+        console.log('Current Date:', currentDate);
+
+        // Xóa tất cả NOW indicator cũ
+        document.querySelectorAll('.now-indicator').forEach(el => el.remove());
+        document.querySelectorAll('.forecast-period.is-now').forEach(el => {
+            el.classList.remove('is-now');
+        });
+
+        // Tìm và đánh dấu box hiện tại
+        let foundCurrentBox = false;
+        document.querySelectorAll('.forecast-period').forEach(box => {
+            const boxHour = parseInt(box.getAttribute('data-hour'));
+            const boxDate = box.getAttribute('data-date');
+            const boxTime = box.getAttribute('data-time');
+
+            console.log('Checking box - Date:', boxDate, 'Hour:', boxHour, 'Time:', boxTime);
+
+            // Kiểm tra nếu ngày và giờ trùng khớp
+            if (boxDate === currentDate && boxHour === currentHour) {
+                console.log('Found matching box!');
+                foundCurrentBox = true;
+
+                // Thêm class is-now
+                box.classList.add('is-now');
+
+                // Tạo và thêm badge NOW
+                const nowBadge = document.createElement('span');
+                nowBadge.className = 'now-indicator';
+                nowBadge.textContent = 'NOW';
+                box.appendChild(nowBadge);
+
+                // Auto scroll đến box hiện tại
+                setTimeout(() => {
+                    const container = box.closest('.detail-box-container');
+                    if (container) {
+                        const boxLeft = box.offsetLeft;
+                        const boxWidth = box.offsetWidth;
+                        const containerWidth = container.offsetWidth;
+                        const scrollPosition = boxLeft - (containerWidth / 2) + (boxWidth / 2);
+
+                        container.scrollTo({
+                            left: Math.max(0, scrollPosition),
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 300);
+            }
+        });
+
+        if (!foundCurrentBox) {
+            console.log('No matching box found for current time');
+        }
+    }
+
+    // ===== CHUYỂN ĐỔI TAB NGÀY =====
+    function switchDay(dayIndex) {
+    // toggle panel
+    document.querySelectorAll('.forecast-display').forEach((panel, i) => {
+        panel.classList.toggle('active', i === dayIndex);
+    });
+    // toggle tab
+    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === dayIndex);
+    });
+    // cập nhật NOW + nút scroll của panel đang mở
+    setTimeout(() => {
+        updateNowIndicator();
+        updateScrollButtons(dayIndex);
+    }, 50);
+    }
+
+    // gắn sự kiện cho tab
+    document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+        const day = parseInt(btn.getAttribute('data-day'));
+        if (!isNaN(day)) switchDay(day);
+        });
+    });
+
+    // đảm bảo panel đầu tiên đang active
+    switchDay(0);
+    });
+
+    // ===== SCROLL 2 GIỜ =====
+    function scrollHourly(dayIndex, direction) {
+        const container = document.getElementById('hourly-container-' + dayIndex);
+        if (!container) return;
+
+        const boxes = container.querySelectorAll('.forecast-period');
+        if (boxes.length === 0) return;
+
+        const boxWidth = boxes[0].offsetWidth;
+        const gap = parseFloat(getComputedStyle(container).gap) || 16;
+        const scrollDistance = (boxWidth + gap) * Math.abs(direction);
+
+        container.scrollBy({
+            left: direction > 0 ? scrollDistance : -scrollDistance,
+            behavior: 'smooth'
+        });
+
+        setTimeout(() => updateScrollButtons(dayIndex), 400);
+    }
+
+    // ===== CẬP NHẬT TRẠNG THÁI NÚT SCROLL =====
+    function updateScrollButtons(dayIndex) {
+        const container = document.getElementById('hourly-container-' + dayIndex);
+        if (!container) return;
+
+        const leftBtn = document.getElementById('scroll-left-' + dayIndex);
+        const rightBtn = document.getElementById('scroll-right-' + dayIndex);
+
+        if (leftBtn && rightBtn) {
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            leftBtn.disabled = container.scrollLeft <= 5;
+            rightBtn.disabled = container.scrollLeft >= maxScroll - 5;
+        }
+    }
+
+    // ===== KHỞI TẠO KHI TRANG TẢI XONG =====
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('Page loaded, initializing...');
+
+        updateNowIndicator();
+
+        // Attach scroll button events (left/right) using data attributes
+        document.querySelectorAll('.scroll-btn-left, .scroll-btn-right').forEach(btn => {
+        // Attach scroll button events (left/right) using data attributes
+        document.querySelectorAll('.scroll-btn-left, .scroll-btn-right').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const day = parseInt(btn.getAttribute('data-day'));
+                const dir = parseInt(btn.getAttribute('data-direction'));
+                if (!isNaN(day) && !isNaN(dir)) {
+                    scrollHourly(day, dir);
+                }
+            });
+        });
+
+        // Attach tab button events to switch days
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const day = parseInt(btn.getAttribute('data-day'));
+                if (!isNaN(day)) {
+                    switchDay(day);
+                }
+            });
+        });
+            updateScrollButtons(index);
+
+            const container = display.querySelector('.detail-box-container');
+            if (container) {
+                container.addEventListener('scroll', () => updateScrollButtons(index));
+            }
+        });
+
+        setInterval(() => {
+            console.log('Updating NOW indicator...');
+            updateNowIndicator();
+        }, 30000);
+
+        setInterval(() => {
+            console.log('Updating NOW indicator (1 minute interval)...');
+            updateNowIndicator();
+        }, 60000);
+    });
+
+    document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) {
+            console.log('Tab visible again, updating NOW indicator...');
+            updateNowIndicator();
+        }
+    });
+</script>
+{% endblock %}

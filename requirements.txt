@@ -1,23 +1,22 @@
-Django>=4.2
-djangorestframework>=3.14.0
-python-dotenv>=1.0.0
-Pillow>=10.0.0
-requests
-joblib
-spacy
-scikit-learn
-matplotlib<3.10.0
-# Các package bổ sung cho dự án
-django-crispy-forms>=2.0
-crispy-bootstrap5>=0.7
-django-widget-tweaks>=1.4.1
-sympy
-spacy
-en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
-
-# Nếu dùng PostgreSQL, thêm dòng sau:
-# psycopg2-binary>=2.9.9
-
-
-
-
+Django==5.1.4
+asgiref==3.8.1
+psycopg2-binary==2.9.10
+django-crispy-forms==2.4
+crispy-bootstrap5
+django-import-export==4.3.7
+osmnx==1.9.4
+scikit-learn==1.6.1
+pandas==2.2.2
+spacy==3.8.5
+xgboost==3.0.0
+gunicorn
+click==8.1.7
+requests==2.32.3
+certifi==2024.7.4
+urllib3==2.2.2
+charset-normalizer==3.3.2
+idna==3.8
+django-widget-tweaks
+sympy>=1.7.1
+whitenoise
+matplotlib

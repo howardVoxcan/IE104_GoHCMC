@@ -1,0 +1,615 @@
+.favourite-content-wrapper { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 30px; 
+}
+.location-list-column { 
+    flex: 2; 
+    min-width: 350px; 
+}
+.trip-setup-column {
+    flex: 1;
+    min-width: 300px;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+}
+
+.dashed-line { 
+    width: 100% !important; 
+}
+
+/* 3. CARD MỚI (CHỈ CÒN DETAILS) */
+.location-item-card { /* Đổi tên class để tránh nhầm lẫn */
+    background: var(--card-bg); 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 15px;
+    overflow: hidden; /* Quan trọng để bo góc */
+}
+html[data-theme="dark"] .location-item-card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Style cho link tên địa điểm */
+.summary-location-link {
+    margin: 0;
+    font-size: 16px;
+    flex-grow: 1;
+    font-weight: bold;
+    color: var(--text-light, white);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.summary-location-link:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    margin-right: 15px; /* Khoảng cách với checkbox */
+    background-color: var(--danger); /* Màu nền đỏ */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: background-color 0.2s, opacity 0.2s;
+    flex-shrink: 0; /* Không bị co lại */
+}
+.delete-button:hover {
+    background-color: #c0392b;
+    opacity: 0.9;
+}
+.delete-button i {
+    margin-right: 8px;
+    font-size: 1em;
+}
+
+#details-section {
+    padding: 15px;
+    background: var(--main-bg);
+    border-top: 1px solid var(--border-color); 
+}
+
+#details-section label {
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.details-section {
+    padding: 16px 18px;
+    background: var(--main-bg);
+    border-top: 1px dashed var(--border-color);
+}
+
+.extra-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 10px 0 0;
+    padding: 6px 0 0;
+}
+
+.extra-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.extra-input-shell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.extra-input-shell i {
+    color: var(--secondary);
+}
+
+.extra-input-shell:focus-within {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+}
+
+.extra-input-shell input,
+.extra-input-shell select {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    outline: none;
+}
+
+.extra-input-shell select {
+    appearance: none;
+}
+
+.empty-input {
+    display: none;
+}
+
+.extra-inputs {
+    border-top: none; 
+    margin: 10px 0 0 0; 
+    padding-top: 0;
+}
+
+.extra-inputs input, .extra-inputs select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color); 
+    background-color: var(--card-bg); 
+    color: var(--text-main); 
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* 5. CSS CHO CỘT BÊN PHẢI (SẠCH SẼ) */
+.trip-setup-column label {
+    font-weight: bold; display: block;
+    margin-top: 15px; margin-bottom: 5px;
+    font-size: 0.9rem; color: var(--text-main);
+    transition: color 0.3s;
+}
+.trip-setup-column select, 
+.trip-setup-column input {
+    width: 100%; padding: 8px; border-radius: 4px;
+    border: 1px solid var(--border-color); 
+    background-color: var(--card-bg); 
+    color: var(--text-main); 
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.selected-list-header {
+    font-size: 1rem; color: var(--text-main);
+    margin-top: 20px; margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 5px;
+    transition: color 0.3s, border-color 0.3s;
+}
+#selected-locations-list {
+    list-style-type: none; padding-left: 0; margin: 0;
+    font-size: 0.9rem;
+}
+#selected-locations-list li {
+    background: var(--hover-bg); 
+    color: var(--text-main); 
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* CSS CHO THÔNG BÁO LỖI/THÀNH CÔNG */
+.messages { margin-bottom: 15px; }
+.messages .error {
+    color: var(--danger);
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid var(--danger);
+    padding: 10px; border-radius: 5px;
+}
+:root[data-theme="dark"] .messages .error { background-color: rgba(192, 57, 43, 0.1); }
+.messages .success {
+    color: var(--secondary);
+    background-color: rgba(39, 174, 96, 0.1);
+    border: 1px solid var(--secondary);
+    padding: 10px; border-radius: 5px;
+}
+:root[data-theme="dark"] .messages .success { background-color: rgba(30, 132, 73, 0.1); }
+
+.favourite-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+.favourite-header {
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.location-summary {
+    background-color: var(--secondary); 
+    border: 1px var(--secondary) solid; 
+    display: flex;
+    justify-content: space-between; /* Cách label và checkbox */
+    align-items: center;
+    padding: 10px 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.location-summary label {
+    margin: 0;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.location-summary input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-left: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+
+#toggle-checkbox {
+    color: var(--primary);
+    width: 1.5rem;
+    height: 1.5rem;
+    align-items: center;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+#toggle-checkbox input:checked+span::after {
+    color: green;
+}
+
+.details-section .line {
+    margin: 10px 0;
+}
+
+.dashed-line {
+    border: 1px dashed var(--secondary);
+}
+
+h3 {
+    font-size: 28px;
+    color: var(--primary);
+    margin: 10px 0;
+}
+
+.trip {
+    position: relative;
+    padding: 26px 24px 30px;
+    border-radius: 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 18px 45px rgba(10, 166, 90, 0.12);
+    overflow: hidden;
+}
+.trip::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 120% at 100% 0%, rgba(39,174,96,0.18), transparent 60%);
+    pointer-events: none;
+}
+.trip-hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(39,174,96,0.18);
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.primary-cta {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    background-image: linear-gradient(120deg, #1abc9c, #2ecc71);
+    color: #fff;
+    box-shadow: 0 15px 25px rgba(46,204,113,0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.primary-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 30px rgba(46,204,113,0.35);
+}
+
+.empty-favourite-state {
+    min-height: 350px;
+    margin: 40px auto;
+    max-width: 520px;
+    padding: 40px 30px;
+    border-radius: 16px;
+    background: var(--card-bg);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+}
+.empty-favourite-state .empty-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+}
+.empty-favourite-state p {
+    color: var(--text-main);
+    font-size: 1rem;
+}
+.back-to-locations-btn {
+    margin-top: 10px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    border: none;
+    background: var(--secondary);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s;
+}
+.back-to-locations-btn:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+.trip-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+.trip-name-subtitle {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    opacity: 0.8;
+}
+.trip-guide-inline {
+    margin: 6px 0 0;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+.trip-guide-link {
+    color: var(--secondary);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px dashed currentColor;
+    transition: color 0.2s;
+}
+.trip-guide-link:hover {
+    color: var(--primary);
+}
+.trip-help-btn {
+    border: none;
+    background: var(--hover-bg);
+    color: var(--primary);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+.trip-help-btn:hover {
+    background: var(--secondary);
+    color: #fff;
+    transform: translateY(-1px);
+}
+.trip-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 16px;
+}
+.trip-field-group {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 10px;
+    background: var(--main-bg);
+    border: 1px dashed var(--border-color);
+}
+.group-title {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    color: var(--text-main);
+}
+.input-shell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.input-shell i {
+    color: var(--primary);
+}
+.input-shell:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+    background: var(--hover-bg);
+}
+.input-shell input,
+.input-shell select {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    padding: 0;
+    outline: none;
+}
+.input-shell select {
+    appearance: none;
+}
+.selected-locations-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.selected-placeholder,
+.selected-location-item {
+    border-radius: 10px;
+    padding: 10px 14px;
+    background: var(--card-bg);
+    border: 1px dashed var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.selected-placeholder {
+    color: var(--text-main);
+    opacity: 0.8;
+}
+.selected-location-item {
+    border-style: solid;
+}
+.location-order {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--secondary);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+.location-name {
+    flex: 1;
+    font-weight: 600;
+}
+.trip-guide-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1200;
+}
+.trip-guide-modal.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+.trip-guide-dialog {
+    background: var(--card-bg);
+    border-radius: 18px;
+    padding: 28px 32px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+}
+.trip-guide-dialog h4 {
+    margin-top: 0;
+    color: var(--primary);
+}
+.trip-guide-hero {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.hero-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: rgba(39, 174, 96, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+    font-size: 1.4rem;
+}
+.trip-guide-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+.guide-card {
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--main-bg);
+    border: 1px solid var(--border-color);
+}
+.guide-card h5 {
+    margin: 0 0 8px;
+    font-size: 0.95rem;
+    color: var(--primary);
+}
+.guide-card ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.trip-guide-note {
+    margin: 0 0 18px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    background: rgba(39, 174, 96, 0.12);
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+.modal-close-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-main);
+    font-size: 1.5rem;
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    cursor: pointer;
+}
+.modal-primary-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px 18px;
+    border-radius: 30px;
+    border: none;
+    background: var(--secondary);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+.modal-primary-btn:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+body.modal-open {
+    overflow: hidden;
+}

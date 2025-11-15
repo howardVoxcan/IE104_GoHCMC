@@ -1,0 +1,458 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}Favourite{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/favourite.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="favourite-container">
+    {% if locations %}
+    <h2 class="favourite-header">List of favourite locations</h2>
+    {% endif %}
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if locations %}
+    <form method="POST" action="{% url 'create_trip' %}" id="create-trip-form">
+        {% csrf_token %}
+        <div class="favourite-content-wrapper">
+            <div class="location-list-column">
+                {% for location in locations %}
+                <div class="location-item-card">
+
+                    <div class="item-controls">
+                        <summary class="location-summary">
+                            <a href="{% url 'display_location' location.code %}" class="summary-location-link">
+                                {{ location.location }}
+                            </a>
+
+                            <button type="submit" class="delete-button" title="Remove from favourites"
+                                formaction="{% url 'favourite' %}" name="location_code" value="{{ location.code }}">
+                                <i class="fa-solid fa-trash-alt"></i> Delete
+                            </button>
+
+                            <input type="checkbox" name="locations" value="{{ location.id }}" id="cb-{{ location.id }}"
+                                data-target="#details-section-{{ location.id }}"
+                                data-location-name="{{ location.location }}">
+                        </summary>
+
+                        <div id="details-section-{{ location.id }}" class="details-section" style="display: none;">
+                            <div id="extra-inputs-{{ location.id }}" class="extra-inputs">
+                                <div class="extra-field">
+                                    <label for="pinned_order_{{ location.id }}">Pin at position</label>
+                                    <div class="extra-input-shell">
+                                        <i class="fa-solid fa-hashtag"></i>
+                                        <input id="pinned_order_{{ location.id }}" type="number"
+                                            name="pinned_order_{{ location.id }}" min="1"
+                                            placeholder="Order (1, 2, 3...)">
+                                    </div>
+                                </div>
+
+                                <div class="extra-field">
+                                    <label for="precedence_after_{{ location.id }}">Must go after</label>
+                                    <div class="extra-input-shell">
+                                        <i class="fa-solid fa-shuffle"></i>
+                                        <select id="precedence_after_{{ location.id }}"
+                                            name="precedence_after_{{ location.id }}" class="precedence-dropdown"
+                                            data-current-id="{{ location.id }}">
+                                            <option value="">-- Select location --</option>
+                                            {% for loc in locations %}
+                                            <option value="{{ loc.id }}">{{ loc.location }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="trip-setup-column">
+                <div class="trip">
+                    <div class="trip-hero-tag">
+                        <i class="fa-solid fa-route"></i>
+                        <span>Journey builder</span>
+                    </div>
+
+                    <div class="trip-heading">
+                        <div>
+                            <h3 class="trip-name">Trip's name</h3>
+                            <p class="trip-name-subtitle">Give it a fun name so you remember the journey.</p>
+                            <p class="trip-guide-inline">
+                                Need inspiration? <a href="#" class="trip-guide-link" id="open-trip-guide">See trip
+                                    ideas</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="trip-field">
+                        <label for="type-name">Trip name</label>
+                        <input id="type-name" type="text" name="path_name" placeholder="e.g., District 1 food tour">
+                    </div>
+                    <input type="hidden" name="trip_list_id" value="{{ trip_list.id }}">
+
+                    <div class="trip-field-group">
+                        <h4 class="group-title">Select start and end points</h4>
+
+                        <div class="trip-field">
+                            <label for="start_point_select">Start point</label>
+                            <div class="input-shell">
+                                <i class="fa-solid fa-flag-checkered"></i>
+                                <select name="start_point" id="start_point_select">
+                                    <option value="">-- Select start point --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="trip-field">
+                            <label for="end_point_select">End point</label>
+                            <div class="input-shell">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <select name="end_point" id="end_point_select">
+                                    <option value="">-- Select end point --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trip-field-group">
+                        <h4 class="group-title">Selected locations</h4>
+                        <ul id="selected-locations-list" class="selected-locations-list">
+                            <li class="selected-placeholder">
+                                <i class="fa-regular fa-compass"></i>
+                                <span>No locations selected yet</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <hr class="dashed-line" style="margin-top: 20px; margin-bottom: 20px;">
+                    <button type="submit" class="primary-cta" id="create-journey-button">
+                        <span>Create journey</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    {% else %}
+    <div class="empty-favourite-state">
+        <p class="empty-title">No favourite locations yet!</p>
+        <p>Head back to Locations, save a few must-visit spots, then return to build your trip.</p>
+        <a class="back-to-locations-btn" href="{% url 'locations' %}">Explore Locations</a>
+    </div>
+    {% endif %}
+</div>
+
+{% if locations %}
+<script>
+    function detectCycle(constraints) {
+        const graph = {};
+        const indegree = {};
+        const nodes = new Set();
+        constraints.forEach(([from, to]) => {
+            if (!graph[from]) graph[from] = [];
+            graph[from].push(to);
+            nodes.add(from);
+            nodes.add(to);
+            indegree[to] = (indegree[to] || 0) + 1;
+            if (!(from in indegree)) indegree[from] = 0;
+        });
+        const queue = [];
+        nodes.forEach(node => {
+            if (indegree[node] === 0) queue.push(node);
+        });
+        let visited = 0;
+        while (queue.length > 0) {
+            const node = queue.shift();
+            visited++;
+            if (graph[node]) {
+                graph[node].forEach(nei => {
+                    indegree[nei]--;
+                    if (indegree[nei] === 0) {
+                        queue.push(nei);
+                    }
+                });
+            }
+        }
+        return visited < nodes.size;
+    }
+
+    function toggleInputsDisabled(section, disable) {
+        const inputs = section.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.disabled = disable;
+        });
+    }
+
+    function checkLocationLimit() {
+        const limit = 8;
+        const allCheckboxes = document.querySelectorAll('input[name="locations"]');
+        const checkedCount = document.querySelectorAll('input[name="locations"]:checked').length;
+
+        const limitReached = (checkedCount >= limit);
+
+        allCheckboxes.forEach(cb => {
+            if (!cb.checked) { // Chỉ disable những ô CHƯA CHỌN
+                cb.disabled = limitReached;
+
+                // Cũng vô hiệu hóa label của checkbox
+                const summary = cb.closest('.location-summary');
+                if (summary) {
+                    if (limitReached) {
+                        summary.style.opacity = '0.6';
+                        summary.style.cursor = 'not-allowed';
+                    } else {
+                        summary.style.opacity = '1';
+                        summary.style.cursor = 'pointer';
+                    }
+                }
+            }
+        });
+    }
+
+    const selectedListEmptyItem = `
+        <li class="selected-placeholder">
+            <i class="fa-regular fa-compass"></i>
+            <span>No locations selected yet</span>
+        </li>`;
+
+    function updateRightColumnSelections() {
+        const checkboxes = document.querySelectorAll('input[name="locations"]:checked');
+        const startSelect = document.getElementById('start_point_select');
+        const endSelect = document.getElementById('end_point_select');
+        const selectedList = document.getElementById('selected-locations-list');
+
+        const oldStartVal = startSelect.value;
+        const oldEndVal = endSelect.value;
+
+        startSelect.innerHTML = '<option value="">-- Select start point --</option>';
+        endSelect.innerHTML = '<option value="">-- Select end point --</option>';
+        selectedList.innerHTML = '';
+
+        if (checkboxes.length === 0) {
+            selectedList.innerHTML = selectedListEmptyItem;
+        } else {
+            checkboxes.forEach((cb, idx) => {
+                const id = cb.value;
+                const name = cb.dataset.locationName;
+
+                startSelect.innerHTML += `<option value="${id}">${name}</option>`;
+                endSelect.innerHTML += `<option value="${id}">${name}</option>`;
+                selectedList.innerHTML += `
+                    <li class="selected-location-item">
+                        <span class="location-order">${idx + 1}</span>
+                        <span class="location-name">${name}</span>
+                    </li>`;
+            });
+        }
+
+        startSelect.value = oldStartVal;
+        endSelect.value = oldEndVal;
+
+        checkLocationLimit();
+    }
+
+    function updatePrecedenceDropdowns() {
+        const selectedCheckboxes = document.querySelectorAll('input[name="locations"]:checked');
+        const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+
+        document.querySelectorAll('.precedence-dropdown').forEach(dropdown => {
+            const currentId = dropdown.getAttribute('data-current-id');
+
+            Array.from(dropdown.options).forEach(option => {
+                const optVal = option.value;
+                const shouldHide = optVal === "" || optVal === currentId || !selectedIds.includes(optVal);
+                option.hidden = shouldHide;
+                if (shouldHide && dropdown.value === optVal) {
+                    dropdown.value = "";
+                }
+            });
+        });
+    }
+
+    function updatePinnedInputsVisibility() {
+        const selectedStart = document.getElementById('start_point_select').value;
+        const selectedEnd = document.getElementById('end_point_select').value;
+
+        const hiddenIds = new Set();
+        if (selectedStart) hiddenIds.add(selectedStart);
+        if (selectedEnd) hiddenIds.add(selectedEnd);
+
+        document.querySelectorAll('.extra-inputs').forEach(div => {
+            const locationId = div.closest('.details-section').id.replace('details-section-', '');
+            if (hiddenIds.has(locationId)) {
+                div.style.display = 'none';
+            } else {
+                div.style.display = 'block';
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll('input[name="locations"]');
+
+        checkboxes.forEach(checkbox => {
+            const targetId = checkbox.dataset.target;
+            const detailsSection = document.querySelector(targetId);
+            const summary = checkbox.closest('.location-summary'); // Lấy thanh summary
+
+            if (!checkbox.checked) {
+                detailsSection.style.display = 'none';
+                toggleInputsDisabled(detailsSection, true);
+            } else {
+                detailsSection.style.display = 'block';
+                toggleInputsDisabled(detailsSection, false);
+            }
+
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
+                    detailsSection.style.display = 'block';
+                    toggleInputsDisabled(detailsSection, false);
+                } else {
+                    detailsSection.style.display = 'none';
+                    toggleInputsDisabled(detailsSection, true);
+                }
+                updateRightColumnSelections();
+            });
+
+            const label = checkbox.closest('.location-summary');
+            if (label) {
+                label.addEventListener('click', function (e) {
+                    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                        e.stopPropagation();
+                        return;
+                    }
+
+                    if (e.target.tagName !== 'INPUT') {
+                        const checkedCount = document.querySelectorAll('input[name="locations"]:checked').length;
+                        if (!checkbox.checked && checkedCount >= 8) {
+                            alert("You can only select a maximum of 8 locations.");
+                            e.preventDefault();
+                            return;
+                        }
+
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+        });
+
+        // Thêm listener cho các dropdown MỚI (bên phải)
+        document.getElementById('start_point_select').addEventListener('change', updatePinnedInputsVisibility);
+        document.getElementById('end_point_select').addEventListener('change', updatePinnedInputsVisibility);
+
+        // Giữ nguyên: Logic kiểm tra vòng lặp
+        const createJourneyButton = document.getElementById('create-journey-button');
+        if (createJourneyButton) {
+            createJourneyButton.addEventListener('click', function (e) {
+                const constraints = [];
+                const dropdowns = document.querySelectorAll('.precedence-dropdown');
+
+                dropdowns.forEach(dropdown => {
+                    const afterId = dropdown.value;
+                    const currentId = dropdown.getAttribute('data-current-id');
+
+                    if (afterId && !dropdown.disabled) {
+                        constraints.push([afterId, currentId]);
+                    }
+                });
+
+                if (detectCycle(constraints)) {
+                    e.preventDefault();
+                    alert("Error: A cycle was detected in the precedence constraints.\nPlease check your 'Must go after' selections.");
+                }
+            });
+        }
+
+        // Chạy lần đầu khi tải trang
+        updateRightColumnSelections(); // checkLocationLimit() được gọi BÊN TRONG hàm này
+        updatePrecedenceDropdowns();
+        updatePinnedInputsVisibility();
+
+        const tripGuideModal = document.getElementById('trip-guide-modal');
+        const openGuideBtn = document.getElementById('open-trip-guide');
+        const closeGuideBtn = document.getElementById('close-trip-guide');
+        const guideStartBtn = document.getElementById('guide-start-select');
+
+        function toggleTripGuide(show) {
+            if (!tripGuideModal) return;
+            tripGuideModal.classList.toggle('is-visible', show);
+            document.body.classList.toggle('modal-open', show);
+            tripGuideModal.setAttribute('aria-hidden', show ? 'false' : 'true');
+        }
+
+        openGuideBtn?.addEventListener('click', () => toggleTripGuide(true));
+        closeGuideBtn?.addEventListener('click', () => toggleTripGuide(false));
+        tripGuideModal?.addEventListener('click', (e) => {
+            if (e.target === tripGuideModal) toggleTripGuide(false);
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') toggleTripGuide(false);
+        });
+        guideStartBtn?.addEventListener('click', () => {
+            toggleTripGuide(false);
+            document.querySelector('.location-list-column')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+{% endif %}
+
+<div class="trip-guide-modal" id="trip-guide-modal" aria-hidden="true">
+    <div class="trip-guide-dialog" role="dialog" aria-modal="true" aria-labelledby="trip-guide-title">
+        <button type="button" class="modal-close-btn" id="close-trip-guide" aria-label="Đóng hướng dẫn">
+            <span>&times;</span>
+        </button>
+
+        <div class="trip-guide-hero">
+            <div class="hero-icon">
+                <i class="fa-solid fa-route"></i>
+            </div>
+            <div>
+                <h4 id="trip-guide-title">Trip building tips</h4>
+                <p>Turn your favourites list into a smooth journey with just a few quick steps.</p>
+            </div>
+        </div>
+
+        <div class="trip-guide-columns">
+            <div class="guide-card">
+                <h5>Quick checklist</h5>
+                <ul>
+                    <li><strong>Select 3–8 places</strong> you absolutely want to visit.</li>
+                    <li><strong>Lock the start and end points</strong> to shape the route.</li>
+                    <li><strong>Use “Must go after”</strong> for back-to-back stops.</li>
+                </ul>
+            </div>
+            <div class="guide-card">
+                <h5>Optimization tips</h5>
+                <ul>
+                    <li>Prioritize food spots in the appropriate time slots.</li>
+                    <li>Group nearby places to cut down travel time.</li>
+                    <li>Name the trip to capture its vibe.</li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="trip-guide-note">
+            Tip: mix one must-go + one chill spot + one local experience for a balanced plan.
+        </p>
+
+        <button type="button" class="modal-primary-btn" id="guide-start-select">
+            Start picking locations
+        </button>
+    </div>
+</div>
+{% endblock %}

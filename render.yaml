@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gohcmc-web
+    env: python
+    plan: free
+    region: oregon
+    pythonVersion: "3.11.8"
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn GoHCMC.wsgi:application --bind 0.0.0.0:$PORT
+    envVars: []
+    autoDeploy: true

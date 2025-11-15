@@ -2,7 +2,6 @@ Django==5.1.4
 asgiref==3.8.1
 django-import-export==4.3.7
 scikit-learn==1.6.1
-spacy==3.7.5
 gunicorn==21.2.0
 click==8.1.7
 requests==2.32.3

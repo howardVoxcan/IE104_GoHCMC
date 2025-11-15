@@ -9,7 +9,6 @@ certifi==2024.7.4
 urllib3==2.2.2
 charset-normalizer==3.3.2
 idna==3.8
-django-widget-tweaks==1.5.4
 sympy>=1.7.1
 whitenoise==6.5.0
 matplotlib==3.8.0

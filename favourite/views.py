@@ -151,9 +151,6 @@ def create_trip(request):
     if end_id and end_id not in id_to_index:
         messages.error(request, "Invalid end point.")
         return redirect('favourite')
-    if start_id and end_id and start_id == end_id:
-        messages.error(request, "Start and end points cannot be the same.")
-        return redirect('favourite')
 
     # --- Pinned / Precedence ---
     pinned_positions = [None] * len(locations)      

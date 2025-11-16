@@ -7,7 +7,7 @@
 .trip-layout {
     display: flex;
     justify-content: space-between; /* lề trái = lề phải */
-    gap: 20px;                      /* giảm khoảng trống giữa 2 cột */
+    gap: 40px;                      /* giảm khoảng trống giữa 2 cột */
     align-items: flex-start;
 }
 
@@ -102,7 +102,7 @@
     display: flex;
     align-items: center;
     column-gap: 10px;        
-    padding: 16px 20px;
+    padding: 14px 18px;  /* giảm từ 16px 20px */
     cursor: pointer;
     list-style: none;
     background-color: #00aa6c;
@@ -112,19 +112,21 @@
 }
 
 .summary-left {
-    flex: 0 0 auto;      /* <— điều khiển độ rộng phần tiêu đề */
-    margin-right: 12px;       /* ← giảm / tăng để đổi khoảng đệm sau tiêu đề */
-    display: flex;
-    flex-direction: column;
+    flex: 0 1 auto;      /* cho phép co dãn */
+    max-width: 45%;      /* giới hạn không quá 45% */
+    margin-right: 12px;
+    overflow: hidden;
 }
 
 .summary-left .trip-name {
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    color: #fff;
-    text-transform: capitalize;
-    text-shadow: none;               
+    font-size: 1.2rem;   
+    line-height: 1.3;
+    word-break: break-word;  /* cho phép ngắt từ khi quá dài */
+}
+
+.summary-right {
+    flex-shrink: 0;      /* không cho co lại */
+    white-space: nowrap; /* không xuống dòng */
 }
 
 .summary-right {
@@ -142,8 +144,9 @@
     background: #bccec6;
     color: #1ca766;
     font-weight: 700;
-    border-radius: 999px;
+    border-radius: 500px;
     padding: 6px 14px;
+    font-size: 0.9rem;   /* giảm kích thước chữ nếu cần */
 }
 
 .summary-right .icon i {
@@ -654,4 +657,244 @@ html[data-theme="light"] .travel-wish-chip {
 
 html[data-theme="light"] .travel-wish-chip i {
     color: #17a663;
+}
+
+/* Trip stats widget styles */
+.trip-stats-widget {
+    background: linear-gradient(155deg, #0a4f36, #0d6145);
+    color: #e8fff5;
+    border: 1px solid rgba(141, 233, 192, 0.3);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.trip-stats-widget::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(126, 240, 189, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.trip-stats-widget .widget-head h3 {
+    color: #8de9c0;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.trip-stats-widget .widget-desc {
+    color: rgba(232, 255, 245, 0.8);
+    font-size: 0.95rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #7ef0bd, #1abc9c);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(126, 240, 189, 0.5);
+    transform: translateX(4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.stat-card:hover::after {
+    transform: scaleY(1);
+}
+
+.stat-card i {
+    font-size: 2.2rem;
+    color: #7ef0bd;
+    background: rgba(126, 240, 189, 0.15);
+    border-radius: 16px;
+    padding: 14px;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover i {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(232, 255, 245, 0.75);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+}
+
+.next-trip-suggest {
+    margin-top: 24px;
+    padding: 22px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(26, 188, 156, 0.15), rgba(46, 204, 113, 0.1));
+    border: 2px dashed rgba(126, 240, 189, 0.35);
+    position: relative;
+}
+
+.next-trip-suggest::before {
+    content: "💡";
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    background: #0d6145;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 1rem;
+    border: 2px solid rgba(126, 240, 189, 0.4);
+}
+
+.next-trip-suggest h4 {
+    margin: 0 0 10px;
+    color: #8de9c0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.next-trip-suggest p {
+    margin: 0 0 16px;
+    color: #f5fff9;
+    font-size: 0.98rem;
+    line-height: 1.5;
+}
+
+.suggest-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, #1abc9c, #2ecc71);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 12px 28px rgba(26, 188, 156, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.suggest-btn i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.suggest-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(26, 188, 156, 0.45);
+    background: linear-gradient(120deg, #16a085, #27ae60);
+}
+
+.suggest-btn:hover i {
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* Light theme adjustments */
+html[data-theme="light"] .trip-stats-widget {
+    background: linear-gradient(145deg, #e0fff1, #c5f5dd);
+    color: #075033;
+    border-color: rgba(7, 80, 51, 0.15);
+    box-shadow: 0 25px 55px rgba(19, 121, 83, 0.2);
+}
+
+html[data-theme="light"] .trip-stats-widget::before {
+    background: radial-gradient(circle, rgba(23, 166, 99, 0.12), transparent 70%);
+}
+
+html[data-theme="light"] .trip-stats-widget .widget-head h3 {
+    color: #0a5a3d;
+}
+
+html[data-theme="light"] .stat-card {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(7, 80, 51, 0.12);
+}
+
+html[data-theme="light"] .stat-card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(23, 166, 99, 0.35);
+    box-shadow: 0 10px 28px rgba(7, 80, 51, 0.15);
+}
+
+html[data-theme="light"] .stat-card i {
+    color: #17a663;
+    background: rgba(23, 166, 99, 0.12);
+}
+
+html[data-theme="light"] .stat-value {
+    color: #0a3b27;
+    text-shadow: none;
+}
+
+html[data-theme="light"] .stat-label {
+    color: rgba(7, 80, 51, 0.7);
+}
+
+html[data-theme="light"] .next-trip-suggest {
+    background: linear-gradient(135deg, rgba(23, 166, 99, 0.08), rgba(46, 204, 113, 0.06));
+    border-color: rgba(23, 166, 99, 0.25);
+}
+
+html[data-theme="light"] .next-trip-suggest::before {
+    background: #c5f5dd;
+    border-color: rgba(23, 166, 99, 0.3);
+}
+
+html[data-theme="light"] .next-trip-suggest h4 {
+    color: #17a663;
+}
+
+html[data-theme="light"] .next-trip-suggest p {
+    color: #0a3b27;
 }

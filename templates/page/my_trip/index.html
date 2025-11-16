@@ -25,8 +25,8 @@
 						<span class="trip-name">{{ path.path_name }}</span>
 					</div>
 					<div class="summary-right">
-						<span class="icon"><i class="fas fa-road"></i> {{ path.total_distance }} m</span>
-						<span class="icon"><i class="fas fa-clock"></i> {{ path.total_duration }} s</span>
+						<span class="icon"><i class="fas fa-road"></i> {{ path.total_distance }} km</span>
+						<span class="icon"><i class="fas fa-clock"></i> {{ path.total_duration }} minutes</span>
 						<span class="summary-toggle" aria-label="Open details">
 							<span class="toggle-text">Details</span>
 							<i class="fas fa-chevron-down"></i>
@@ -63,6 +63,54 @@
 			</details>
 			{% endfor %}
 		</div>
+
+		<aside class="trip-side-widgets">
+			<section class="widget trip-stats-widget" aria-labelledby="trip-stats-title">
+				<div class="widget-head">
+					<h3 id="trip-stats-title">Trip Statistics</h3>
+				</div>
+				<p class="widget-desc">Your journey overview at a glance.</p>
+
+				<div class="stats-grid">
+					<div class="stat-card">
+						<i class="fa-solid fa-route"></i>
+						<div class="stat-content">
+							<span class="stat-value" id="total-trips">0</span>
+							<span class="stat-label">Total Trips</span>
+						</div>
+					</div>
+					<div class="stat-card">
+						<i class="fa-solid fa-road"></i>
+						<div class="stat-content">
+							<span class="stat-value" id="total-distance">0</span>
+							<span class="stat-label">Total km</span>
+						</div>
+					</div>
+					<div class="stat-card">
+						<i class="fa-solid fa-clock"></i>
+						<div class="stat-content">
+							<span class="stat-value" id="total-time">0</span>
+							<span class="stat-label">Total hours</span>
+						</div>
+					</div>
+					<div class="stat-card">
+						<i class="fa-solid fa-star"></i>
+						<div class="stat-content">
+							<span class="stat-value" id="avg-distance">0</span>
+							<span class="stat-label">Avg km/trip</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="next-trip-suggest">
+					<h4>Next trip idea</h4>
+					<p id="trip-suggestion">Explore more locations to plan your next adventure!</p>
+					<a href="{% url 'locations' %}" class="suggest-btn">
+						<i class="fa-solid fa-compass"></i> Discover Locations
+					</a>
+				</div>
+			</section>
+		</aside>
 	</div>
 	{% else %}
 	<section class="trip-empty-state">
@@ -92,6 +140,15 @@
 
 <script>
 	(() => {
+		const tripSuggestions = [
+			"How about a food tour around District 1?",
+			"Try visiting museums and cultural sites next!",
+			"Plan a waterfront walk along the Saigon River.",
+			"Explore the vibrant nightlife in District 2.",
+			"Combine shopping and dining in a single trip!",
+			"Visit historical landmarks for a heritage tour."
+		];
+
 		function getCookie(name) {
 			let cookieValue = null;
 			if (document.cookie && document.cookie !== '') {
@@ -106,6 +163,28 @@
 		}
 
 		document.addEventListener('DOMContentLoaded', () => {
+			const cards = document.querySelectorAll('.trip-card');
+			let totalDistance = 0;
+			let totalDuration = 0;
+
+			cards.forEach(card => {
+				totalDistance += parseFloat(card.dataset.distance || 0);
+				totalDuration += parseFloat(card.dataset.duration || 0);
+			});
+
+			const totalTrips = cards.length;
+			const totalKm = (totalDistance / 1000).toFixed(1);
+			const totalHours = (totalDuration / 3600).toFixed(1);
+			const avgKm = totalTrips > 0 ? (totalDistance / totalTrips / 1000).toFixed(1) : 0;
+
+			document.getElementById('total-trips').textContent = totalTrips;
+			document.getElementById('total-distance').textContent = totalKm;
+			document.getElementById('total-time').textContent = totalHours;
+			document.getElementById('avg-distance').textContent = avgKm;
+
+			const randomSuggestion = tripSuggestions[Math.floor(Math.random() * tripSuggestions.length)];
+			document.getElementById('trip-suggestion').textContent = randomSuggestion;
+
 			document.querySelectorAll('.delete-btn').forEach(btn => {
 				btn.addEventListener('click', function () {
 					if (!confirm('Are you sure you want to delete this trip?')) return;

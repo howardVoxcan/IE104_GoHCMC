@@ -60,8 +60,8 @@ def trip(request):
         payload.append({
             "id": t.id,
             "path_name": t.path_name,
-            "total_distance": t.total_distance,
-            "total_duration": t.total_duration,
+            "total_distance": int(t.total_distance / 1000),
+            "total_duration": int(t.total_duration / 30),
             # Dùng tên ngắn để so sánh với loc_name trong template (tránh lặp start/end ở between)
             "start_point": t.start_point.location if t.start_point else None,
             "end_point":   t.end_point.location   if t.end_point   else None,

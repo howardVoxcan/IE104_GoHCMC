@@ -33,9 +33,9 @@ This isn’t your average travel app. It blends real-world usefulness with intel
 
 ### System Architecture
 
-**Frontend**: HTML/CSS, JavaScript
-**Backend**: Python Django
-**Container**: Docker
+- **Frontend**: HTML/CSS, JavaScript
+- **Backend**: Python Django
+- **Container**: Docker
 
 ---
 
@@ -87,16 +87,16 @@ IE104_GoHCMC/
 
 ### ✅ Basic
 
-Clean, mobile-friendly homepage and UI
-Explore locations with full detail view and live 3-day weather forecast
-Save favorite locations and manage personalized trip lists
+- Clean, mobile-friendly homepage and UI
+- Explore locations with full detail view and live 3-day weather forecast
+- Save favorite locations and manage personalized trip lists
 
 ### 🚀 Advanced
 
 **🗺 Smart Trip Planner**
-Plan multi-stop trips with custom start and end points
-Route optimized via a simplified Hamiltonian Path algorithm
-Trip paths are saved to user history
+- Plan multi-stop trips with custom start and end points
+- Route optimized via a simplified Hamiltonian Path algorithm
+- Trip paths are saved to user history
 
 ---
 
@@ -122,7 +122,7 @@ Website run in: http://localhost:5000
 
 ---
 
-## 🤝 Đóng góp
+## 🤝 Contribute
 1. Fork repository
 2. Create feature branch
 3. Commit changes

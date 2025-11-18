@@ -2,10 +2,10 @@
 
 ## 🎓 Team Introduction
 
-University: University of Information Technology, VNU-HCM
-Faculty: Information Technology
-Supervisor: MSc. Vo Tan Khoa
-Student Group: Group 3
+- **University**: University of Information Technology, VNU-HCM
+- **Faculty**: Information Technology
+- **Supervisor**: MSc. Vo Tan Khoa
+- **Student Group**: Group 3
 
 ---
 
@@ -102,7 +102,7 @@ Trip paths are saved to user history
 
 ## 🚀 Run the App Locally
 
-```
+```bash
 # Clone the repo
 git clone https://github.com/howardVoxcan/IE104_GoHCMC.git
 cd IE104_GoHCMC

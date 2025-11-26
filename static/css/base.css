@@ -2,13 +2,13 @@
   --main-bg: #f3fff4;
   /* Nền tổng thể */
   --header-color: #FFFFFF;
-  /* Nền Header (sẽ dùng shadow để tách biệt) */
+  /* Nền Header */
   --card-bg: #FFFFFF;
-  /* Nền Card (cũng dùng shadow) */
+  /* Nền Card */
   --border-color: #E0E0E0;
   /* Màu viền/phân cách */
   --hover-bg: #F5F5F5;
-  /* Màu hover (xám rất nhạt) */
+  /* Màu hover */
 
   --primary: #2ECC71;
   /* Xanh ngọc lục bảo - chủ đạo */
@@ -19,44 +19,54 @@
   --danger: #E74C3C;
   /* Đỏ cảnh báo/nguy hiểm */
   --text-main: #2C3E50;
-  /* Chữ chính - đen chuyên nghiệp */
+  /* Chữ chính */
   --text-sub: #7F8C8D;
-  /* Chữ phụ - xám */
+  /* Chữ phụ */
   --disabled-color: #ccc;
   --disabled-border-color: #eee;
 
   --font-main: 'Segoe UI', Arial, sans-serif;
-  --header-height: 64px;
-  
+  --header-height: 6.4rem;
+
   --star-color: #fbb002;
+
+  /* Shadows for consistency */
+  --card-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+  --card-shadow-hover: 0 4px 12px rgba(44, 62, 80, 0.15);
+  --focus-outline: 3px solid var(--primary);
 }
 
 :root[data-theme="dark"] {
   --main-bg: #4c4c4c;
   /* Nền tổng thể */
   --header-color: #1F1F1F;
-  /* Nền Header (tối hơn nền chính) */
+  /* Nền Header */
   --card-bg: #2C2C2C;
-  /* Nền Card (tối, nhưng khác header) */
+  /* Nền Card */
   --border-color: #555555;
   /* Màu viền/phân cách */
   --hover-bg: #4A4A4A;
-  /* Màu hover (sáng hơn nền card/main) */
+  /* Màu hover */
 
   --primary: #27AE60;
   --secondary: #1E8449;
   --accent: #D35400;
   --danger: #C0392B;
   --text-main: #ECF0F1;
-  /* Chữ chính - trắng ngà */
+  /* Chữ chính */
   --text-sub: #95A5A6;
-  /* Chữ phụ - xám nhạt */
+  /* Chữ phụ */
   --disabled-color: #7c7c7c;
   --disabled-border-color: #686868;
   --font-main: 'Segoe UI', Arial, sans-serif;
-  --header-height: 64px;
+  --header-height: 6.4rem;
 
   --star-color: #fbb002;
+
+  /* Shadows for consistency */
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --focus-outline: 3px solid var(--primary);
 }
 
 * {
@@ -69,4 +79,5 @@ body {
   font-family: var(--font-main);
   background: var(--main-bg);
   color: var(--text-main);
+  font-size: 62.5%; /* Sets 1rem = 10px */
 }

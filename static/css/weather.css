@@ -19,7 +19,7 @@
 
 .weather-day-btn {
   border: 2px solid var(--primary);
-  border-radius: 32px;
+  border-radius: 3.2rem;
   padding: 0.6rem 1.2rem;
   background: var(--card-bg);
   color: var(--primary);
@@ -49,7 +49,7 @@
   gap: 1.5rem;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 1.6rem;
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.08);
   padding: 1rem 1.5rem;
   transition: background 0.25s, transform 0.25s;
@@ -57,11 +57,11 @@
 
 .weather-day:hover {
   background: var(--hover-bg);
-  transform: translateY(-3px);
+  transform: translateY(-0.3rem);
 }
 
 .weather-day__label {
-  flex: 0 0 100px;
+  flex: 0 0 10rem;
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--primary);
@@ -75,13 +75,13 @@
 /* ==== BIỂU ĐỒ ==== */
 .weather-chart {
   flex: 1;
-  min-height: 260px;
+  min-height: 26rem;
   max-width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--main-bg);
-  border-radius: 12px;
+  border-radius: 1.2rem;
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.06);
   padding: 0.8rem;
@@ -92,8 +92,8 @@
   position: relative;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1.5rem 3.5rem; /* chừa chỗ cho nút scroll */
+  border-radius: 1.2rem;
+  padding: 1.5rem 3.5rem;
   box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
   width: 100%;
   max-width: 100%;
@@ -115,7 +115,7 @@
   font-weight: 700;
   color: var(--text-sub);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.1rem;
   margin: 0;
 }
 
@@ -130,8 +130,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 38px;
-  height: 38px;
+  width: 3.8rem;
+  height: 3.8rem;
   background: var(--primary);
   color: #fff;
   border: none;
@@ -185,14 +185,14 @@
 .forecast-period {
   background: var(--main-bg);
   border: 2px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 1rem;
   padding: 0.8rem 0.6rem;
   text-align: center;
   transition: all 0.25s ease;
   box-shadow: 0 2px 6px rgba(44, 62, 80, 0.06);
 
   /* KEY: Chia đều cho 7 box với gap 0.7rem */
-  flex: 0 0 calc((100% - 4.2rem) / 7); /* 4.2rem = 6 gaps × 0.7rem */
+  flex: 0 0 calc((100% - 4.2rem) / 7);
   min-width: calc((100% - 4.2rem) / 7);
   max-width: calc((100% - 4.2rem) / 7);
 
@@ -216,7 +216,6 @@
 .forecast-period.is-now {
   border: 2px solid var(--accent);
   box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
-  /* dùng hover-bg để hợp cả light/dark, cộng thêm overlay accent nhạt */
   background: linear-gradient(
     135deg,
     rgba(230, 126, 34, 0.12) 0%,
@@ -226,7 +225,7 @@
 
 .now-indicator {
   position: absolute;
-  top: -10px;
+  top: -1rem;
   left: 50%;
   transform: translateX(-50%);
   background: var(--accent);
@@ -234,7 +233,7 @@
   font-size: 0.55rem;
   font-weight: 700;
   padding: 0.15rem 0.5rem;
-  border-radius: 6px;
+  border-radius: 0.6rem;
   box-shadow: 0 2px 6px rgba(230, 126, 34, 0.5);
   animation: pulse 2s infinite;
   z-index: 5;
@@ -258,8 +257,8 @@
 }
 
 .forecast-period img {
-  width: 42px;
-  height: 42px;
+  width: 4.2rem;
+  height: 4.2rem;
   margin: 0.3rem 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
@@ -297,7 +296,7 @@
 /* ==== LAYOUT MỚI (2 CỘT) ==== */
 .weather-wrapper {
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 40rem 1fr;
   gap: 1.5rem;
   padding: 2rem 2rem 2rem 2rem;
   max-width: 100%;
@@ -313,7 +312,7 @@
   gap: 2rem;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 1.2rem;
   padding: 3rem 2rem;
   box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
   height: calc(100vh - var(--header-height) - 12rem);
@@ -325,7 +324,7 @@
 .tab-btn {
   padding: 2.5rem 2rem;
   border: 2px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 1.6rem;
   background: var(--main-bg);
   color: var(--text-main);
   font-weight: 600;
@@ -338,7 +337,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 4px rgba(44, 62, 80, 0.05);
-  min-height: 120px;
+  min-height: 12rem;
 }
 
 .tab-btn.active {
@@ -362,7 +361,7 @@
   background: var(--hover-bg);
   border-color: var(--primary);
   color: var(--primary);
-  transform: translateY(-4px);
+  transform: translateY(-0.4rem);
   box-shadow: 0 6px 12px rgba(44, 62, 80, 0.2);
 }
 
@@ -371,7 +370,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  min-height: 600px;
+  min-height: 60rem;
   max-width: 100%;
   overflow: hidden;
 }
@@ -383,7 +382,7 @@
   gap: 1.5rem;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 1.2rem;
   padding: 2rem;
   box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
   flex: 1;
@@ -402,13 +401,13 @@
   width: 100%;
   background: var(--main-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 1.2rem;
   padding: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
-  min-height: 400px;
+  min-height: 40rem;
   max-width: 100%;
 }
 
@@ -416,9 +415,9 @@
 .chart-image-container .chart-img {
   max-width: 100%;
   width: 100%;
-  max-height: 650px;
+  max-height: 65rem;
   height: auto;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   object-fit: contain;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
@@ -451,8 +450,8 @@
 
 /* Icon ở giữa (card hourly – khác icon dự báo mưa/nắng chung) */
 .forecast-period img {
-  width: 70px; /* tăng so với mặc định */
-  height: 70px;
+  width: 7rem;
+  height: 7rem;
   margin: 0.8rem 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   flex-shrink: 0;
@@ -487,7 +486,7 @@
 }
 
 /* ======= Responsive ======= */
-@media (max-width: 900px) {
+@media (max-width: 90rem) {
   .weather-wrapper {
     grid-template-columns: 1fr;
     padding: 1rem;
@@ -504,8 +503,8 @@
   }
 
   .tab-btn {
-    min-width: 140px;
-    min-height: 80px;
+    min-width: 14rem;
+    min-height: 8rem;
     flex-shrink: 0;
     padding: 1.5rem 1rem;
     font-size: 1rem;
@@ -523,8 +522,8 @@
 
   .scroll-btn-left,
   .scroll-btn-right {
-    width: 32px;
-    height: 32px;
+    width: 3.2rem;
+    height: 3.2rem;
     font-size: 1.2rem;
   }
 
@@ -532,11 +531,11 @@
 
   .chart-image-container {
     padding: 1rem;
-    min-height: 280px;
+    min-height: 28rem;
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 102.4rem) {
   .weather-wrapper {
     padding: 1.5rem 1rem;
     max-width: 100%;
@@ -557,7 +556,7 @@
 }
 
 /* Responsive - Điều chỉnh số box hiển thị */
-@media (max-width: 1400px) {
+@media (max-width: 140rem) {
   .forecast-period {
     flex: 0 0 calc((100% - 3.5rem) / 6);
     min-width: calc((100% - 3.5rem) / 6);
@@ -565,7 +564,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 120rem) {
   .forecast-period {
     flex: 0 0 calc((100% - 2.8rem) / 5);
     min-width: calc((100% - 2.8rem) / 5);
@@ -573,7 +572,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 90rem) {
   .detail-box { padding: 1rem 2.5rem; }
 
   .forecast-period {
@@ -584,13 +583,13 @@
 
   .scroll-btn-left,
   .scroll-btn-right {
-    width: 32px;
-    height: 32px;
+    width: 3.2rem;
+    height: 3.2rem;
     font-size: 1.2rem;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 60rem) {
   .forecast-period {
     flex: 0 0 calc((100% - 1.4rem) / 3);
     min-width: calc((100% - 1.4rem) / 3);
@@ -599,16 +598,16 @@
   }
 
   .forecast-period img {
-    width: 36px;
-    height: 36px;
+    width: 3.6rem;
+    height: 3.6rem;
   }
 
   .period-temp { font-size: 1rem; }
 
   .scroll-btn-left,
   .scroll-btn-right {
-    width: 30px;
-    height: 30px;
+    width: 3rem;
+    height: 3rem;
     font-size: 1.1rem;
   }
 

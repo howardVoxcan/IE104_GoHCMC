@@ -8,12 +8,14 @@
   font-size: 1.2rem;
   box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
   height: var(--header-height);
-  padding: 3rem 2em;
+  padding: 0.3rem 2rem;
   gap: 1.5rem;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 120rem;
   z-index: 1000;
   background-color: var(--main-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -23,8 +25,10 @@
 .header {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 120rem;
   z-index: 1000;
   background-color: var(--main-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -38,7 +42,7 @@
 }
 
 .header__logo-img {
-  height: 48px;
+  height: 4.8rem;
   width: auto;
   display: block;
 }
@@ -55,13 +59,14 @@
   flex-direction: row;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 
 .nav-link {
   color: var(--text-main);
   text-decoration: none;
   padding: 0.6rem 1.2rem;
-  border-radius: 16px;
+  border-radius: 1.6rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -79,9 +84,9 @@
 .search-form {
   display: flex;
   align-items: center;
-  width: 180px;
+  width: 18rem;
   background: var(--main-bg);
-  border-radius: 32px;
+  border-radius: 3.2rem;
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.2);
   margin-left: 0.3rem;
   transition: width 0.3s;
@@ -95,7 +100,7 @@
 .search-input {
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: 32px 0 0 32px;
+  border-radius: 3.2rem 0 0 3.2rem;
   outline: none;
   font-size: 0.9rem;
   color: var(--text-main);
@@ -108,7 +113,7 @@
   background: transparent;
   color: var(--text-sub);
   border: none;
-  border-radius: 0 32px 32px 0;
+  border-radius: 0 3.2rem 3.2rem 0;
   padding: 0.4rem 0.8rem;
   cursor: pointer;
   font-size: 1.15rem;
@@ -117,7 +122,7 @@
 
 .button {
   border: 2px solid var(--primary);
-  border-radius: 32px;
+  border-radius: 3.2rem;
   padding: 0.6rem 1.5rem;
   font-size: 1.15rem;
   cursor: pointer;
@@ -142,7 +147,7 @@
 
 .user-btn {
   border: 2px solid var(--primary);
-  border-radius: 32px;
+  border-radius: 3.2rem;
   padding: 0.6rem 1.5rem;
   font-size: 1.15rem;
   cursor: pointer;
@@ -153,7 +158,7 @@
   align-items: center;
   gap: 0.5rem;
   transition: background 0.2s, color 0.2s;
-  min-width: 140px;
+  min-width: 14rem;
   box-sizing: border-box;
 }
 
@@ -162,18 +167,18 @@
   position: absolute;
   left: 0;
   top: 100%;
-  margin-top: 10px;
-  min-width: 220px;
+  margin-top: 1rem;
+  min-width: 22rem;
   background: #fff;
   color: var(--primary);
-  border-radius: 16px;
+  border-radius: 1.6rem;
   box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
   z-index: 100;
   padding: 0.7rem 0;
   flex-direction: column;
   gap: 0.2rem;
   font-size: 1.08rem;
-  border: 1.5px solid #f0f0f0;
+  border: 1px solid #f0f0f0;
 }
 
 .user-menu.open {
@@ -184,9 +189,9 @@
 .user-menu button {
   display: flex;
   align-items: center;
-  gap: 0.8em;
+  gap: 0.8rem;
   width: 100%;
-  padding: 0.7em 1.4em;
+  padding: 0.7rem 1.4rem;
   background: none;
   border: none;
   color: var(--primary);
@@ -195,7 +200,7 @@
   text-align: left;
   cursor: pointer;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   transition: background 0.18s, color 0.18s;
   box-shadow: none;
 }
@@ -211,8 +216,8 @@
 }
 
 .user-menu i {
-  font-size: 1.15em;
-  min-width: 1.3em;
+  font-size: 1.15rem;
+  min-width: 1.3rem;
   text-align: center;
   color: inherit !important;
   transition: color 0.18s;
@@ -236,12 +241,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   background: var(--main-bg);
   border: 2px solid var(--primary);
-  /* Keep border primary */
   font-size: 1.15rem;
   box-shadow: 0 2px 10px rgba(44, 62, 80, 0.12);
   transition: background 0.2s, border 0.2s, color 0.2s, transform 0.5s;
@@ -250,7 +254,6 @@
 .theme-switch:hover,
 .header__search-icon:hover {
   background: var(--primary);
-  /* Keep background primary */
   border-color: var(--primary);
 }
 
@@ -264,31 +267,25 @@
 .theme-switch:hover .theme-switch__icon,
 .header__search-icon:hover i {
   color: var(--accent);
-  /* Change icon color to accent on hover */
   transform: rotate(360deg);
-  /* Add rotation effect */
 }
 
 :root[data-theme="dark"] .theme-switch,
 :root[data-theme="dark"] .header__search-icon {
   background: var(--card-bg);
   border-color: var(--primary);
-  /* Keep border primary */
 }
 
 :root[data-theme="dark"] .theme-switch:hover,
 :root[data-theme="dark"] .header__search-icon:hover {
   background: var(--primary);
-  /* Keep background primary */
   border-color: var(--primary);
 }
 
 :root[data-theme="dark"] .theme-switch:hover .theme-switch__icon,
 :root[data-theme="dark"] .header__search-icon:hover i {
   color: var(--accent);
-  /* Change icon color to accent on hover */
   transform: rotate(360deg);
-  /* Add rotation effect */
 }
 
 html,
@@ -311,7 +308,7 @@ main {
 
 .main-content {
   padding: 2rem;
-  padding-top: 80px;
+  padding-top: 8rem;
 }
 
 /* Footer */
@@ -338,8 +335,8 @@ main {
 }
 
 .footer-column {
-  flex: 1 1 260px;
-  min-width: 220px;
+  flex: 1 1 26rem;
+  min-width: 22rem;
   margin-bottom: 1.2rem;
   display: flex;
   flex-direction: column;
@@ -364,8 +361,8 @@ main {
   justify-content: center;
   background: #555;
   color: #eee;
-  width: 38px;
-  height: 38px;
+  width: 3.8rem;
+  height: 3.8rem;
   border-radius: 50%;
   font-size: 1.25rem;
   transition: background 0.2s, color 0.2s, transform 0.18s;
@@ -375,7 +372,7 @@ main {
 .social-links a:hover {
   background: var(--primary);
   color: #fff;
-  transform: translateY(-2px) scale(1.08);
+  transform: translateY(-2px);
 }
 
 .footer-bottom {
@@ -388,27 +385,27 @@ main {
 
 /* Typography riêng cho footer */
 .footer h3 {
-  font-size: 28px;
+  font-size: 2.8rem;
   color: var(--primary);
-  margin: 10px 0;
-  text-align: center;      /* nếu bạn muốn căn giữa */
-  font-weight: 700;        /* tùy, có thể bỏ */
+  margin: 1rem 0;
+  text-align: center;
+  font-weight: 700;
 }
 
 .footer p {
-  margin: 4px 0;
+  margin: 0.4rem 0;
   color: #ECF0F1;
-  text-align: center;      /* để đồng bộ giữa các trang */
+  text-align: center;
   line-height: 1.6;
 }
 
 /* Back to Top button */
 .back-to-top {
   position: fixed;
-  bottom: 100px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
+  bottom: 2rem;
+  right: 2rem;
+  width: 5rem;
+  height: 5rem;
   background-color: var(--primary);
   color: #fff;
   border: none;
@@ -427,11 +424,38 @@ main {
 }
 
 .back-to-top i {
-  font-size: 20px;
+  font-size: 2rem;
+}
+
+/* Responsive header scaling */
+@media (max-width: 120rem) {
+  .header {
+    gap: 1.5rem;
+    padding: 0.3rem 2rem;
+  }
+  .nav-link {
+    padding: 0.6rem 1.2rem;
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 102.4rem) {
+  .header {
+    gap: 1rem;
+    padding: 0.3rem 1.5rem;
+  }
+  .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+  }
+  .header__user .button {
+    padding: 0.5rem 1.2rem;
+    font-size: 1.3rem;
+  }
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 90rem) {
   .footer-grid {
     flex-direction: column;
     align-items: center;

@@ -1,18 +1,18 @@
 .trip-container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 24px;
+    max-width: 120rem;
+    margin: 3rem auto;
+    padding: 0 2.4rem;
 }
 
 .trip-layout {
     display: flex;
-    justify-content: space-between; /* lề trái = lề phải */
-    gap: 20px;                      /* giảm khoảng trống giữa 2 cột */
+    justify-content: space-between;
+    gap: 2rem;
     align-items: flex-start;
 }
 
 .trip-main {
-    flex: 0 1 880px;   
+    flex: 0 1 88rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -20,31 +20,31 @@
 }
 
 .trip-side-widgets {
-    flex: 0 0 500px;                /* thu hẹp mini timeline lại nếu cần */
+    flex: 0 0 50rem;
     margin-left: 0;
     position: sticky;
-    top: 120px;
+    top: 12rem;
     align-self: flex-start;
 }
 
 .trip-container {
-    max-width: 1320px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 132rem;
+    margin: 2rem auto;
+    padding: 2rem;
 }
 
 .trip-layout {
     display: flex;
-    gap: 32px;
+    gap: 3.2rem;
     align-items: flex-start;
-    justify-content: center;   /* gom 2 cột vào giữa */
+    justify-content: center;
 }
 
 .trip-main {
-    flex: 0 1 760px;
+    flex: 0 1 76rem;
     display: flex;
     flex-direction: column;
-    align-items: center;        /* tiêu đề + card nằm giữa */
+    align-items: center;
     width: 100%;
 }
 
@@ -54,66 +54,65 @@
 }
 
 .trip-card {
-    margin: 0 auto 25px;
+    margin: 0 auto 2.5rem;
 }
 
 .trip-side-widgets {
-    width: 320px;
+    width: 32rem;
     position: sticky;
-    top: 120px;
+    top: 12rem;
     align-self: flex-start;
 }
 
 .trip-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 120rem;
+    margin: 2rem auto;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 .trip-header {
-    font-size: 28px;
-    color: #05915d;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
     text-align: left;
 }
 
 /* Card container */
 .trip-card {
     background: #fff;
-    border-radius: 10px;
+    border-radius: 1rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin: 0 auto 25px 0;
+    margin: 0 auto 2.5rem 0;
     overflow: hidden;
     transition: transform 0.2s ease;
-    max-width: 720px;   /* thu hẹp card */
+    max-width: 72rem;
     margin-left: 0;
     width: 100%;
 }
 
 .trip-card:hover {
-    background-color: #05915d;
+    background-color: var(--primary);
 }
 
 /* Summary now split into left/right */
 .trip-card-summary {
     display: flex;
     align-items: center;
-    column-gap: 10px;        
-    padding: 16px 20px;
+    column-gap: 1rem;
+    padding: 1.6rem 2rem;
     cursor: pointer;
     list-style: none;
-    background-color: #00aa6c;
-    gap: 14px;
+    background-color: var(--secondary);
+    gap: 1.4rem;
     justify-content: space-between;
-    /* Emphasize name vs metrics */
 }
 
 .summary-left {
-    flex: 0 0 auto;      /* <— điều khiển độ rộng phần tiêu đề */
-    margin-right: 12px;       /* ← giảm / tăng để đổi khoảng đệm sau tiêu đề */
+    flex: 0 0 auto;
+    margin-right: 1.2rem;
     display: flex;
     flex-direction: column;
 }
@@ -124,17 +123,17 @@
     letter-spacing: 0.4px;
     color: #fff;
     text-transform: capitalize;
-    text-shadow: none;               
+    text-shadow: none;
 }
 
 .summary-right {
     margin-left: auto;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.35);  
+    gap: 1rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 99.9rem;
+    background: rgba(255, 255, 255, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.55);
 }
 
@@ -142,8 +141,8 @@
     background: #bccec6;
     color: #1ca766;
     font-weight: 700;
-    border-radius: 999px;
-    padding: 6px 14px;
+    border-radius: 99.9rem;
+    padding: 0.6rem 1.4rem;
 }
 
 .summary-right .icon i {
@@ -153,9 +152,9 @@
 .summary-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 999px;
+    gap: 0.6rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 99.9rem;
     background: rgba(255, 255, 255, 0.18);
     color: #ffffff;
     font-weight: 600;
@@ -170,7 +169,7 @@
 
 .trip-card-summary:hover .summary-toggle {
     background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
+    transform: translateY(-0.1rem);
 }
 
 .trip-card[open] .summary-toggle i {
@@ -180,21 +179,21 @@
 /* Font sizes increased */
 .trip-name {
     color: white;
-    font-size: 22px;
+    font-size: 2.2rem;
     font-weight: 700;
 }
 
 .summary-right .icon {
     color: white;
-    font-size: 18px;
+    font-size: 1.8rem;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.6rem;
 }
 
 #trip-toggle-icon {
     color: white;
-    margin-left: 10px;
+    margin-left: 1rem;
     transition: transform 0.2s ease;
 }
 
@@ -204,26 +203,26 @@
 
 /* Body content */
 .trip-card-body {
-    padding: 22px 24px;
+    padding: 2.2rem 2.4rem;
     background: #fcfffd;
     border-top: 1px solid rgba(0, 170, 108, 0.1);
-    border-radius: 0 0 18px 18px;
+    border-radius: 0 0 1.8rem 1.8rem;
 }
 
 .trip-locations {
     list-style: none;
-    margin: 0 0 18px;
+    margin: 0 0 1.8rem;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
 }
 
 .trip-locations li {
     display: flex;
-    gap: 10px;
-    padding: 10px 14px;
-    border-radius: 12px;
+    gap: 1rem;
+    padding: 1rem 1.4rem;
+    border-radius: 1.2rem;
     background: rgba(0, 170, 108, 0.08);
     align-items: center;
     font-size: 0.95rem;
@@ -232,7 +231,7 @@
 
 .trip-locations li strong {
     color: #008e5f;
-    min-width: 48px;
+    min-width: 4.8rem;
     text-transform: uppercase;
     font-weight: 700;
 }
@@ -240,7 +239,7 @@
 .dashed-line {
     border: none;
     border-top: 1px dashed rgba(0, 170, 108, 0.4);
-    margin: 6px 0 18px;
+    margin: 0.6rem 0 1.8rem;
     width: 100%;
 }
 
@@ -248,9 +247,9 @@
 .delete-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border-radius: 999px;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    border-radius: 99.9rem;
     border: none;
     background: linear-gradient(135deg, #ff7b74, #ff4d69);
     color: #fff;
@@ -267,7 +266,7 @@
 }
 
 .delete-btn:hover {
-    transform: translateY(-1px);
+    transform: translateY(-0.1rem);
     box-shadow: 0 14px 24px rgba(255, 77, 105, 0.32);
 }
 
@@ -281,31 +280,31 @@
     text-align: center;
     color: #888;
     font-style: italic;
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 
 .trip-empty-state {
     width: 100%;
-    min-height: calc(100vh - 220px);
+    min-height: calc(100vh - 22rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 4rem 2rem;
     text-align: center;
 }
 
 .trip-empty-card {
     margin: 0 auto;
-    max-width: 560px;
+    max-width: 56rem;
     width: 100%;
-    padding: 40px 36px;
-    border-radius: 24px;
+    padding: 4rem 3.6rem;
+    border-radius: 2.4rem;
     background: var(--card-bg, #f7fff9);
     border: 1px solid rgba(5, 145, 93, 0.18);
     box-shadow: 0 25px 60px rgba(5, 145, 93, 0.15);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1.6rem;
 }
 
 html[data-theme="dark"] .trip-empty-card {
@@ -314,22 +313,22 @@ html[data-theme="dark"] .trip-empty-card {
 }
 
 .empty-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 2rem;
     margin: 0 auto;
     background: rgba(5, 145, 93, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #05915d;
-    font-size: 32px;
+    font-size: 3.2rem;
 }
 
 .trip-empty-card h2 {
     margin: 0;
     color: #05915d;
-    font-size: 26px;
+    font-size: 2.6rem;
 }
 
 .trip-empty-card p {
@@ -345,21 +344,21 @@ html[data-theme="dark"] .trip-empty-card {
     color: var(--text-main, #34495e);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.8rem;
     line-height: 1.4;
 }
 
 .trip-empty-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 1.2rem;
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 0.8rem;
 }
 
 .trip-empty-actions a {
-    border-radius: 999px;
-    padding: 12px 22px;
+    border-radius: 99.9rem;
+    padding: 1.2rem 2.2rem;
     font-weight: 600;
     text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -371,7 +370,7 @@ html[data-theme="dark"] .trip-empty-card {
     box-shadow: 0 12px 25px rgba(17, 201, 131, 0.3);
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.8rem;
 }
 
 .empty-secondary {
@@ -380,35 +379,35 @@ html[data-theme="dark"] .trip-empty-card {
 }
 
 .trip-empty-actions a:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.2rem);
 }
 
 .trip-layout {
     display: flex;
-    gap: 32px;
+    gap: 3.2rem;
     align-items: flex-start;
-    justify-content: center;   /* gom 2 cột vào giữa */
+    justify-content: center;
 }
 
 .trip-main {
-    flex: 0 1 760px;
+    flex: 0 1 76rem;
     display: flex;
     flex-direction: column;
-    align-items: center;        /* tiêu đề + card nằm giữa */
+    align-items: center;
     width: 100%;
 }
 
 .trip-side-widgets {
-    width: 320px;
+    width: 32rem;
     position: sticky;
-    top: 120px;
+    top: 12rem;
     align-self: flex-start;
 }
 
 .widget {
     background: #fff;
-    border-radius: 18px;
-    padding: 18px 20px;
+    border-radius: 1.8rem;
+    padding: 1.8rem 2rem;
     box-shadow: 0 15px 35px rgba(5, 145, 93, 0.12);
     border: 1px solid rgba(5, 145, 93, 0.12);
 }
@@ -423,7 +422,7 @@ html[data-theme="dark"] .widget {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
 }
 
 .widget-head h3 {
@@ -433,7 +432,7 @@ html[data-theme="dark"] .widget {
 }
 
 .widget-desc {
-    margin: 8px 0 12px;
+    margin: 0.8rem 0 1.2rem;
     font-size: 0.9rem;
     color: #4b4b4b;
 }
@@ -443,8 +442,8 @@ html[data-theme="dark"] .widget {
     border: 1px dashed rgba(5, 145, 93, 0.4);
     background: transparent;
     color: #05915d;
-    border-radius: 999px;
-    padding: 4px 12px;
+    border-radius: 99.9rem;
+    padding: 0.4rem 1.2rem;
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
@@ -456,17 +455,17 @@ html[data-theme="dark"] .widget {
 
 .timeline-pool {
     border: 1px dashed rgba(5,145,93,0.4);
-    border-radius: 14px;
-    padding: 12px;
-    margin-bottom: 14px;
+    border-radius: 1.4rem;
+    padding: 1.2rem;
+    margin-bottom: 1.4rem;
 }
-.pool-label { font-weight: 600; margin-bottom: 8px; }
+.pool-label { font-weight: 600; margin-bottom: 0.8rem; }
 .timeline-chips,
 .slot-body {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    min-height: 34px;
+    gap: 0.8rem;
+    min-height: 3.4rem;
 }
 .pool-placeholder,
 .slot-placeholder {
@@ -475,8 +474,8 @@ html[data-theme="dark"] .widget {
 }
 .timeline-slot {
     border: 1px solid rgba(5,145,93,0.2);
-    border-radius: 16px;
-    padding: 12px;
+    border-radius: 1.6rem;
+    padding: 1.2rem;
     background: rgba(5,145,93,0.04);
     transition: border-color 0.2s, background 0.2s;
 }
@@ -486,17 +485,17 @@ html[data-theme="dark"] .widget {
 }
 .slot-head {
     display: flex;
-    gap: 10px;
+    gap: 1rem;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
 
 .slot-title-input,
 .slot-time-input {
     border: 1px solid rgba(5,145,93,0.25);
     background: #fff;
-    border-radius: 999px;
-    padding: 6px 14px;
+    border-radius: 99.9rem;
+    padding: 0.6rem 1.4rem;
     font-size: 0.9rem;
     color: #05915d;
     flex: 1;
@@ -509,7 +508,7 @@ html[data-theme="dark"] .widget {
 }
 
 .slot-time-input {
-    flex: 0 0 130px;
+    flex: 0 0 13rem;
     text-align: right;
 }
 
@@ -522,8 +521,8 @@ html[data-theme="dark"] .widget {
 .timeline-chip {
     background: #05915d;
     color: #fff;
-    border-radius: 999px;
-    padding: 6px 14px;
+    border-radius: 99.9rem;
+    padding: 0.6rem 1.4rem;
     font-size: 0.85rem;
     cursor: grab;
     position: relative;
@@ -534,17 +533,17 @@ html[data-theme="dark"] .widget {
     background: rgba(255,255,255,0.2);
     color: #fff;
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
+    width: 1.8rem;
+    height: 1.8rem;
     font-size: 0.8rem;
-    margin-left: 6px;
+    margin-left: 0.6rem;
     cursor: pointer;
 }
 
 @keyframes trip-card-reveal {
     from {
         opacity: 0;
-        transform: translateY(-6px);
+        transform: translateY(-0.6rem);
     }
     to {
         opacity: 1;
@@ -569,11 +568,11 @@ html[data-theme="dark"] .widget {
 }
 
 .trip-container.is-empty {
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh - 16rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 24px;
+    padding: 6rem 2.4rem;
 }
 
 .trip-container.is-empty .trip-empty-state {
@@ -586,7 +585,7 @@ html[data-theme="dark"] .widget {
     margin: 0;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 110rem) {
     .trip-layout {
         flex-direction: column;
     }
@@ -610,19 +609,19 @@ html[data-theme="dark"] .widget {
 
 .travel-wish-list {
     list-style: none;
-    margin: 12px 0 0;
+    margin: 1.2rem 0 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
 }
 
 .travel-wish-chip {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    padding: 12px 14px;
-    border-radius: 16px;
+    gap: 1rem;
+    padding: 1.2rem 1.4rem;
+    border-radius: 1.6rem;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: #f5fff9;
@@ -632,7 +631,7 @@ html[data-theme="dark"] .widget {
 
 .travel-wish-chip i {
     color: #7ef0bd;
-    margin-top: 2px;
+    margin-top: 0.2rem;
 }
 
 html[data-theme="light"] .travel-wish-widget {

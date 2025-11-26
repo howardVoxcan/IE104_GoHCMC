@@ -1,17 +1,17 @@
 .favourite-content-wrapper { 
     display: flex; 
     flex-wrap: wrap; 
-    gap: 30px; 
+    gap: 3rem; 
 }
 .location-list-column { 
     flex: 2; 
-    min-width: 350px; 
+    min-width: 35rem; 
 }
 .trip-setup-column {
     flex: 1;
-    min-width: 300px;
+    min-width: 30rem;
     position: sticky;
-    top: 20px;
+    top: 2rem;
     align-self: flex-start;
 }
 
@@ -19,13 +19,13 @@
     width: 100% !important; 
 }
 
-/* 3. CARD MỚI (CHỈ CÒN DETAILS) */
-.location-item-card { /* Đổi tên class để tránh nhầm lẫn */
+/* Location Item Card */
+.location-item-card { 
     background: var(--card-bg); 
-    border-radius: 10px;
+    border-radius: 1rem; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    margin-bottom: 15px;
-    overflow: hidden; /* Quan trọng để bo góc */
+    margin-bottom: 1.5rem; 
+    overflow: hidden; 
 }
 html[data-theme="dark"] .location-item-card {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
@@ -34,7 +34,7 @@ html[data-theme="dark"] .location-item-card {
 /* Style cho link tên địa điểm */
 .summary-location-link {
     margin: 0;
-    font-size: 16px;
+    font-size: 1.6rem;
     flex-grow: 1;
     font-weight: bold;
     color: var(--text-light, white);
@@ -49,43 +49,43 @@ html[data-theme="dark"] .location-item-card {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 12px;
-    margin-right: 15px; /* Khoảng cách với checkbox */
-    background-color: var(--danger); /* Màu nền đỏ */
+    padding: 0.8rem 1.2rem;
+    margin-right: 1.5rem;
+    background-color: var(--danger);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: pointer;
     font-weight: bold;
     font-size: 0.9em;
     transition: background-color 0.2s, opacity 0.2s;
-    flex-shrink: 0; /* Không bị co lại */
+    flex-shrink: 0;
 }
 .delete-button:hover {
     background-color: #c0392b;
     opacity: 0.9;
 }
 .delete-button i {
-    margin-right: 8px;
+    margin-right: 0.8rem;
     font-size: 1em;
 }
 
 #details-section {
-    padding: 15px;
+    padding: 1.5rem;
     background: var(--main-bg);
-    border-top: 1px solid var(--border-color); 
+    border-top: 1px solid var(--border-color);
 }
 
 #details-section label {
     color: var(--text-main);
     font-size: 0.9rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
     display: block;
 }
 
 .details-section {
-    padding: 16px 18px;
+    padding: 1.6rem 1.8rem;
     background: var(--main-bg);
     border-top: 1px dashed var(--border-color);
 }
@@ -93,24 +93,24 @@ html[data-theme="dark"] .location-item-card {
 .extra-inputs {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin: 10px 0 0;
-    padding: 6px 0 0;
+    gap: 1.4rem;
+    margin: 1rem 0 0;
+    padding: 0.6rem 0 0;
 }
 
 .extra-field label {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-main);
-    margin-bottom: 4px;
+    margin-bottom: 0.4rem;
 }
 
 .extra-input-shell {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 9px 12px;
-    border-radius: 10px;
+    gap: 0.8rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 1rem;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     transition: border-color 0.2s, box-shadow 0.2s;
@@ -145,41 +145,42 @@ html[data-theme="dark"] .location-item-card {
 
 .extra-inputs {
     border-top: none; 
-    margin: 10px 0 0 0; 
+    margin: 1rem 0 0 0; 
     padding-top: 0;
 }
 
 .extra-inputs input, .extra-inputs select {
     width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid var(--border-color); 
+    padding: 0.8rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--border-color);
     background-color: var(--card-bg); 
     color: var(--text-main); 
-    margin-top: 5px;
-    margin-bottom: 10px;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-/* 5. CSS CHO CỘT BÊN PHẢI (SẠCH SẼ) */
+/* Trip Setup Column */
 .trip-setup-column label {
     font-weight: bold; display: block;
-    margin-top: 15px; margin-bottom: 5px;
+    margin-top: 1.5rem; margin-bottom: 0.5rem;
     font-size: 0.9rem; color: var(--text-main);
     transition: color 0.3s;
 }
 .trip-setup-column select, 
 .trip-setup-column input {
-    width: 100%; padding: 8px; border-radius: 4px;
-    border: 1px solid var(--border-color); 
+    width: 100%; padding: 0.8rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--border-color);
     background-color: var(--card-bg); 
     color: var(--text-main); 
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 .selected-list-header {
     font-size: 1rem; color: var(--text-main);
-    margin-top: 20px; margin-bottom: 10px;
-    border-bottom: 1px solid var(--border-color); 
-    padding-bottom: 5px;
+    margin-top: 2rem; margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
     transition: color 0.3s, border-color 0.3s;
 }
 #selected-locations-list {
@@ -189,38 +190,38 @@ html[data-theme="dark"] .location-item-card {
 #selected-locations-list li {
     background: var(--hover-bg); 
     color: var(--text-main); 
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin-bottom: 5px;
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    margin-bottom: 0.5rem;
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* CSS CHO THÔNG BÁO LỖI/THÀNH CÔNG */
-.messages { margin-bottom: 15px; }
+/* Messages */
+.messages { margin-bottom: 1.5rem; }
 .messages .error {
     color: var(--danger);
     background-color: rgba(231, 76, 60, 0.1);
     border: 1px solid var(--danger);
-    padding: 10px; border-radius: 5px;
+    padding: 1rem; border-radius: 0.5rem;
 }
 :root[data-theme="dark"] .messages .error { background-color: rgba(192, 57, 43, 0.1); }
 .messages .success {
     color: var(--secondary);
     background-color: rgba(39, 174, 96, 0.1);
     border: 1px solid var(--secondary);
-    padding: 10px; border-radius: 5px;
+    padding: 1rem; border-radius: 0.5rem;
 }
 :root[data-theme="dark"] .messages .success { background-color: rgba(30, 132, 73, 0.1); }
 
 .favourite-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 120rem;
+    margin: 2rem auto;
+    padding: 2rem;
 }
 .favourite-header {
-    font-size: 28px;
+    font-size: 2.8rem;
     color: var(--primary);
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     text-align: left;
 }
 
@@ -228,27 +229,26 @@ html[data-theme="dark"] .location-item-card {
     background-color: var(--secondary); 
     border: 1px var(--secondary) solid; 
     display: flex;
-    justify-content: space-between; /* Cách label và checkbox */
+    justify-content: space-between;
     align-items: center;
-    padding: 10px 16px;
+    padding: 1rem 1.6rem;
     font-weight: bold;
     color: white;
 }
 
 .location-summary label {
     margin: 0;
-    font-size: 16px;
+    font-size: 1.6rem;
     flex-grow: 1;
 }
 
 .location-summary input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    margin-left: 12px;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-left: 1.2rem;
     cursor: pointer;
     flex-shrink: 0;
 }
-
 
 #toggle-checkbox {
     color: var(--primary);
@@ -264,7 +264,7 @@ html[data-theme="dark"] .location-item-card {
 }
 
 .details-section .line {
-    margin: 10px 0;
+    margin: 1rem 0;
 }
 
 .dashed-line {
@@ -272,15 +272,15 @@ html[data-theme="dark"] .location-item-card {
 }
 
 h3 {
-    font-size: 28px;
+    font-size: 2.8rem;
     color: var(--primary);
-    margin: 10px 0;
+    margin: 1rem 0;
 }
 
 .trip {
     position: relative;
-    padding: 26px 24px 30px;
-    border-radius: 22px;
+    padding: 2.6rem 2.4rem 3rem;
+    border-radius: 2.2rem;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     box-shadow: 0 18px 45px rgba(10, 166, 90, 0.12);
@@ -296,14 +296,14 @@ h3 {
 .trip-hero-tag {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 999px;
+    gap: 0.8rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 99.9rem;
     background: rgba(39,174,96,0.18);
     color: var(--primary);
     font-weight: 700;
     letter-spacing: 0.5px;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
     text-transform: uppercase;
     font-size: 0.8rem;
 }
@@ -313,10 +313,10 @@ h3 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 1rem;
     border: none;
-    border-radius: 999px;
-    padding: 14px 18px;
+    border-radius: 99.9rem;
+    padding: 1.4rem 1.8rem;
     font-size: 1rem;
     font-weight: 700;
     background-image: linear-gradient(120deg, #1abc9c, #2ecc71);
@@ -326,27 +326,27 @@ h3 {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .primary-cta:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.2rem);
     box-shadow: 0 18px 30px rgba(46,204,113,0.35);
 }
 
 .empty-favourite-state {
-    min-height: 350px;
-    margin: 40px auto;
-    max-width: 520px;
-    padding: 40px 30px;
-    border-radius: 16px;
+    min-height: 35rem;
+    margin: 4rem auto;
+    max-width: 52rem;
+    padding: 4rem 3rem;
+    border-radius: 1.6rem;
     background: var(--card-bg);
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 1.4rem;
     justify-content: center;
     align-items: center;
 }
 .empty-favourite-state .empty-title {
-    font-size: 26px;
+    font-size: 2.6rem;
     font-weight: 700;
     color: var(--primary);
 }
@@ -355,9 +355,9 @@ h3 {
     font-size: 1rem;
 }
 .back-to-locations-btn {
-    margin-top: 10px;
-    padding: 12px 28px;
-    border-radius: 30px;
+    margin-top: 1rem;
+    padding: 1.2rem 2.8rem;
+    border-radius: 3rem;
     border: none;
     background: var(--secondary);
     color: #fff;
@@ -367,23 +367,23 @@ h3 {
 }
 .back-to-locations-btn:hover {
     background: var(--primary);
-    transform: translateY(-2px);
+    transform: translateY(-0.2rem);
 }
 
 .trip-heading {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
+    gap: 1.2rem;
 }
 .trip-name-subtitle {
-    margin: 4px 0 0;
+    margin: 0.4rem 0 0;
     font-size: 0.9rem;
     color: var(--text-main);
     opacity: 0.8;
 }
 .trip-guide-inline {
-    margin: 6px 0 0;
+    margin: 0.6rem 0 0;
     font-size: 0.9rem;
     color: var(--text-main);
 }
@@ -402,45 +402,45 @@ h3 {
     background: var(--hover-bg);
     color: var(--primary);
     font-weight: 600;
-    border-radius: 8px;
-    padding: 10px 14px;
+    border-radius: 0.8rem;
+    padding: 1rem 1.4rem;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.8rem;
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
 }
 .trip-help-btn:hover {
     background: var(--secondary);
     color: #fff;
-    transform: translateY(-1px);
+    transform: translateY(-0.1rem);
 }
 .trip-field {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-top: 16px;
+    gap: 0.6rem;
+    margin-top: 1.6rem;
 }
 .trip-field-group {
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 10px;
+    margin-top: 2rem;
+    padding: 1.6rem;
+    border-radius: 1rem;
     background: var(--main-bg);
     border: 1px dashed var(--border-color);
 }
 .group-title {
-    margin: 0 0 8px;
+    margin: 0 0 0.8rem;
     font-size: 1rem;
     color: var(--text-main);
 }
 .input-shell {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-radius: 1rem;
+    padding: 1rem 1.4rem;
     transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 .input-shell i {
@@ -470,17 +470,17 @@ h3 {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.8rem;
 }
 .selected-placeholder,
 .selected-location-item {
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-radius: 1rem;
+    padding: 1rem 1.4rem;
     background: var(--card-bg);
     border: 1px dashed var(--border-color);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
 }
 .selected-placeholder {
     color: var(--text-main);
@@ -490,8 +490,8 @@ h3 {
     border-style: solid;
 }
 .location-order {
-    width: 26px;
-    height: 26px;
+    width: 2.6rem;
+    height: 2.6rem;
     border-radius: 50%;
     background: var(--secondary);
     color: #fff;
@@ -512,7 +512,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: 2.4rem;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
@@ -524,9 +524,9 @@ h3 {
 }
 .trip-guide-dialog {
     background: var(--card-bg);
-    border-radius: 18px;
-    padding: 28px 32px;
-    max-width: 480px;
+    border-radius: 1.8rem;
+    padding: 2.8rem 3.2rem;
+    max-width: 48rem;
     width: 100%;
     position: relative;
     box-shadow: 0 24px 60px rgba(0,0,0,0.2);
@@ -537,14 +537,14 @@ h3 {
 }
 .trip-guide-hero {
     display: flex;
-    gap: 14px;
+    gap: 1.4rem;
     align-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 1.8rem;
 }
 .hero-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 16px;
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 1.6rem;
     background: rgba(39, 174, 96, 0.15);
     display: flex;
     align-items: center;
@@ -554,35 +554,35 @@ h3 {
 }
 .trip-guide-columns {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 14px;
-    margin-bottom: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1.4rem;
+    margin-bottom: 1.6rem;
 }
 .guide-card {
-    padding: 14px;
-    border-radius: 12px;
+    padding: 1.4rem;
+    border-radius: 1.2rem;
     background: var(--main-bg);
     border: 1px solid var(--border-color);
 }
 .guide-card h5 {
-    margin: 0 0 8px;
+    margin: 0 0 0.8rem;
     font-size: 0.95rem;
     color: var(--primary);
 }
 .guide-card ul {
     margin: 0;
-    padding-left: 18px;
+    padding-left: 1.8rem;
     color: var(--text-main);
     font-size: 0.9rem;
     line-height: 1.4;
 }
 .trip-guide-note {
-    margin: 0 0 18px;
+    margin: 0 0 1.8rem;
     font-size: 0.9rem;
     color: var(--text-main);
     background: rgba(39, 174, 96, 0.12);
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-radius: 1rem;
+    padding: 1rem 1.4rem;
 }
 .modal-close-btn {
     border: none;
@@ -590,15 +590,15 @@ h3 {
     color: var(--text-main);
     font-size: 1.5rem;
     position: absolute;
-    top: 14px;
-    right: 16px;
+    top: 1.4rem;
+    right: 1.6rem;
     cursor: pointer;
 }
 .modal-primary-btn {
     width: 100%;
-    margin-top: 20px;
-    padding: 12px 18px;
-    border-radius: 30px;
+    margin-top: 2rem;
+    padding: 1.2rem 1.8rem;
+    border-radius: 3rem;
     border: none;
     background: var(--secondary);
     color: #fff;
@@ -608,7 +608,7 @@ h3 {
 }
 .modal-primary-btn:hover {
     background: var(--primary);
-    transform: translateY(-2px);
+    transform: translateY(-0.2rem);
 }
 body.modal-open {
     overflow: hidden;

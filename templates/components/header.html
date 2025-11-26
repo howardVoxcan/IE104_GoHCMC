@@ -3,12 +3,12 @@
   <div class="header__logo">
     <a href="{% url 'homepage' %}">
       <img
-        src="{% static 'img/Logo_GoHCMC.png' %}"
+        src="{% static 'img/dark.png' %}"
         alt="GoHCMC Logo"
         class="header__logo-img" />
     </a>
   </div>
-  <nav class="header__nav-tabs">
+  <nav class="nav">
     <a
       href="{% url 'homepage' %}"
       class="nav-link {% if request.path == '/' %}active{% endif %}">

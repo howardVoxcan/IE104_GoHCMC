@@ -20,74 +20,18 @@
   </form>
 </div>
 <script>
-  // Search toggle logic with responsive behavior
   const searchToggle = document.getElementById("searchToggle");
   const searchForm = document.getElementById("searchForm");
-  const searchBar = document.getElementById("searchBar");
 
-  function isDesktop() {
-    return window.innerWidth > 1200;
-  }
-
-  function updateSearchDisplay() {
-    if (isDesktop()) {
-      // On desktop: always show search form
-      searchForm.style.display = "flex";
-      searchToggle.style.display = "none";
-      // Reset any absolute positioning
-      searchForm.style.position = "";
-      searchForm.style.top = "";
-      searchForm.style.left = "";
-      searchForm.style.right = "";
-      searchForm.style.zIndex = "";
-      searchForm.style.boxShadow = "";
-    } else {
-      // On mobile: show icon, hide form initially
-      searchForm.style.display = "none";
-      searchToggle.style.display = "inline-flex";
-      // Reset any absolute positioning
-      searchForm.style.position = "";
-      searchForm.style.top = "";
-      searchForm.style.left = "";
-      searchForm.style.right = "";
-      searchForm.style.zIndex = "";
-      searchForm.style.boxShadow = "";
-    }
-  }
-
-  // Initial check
-  updateSearchDisplay();
-
-  // Listen for window resize
-  window.addEventListener("resize", updateSearchDisplay);
-
-  // Toggle logic for mobile
   searchToggle.onclick = function () {
-    if (!isDesktop()) {
-      searchForm.style.display = "flex";
-      searchForm.style.position = "absolute";
-      searchForm.style.top = "100%";
-      searchForm.style.left = "0";
-      searchForm.style.right = "0";
-      searchForm.style.zIndex = "1001";
-      searchForm.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.15)";
-      searchToggle.style.display = "none";
-      searchForm.querySelector("input").focus();
-    }
+    searchForm.classList.add("open");
+    searchToggle.style.display = "none";
+    searchForm.querySelector("input").focus();
   };
 
   function hideSearchForm() {
-    if (!isDesktop()) {
-      searchForm.style.display = "none";
-      searchToggle.style.display = "inline-flex";
-      // Reset absolute positioning
-      searchForm.style.position = "";
-      searchForm.style.top = "";
-      searchForm.style.left = "";
-      searchForm.style.right = "";
-      searchForm.style.zIndex = "";
-      searchForm.style.boxShadow = "";
-    }
+    searchForm.classList.remove("open");
+    searchToggle.style.display = "inline-flex";
   }
 
   searchForm.querySelector("input").addEventListener("blur", function () {

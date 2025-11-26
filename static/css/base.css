@@ -75,9 +75,12 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 62.5%; /* Sets 1rem = 10px */
+}
+
 body {
   font-family: var(--font-main);
   background: var(--main-bg);
   color: var(--text-main);
-  font-size: 62.5%; /* Sets 1rem = 10px */
 }

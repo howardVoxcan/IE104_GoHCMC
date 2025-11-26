@@ -3,7 +3,8 @@
   <div class="header__logo">
     <a href="{% url 'homepage' %}">
       <img
-        src="{% static 'img/dark.png' %}"
+        id="logoImg"
+        src="{% static 'ĩmg/light_logo.png' %}"
         alt="GoHCMC Logo"
         class="header__logo-img" />
     </a>
@@ -69,8 +70,12 @@
   const themeSwitch = document.getElementById("themeSwitch");
   const themeIconSun = document.getElementById("icon-sun");
   const themeIconMoon = document.getElementById("icon-moon");
+  const logoImg = document.getElementById("logoImg");
+  const lightLogo = "{% static 'img/light_logo.png' %}";
+  const darkLogo = "{% static 'img/dark_logo.png' %}";
   function setTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
+    logoImg.src = theme === "dark" ? darkLogo : lightLogo;
     if (theme === "dark") {
       themeIconSun.style.display = "none";
       themeIconMoon.style.display = "inline";

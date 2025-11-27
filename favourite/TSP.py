@@ -79,7 +79,7 @@ class Graph:
         return min_path, min_cost
 
 def distance(origins, destinations):
-    api_key = "nV8MX9Jxszg9MyjUJv5yfTUK4OzKhTGtG0z2E779ZGtdhd2TenzBA1QgOzOf6H2T"
+    api_key = "w6YHI8MoaxcNVp4wPBP7WbanJ5KI6EEx3QtIFtV1Y0VBOWLMc85ZL399y9FUVqHk"
     url = "https://api-v2.distancematrix.ai/maps/api/distancematrix/json"
 
     params = {

@@ -356,6 +356,18 @@
   justify-content: space-between;
 }
 
+#comment-form label {
+  font-size: 1.4rem;
+  color: var(--text-main);
+  margin-right: 0.8rem;
+}
+
+#comment-form h3 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--text-main);
+}
+
 #comment-form select {
   padding: 0.8rem 1.2rem;
   border: 1px solid var(--border-color);

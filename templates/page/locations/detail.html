@@ -51,10 +51,10 @@
     </iframe>
 
     <hr>
-    <h3>Post a comment</h3>
-
+    
     {% if user.is_authenticated %}
     <form id="comment-form">
+        <h3>Post a comment</h3>
         {% csrf_token %}
         <textarea name="content" placeholder="Write your comment..." required></textarea>
         <div class="form-group">

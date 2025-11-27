@@ -23,6 +23,19 @@
   const searchToggle = document.getElementById("searchToggle");
   const searchForm = document.getElementById("searchForm");
 
+  function checkScreenSize() {
+    if (window.innerWidth > 1199) {
+      searchForm.classList.add("open");
+      searchToggle.style.display = "none";
+    } else {
+      searchForm.classList.remove("open");
+      searchToggle.style.display = "inline-flex";
+    }
+  }
+
+  window.addEventListener("resize", checkScreenSize);
+  checkScreenSize();
+
   searchToggle.onclick = function () {
     searchForm.classList.add("open");
     searchToggle.style.display = "none";

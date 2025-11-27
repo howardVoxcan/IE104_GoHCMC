@@ -5,7 +5,7 @@ import itertools
 import os
 
 # --- 1. Tải CSV (Giữ nguyên) ---
-filename = "../../data_with_tags.csv"
+filename = "data/clean/data.csv"
 locations = []
 
 try:
@@ -104,7 +104,7 @@ def create_combined_intent(intent_name, reply_text, user_says_data):
 # --- 5. Logic tạo và lưu file (SỬA ĐỔI) ---
 
 # Thư mục output cho các file JSON đơn lẻ
-output_dir = "json_for_upload" # Đặt tên thư mục mới
+output_dir = "dialogflow/dialogflow_chatbot/json_for_upload" # Đặt tên thư mục mới
 os.makedirs(output_dir, exist_ok=True)
 
 # Danh sách các intent cần tạo

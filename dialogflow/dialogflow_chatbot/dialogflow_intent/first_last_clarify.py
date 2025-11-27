@@ -3,7 +3,7 @@ import json
 import os
 
 # --- 1. Tải locations từ CSV (Giữ nguyên) ---
-filename = "../../data_with_tags.csv"
+filename = "data/clean/data.csv"
 locations = []
 
 try:
@@ -85,7 +85,7 @@ def create_combined_intent(intent_name, reply_text, user_says_data):
 # --- 5. Logic tạo và lưu file (SỬA ĐỔI) ---
 
 # Thư mục output cho các file JSON đơn lẻ
-output_dir = "json_for_upload" 
+output_dir = "dialogflow/dialogflow_chatbot/json_for_upload" 
 os.makedirs(output_dir, exist_ok=True)
 
 # 1. Tạo dữ liệu userSays

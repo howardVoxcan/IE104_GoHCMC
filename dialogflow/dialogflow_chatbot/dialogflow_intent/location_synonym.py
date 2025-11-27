@@ -3,7 +3,7 @@ import pandas as pd
 import re
 
 # List of location names
-locations = pd.read_csv('../../data_with_tags.csv')['LOCATION']
+locations = pd.read_csv('data/clean/data.csv')['LOCATION']
 
 # Abbreviation map
 abbrev_map = {
@@ -46,7 +46,7 @@ def generate_synonyms(name):
     return list(synonyms)
 
 # Write to CSV with double quotes
-with open("json/dialogflow_locations_extended.csv", mode="w", newline='', encoding="utf-8") as file:
+with open("dialogflow/dialogflow_chatbot/locations.csv", mode="w", newline='', encoding="utf-8") as file:
     writer = csv.writer(file, quoting=csv.QUOTE_ALL)
     writer.writerow(["value", "synonym"])
     for loc in locations:

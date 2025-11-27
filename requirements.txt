@@ -1,4 +1,4 @@
-Django==5.1.4
+Django==4.2.26
 asgiref==3.8.1
 django-import-export==4.3.7
 scikit-learn==1.6.1
@@ -11,5 +11,6 @@ charset-normalizer==3.3.2
 idna==3.8
 sympy>=1.7.1
 whitenoise==6.5.0
-matplotlib==3.10.6
+matplotlib==3.9.4
+numpy==1.26.4
 spacy==3.5.4

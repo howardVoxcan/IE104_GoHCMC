@@ -430,9 +430,6 @@ main {
   transform: scale(1.1);
 }
 
-.back-to-top i {
-
-}
 
 /* Responsive */
 @media (max-width: 90rem) {

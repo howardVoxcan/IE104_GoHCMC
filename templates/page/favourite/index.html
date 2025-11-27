@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="{% static 'css/favourite.css' %}">
 {% endblock %}
 
-
 {% block content %}
 <div class="favourite-container">
     {% if locations %}
@@ -158,6 +157,7 @@
 
 {% if locations %}
 <script>
+    // --- 1. Logic kiểm tra vòng lặp ---
     function detectCycle(constraints) {
         const graph = {};
         const indegree = {};
@@ -190,6 +190,7 @@
         return visited < nodes.size;
     }
 
+    // --- 2. Helper toggle inputs ---
     function toggleInputsDisabled(section, disable) {
         const inputs = section.querySelectorAll('input, select');
         inputs.forEach(input => {
@@ -197,6 +198,7 @@
         });
     }
 
+    // --- 3. Logic giới hạn số lượng địa điểm (max 8) ---
     function checkLocationLimit() {
         const limit = 8;
         const allCheckboxes = document.querySelectorAll('input[name="locations"]');
@@ -205,10 +207,8 @@
         const limitReached = (checkedCount >= limit);
 
         allCheckboxes.forEach(cb => {
-            if (!cb.checked) { // Chỉ disable những ô CHƯA CHỌN
+            if (!cb.checked) {
                 cb.disabled = limitReached;
-
-                // Cũng vô hiệu hóa label của checkbox
                 const summary = cb.closest('.location-summary');
                 if (summary) {
                     if (limitReached) {
@@ -229,6 +229,7 @@
             <span>No locations selected yet</span>
         </li>`;
 
+    // --- 4. Cập nhật cột bên phải (Danh sách đã chọn & Dropdown Start/End) ---
     function updateRightColumnSelections() {
         const checkboxes = document.querySelectorAll('input[name="locations"]:checked');
         const startSelect = document.getElementById('start_point_select');
@@ -265,6 +266,7 @@
         checkLocationLimit();
     }
 
+    // --- 5. Cập nhật dropdown "Must go after" (Ẩn các option chưa được chọn) ---
     function updatePrecedenceDropdowns() {
         const selectedCheckboxes = document.querySelectorAll('input[name="locations"]:checked');
         const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
@@ -274,8 +276,11 @@
 
             Array.from(dropdown.options).forEach(option => {
                 const optVal = option.value;
+                // Ẩn nếu: rỗng, trùng chính nó, HOẶC không nằm trong danh sách đã chọn
                 const shouldHide = optVal === "" || optVal === currentId || !selectedIds.includes(optVal);
                 option.hidden = shouldHide;
+                
+                // Reset về rỗng nếu giá trị đang chọn bị ẩn đi
                 if (shouldHide && dropdown.value === optVal) {
                     dropdown.value = "";
                 }
@@ -283,6 +288,7 @@
         });
     }
 
+    // --- 6. Ẩn/Hiện input phụ (Start/End thì ẩn precedence) ---
     function updatePinnedInputsVisibility() {
         const selectedStart = document.getElementById('start_point_select').value;
         const selectedEnd = document.getElementById('end_point_select').value;
@@ -301,14 +307,15 @@
         });
     }
 
+    // --- MAIN EVENT LISTENER ---
     document.addEventListener("DOMContentLoaded", function () {
         const checkboxes = document.querySelectorAll('input[name="locations"]');
 
         checkboxes.forEach(checkbox => {
             const targetId = checkbox.dataset.target;
             const detailsSection = document.querySelector(targetId);
-            const summary = checkbox.closest('.location-summary'); // Lấy thanh summary
-
+            
+            // Set trạng thái ban đầu
             if (!checkbox.checked) {
                 detailsSection.style.display = 'none';
                 toggleInputsDisabled(detailsSection, true);
@@ -317,6 +324,7 @@
                 toggleInputsDisabled(detailsSection, false);
             }
 
+            // Sự kiện khi bấm checkbox
             checkbox.addEventListener('change', function () {
                 if (this.checked) {
                     detailsSection.style.display = 'block';
@@ -325,9 +333,13 @@
                     detailsSection.style.display = 'none';
                     toggleInputsDisabled(detailsSection, true);
                 }
+                
+                // Cập nhật giao diện
                 updateRightColumnSelections();
+                updatePrecedenceDropdowns(); // <--- ĐÃ THÊM: Sửa lỗi Go After Location
             });
 
+            // Chặn click nhầm vào các link/button trong summary
             const label = checkbox.closest('.location-summary');
             if (label) {
                 label.addEventListener('click', function (e) {
@@ -343,7 +355,7 @@
                             e.preventDefault();
                             return;
                         }
-
+                        // Manual toggle
                         checkbox.checked = !checkbox.checked;
                         checkbox.dispatchEvent(new Event('change'));
                     }
@@ -351,11 +363,11 @@
             }
         });
 
-        // Thêm listener cho các dropdown MỚI (bên phải)
+        // Listeners cho Dropdown Start/End point
         document.getElementById('start_point_select').addEventListener('change', updatePinnedInputsVisibility);
         document.getElementById('end_point_select').addEventListener('change', updatePinnedInputsVisibility);
 
-        // Giữ nguyên: Logic kiểm tra vòng lặp
+        // Submit form -> Check Cycle
         const createJourneyButton = document.getElementById('create-journey-button');
         if (createJourneyButton) {
             createJourneyButton.addEventListener('click', function (e) {
@@ -365,7 +377,8 @@
                 dropdowns.forEach(dropdown => {
                     const afterId = dropdown.value;
                     const currentId = dropdown.getAttribute('data-current-id');
-
+                    
+                    // Chỉ tính constraint nếu dropdown không bị disable
                     if (afterId && !dropdown.disabled) {
                         constraints.push([afterId, currentId]);
                     }
@@ -378,11 +391,12 @@
             });
         }
 
-        // Chạy lần đầu khi tải trang
-        updateRightColumnSelections(); // checkLocationLimit() được gọi BÊN TRONG hàm này
+        // Chạy lần đầu khi load trang
+        updateRightColumnSelections();
         updatePrecedenceDropdowns();
         updatePinnedInputsVisibility();
 
+        // --- Logic cho Modal Hướng dẫn (Trip Guide) ---
         const tripGuideModal = document.getElementById('trip-guide-modal');
         const openGuideBtn = document.getElementById('open-trip-guide');
         const closeGuideBtn = document.getElementById('close-trip-guide');
@@ -395,7 +409,10 @@
             tripGuideModal.setAttribute('aria-hidden', show ? 'false' : 'true');
         }
 
-        openGuideBtn?.addEventListener('click', () => toggleTripGuide(true));
+        openGuideBtn?.addEventListener('click', (e) => {
+            e.preventDefault(); // Chặn link # nhảy trang
+            toggleTripGuide(true);
+        });
         closeGuideBtn?.addEventListener('click', () => toggleTripGuide(false));
         tripGuideModal?.addEventListener('click', (e) => {
             if (e.target === tripGuideModal) toggleTripGuide(false);

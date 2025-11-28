@@ -86,32 +86,21 @@ body {
 }
 
 /* Responsive breakpoints */
-@media (max-width: 480px) {
-  html {
-    font-size: 40%; /* 6.4px - Phone */
-  }
-  :root {
+@media (min-width: 1024px) {
+
+ 
+}
+@media (min-width: 880px ) and (max-width: 1023px) {
+
+ 
+}   
+@media (min-width: 576px) and (max-width: 879px) { 
+  :root{
     --header-height: 5rem;
   }
-}
 
-@media (min-width: 481px) and (max-width: 768px) {
-  html {
-    font-size: 50%; /* 8px - Tablet */
-  }
-  :root {
-    --header-height: 5.6rem;
-  }
 }
+@media (max-width: 575px) {
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  html {
-    font-size: 55%; /* 8.8px - iPad */
-  }
-  :root {
-    --header-height: 6rem;
-  }
 }
-
-/* Desktop default: 62.5% (10px), --header-height: 6.4rem */
 

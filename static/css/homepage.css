@@ -28,20 +28,20 @@
   color: #fff;
   text-align: center;
   pointer-events: none;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .banner-overlay h1 {
   font-size: 3rem;
   font-weight: 700;
   margin: 0;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .banner-overlay p {
   font-size: 1.5rem;
   margin-top: 1.6rem;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* ---------- Palace / Top locations ---------- */
@@ -70,14 +70,14 @@
   margin: 1.6rem;
   border-radius: 0.8rem;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   background-color: var(--card-bg);
 }
 
 .palace-item:hover {
   transform: translateY(-0.5rem);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .palace-item .palace-image,
@@ -149,28 +149,30 @@
 
 .features {
   display: grid;
-  grid-template-columns: repeat(3, minmax(26rem,1fr));
+  grid-template-columns: repeat(3, minmax(26rem, 1fr));
   gap: 3.2rem;
   margin-top: 4rem;
 }
 
-@media (max-width: 99.2rem) {
-  .features { grid-template-columns: repeat(2, minmax(26rem,1fr)); }
-}
-@media (max-width: 64rem) {
-  .features { grid-template-columns: 1fr; }
+
+@media (max-width: 800px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
 }
 
 .feature {
   background-color: var(--card-bg);
   padding: 2.4rem 2.2rem;
   border-radius: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
   min-height: 26rem;
 }
 
-.feature:hover { transform: translateY(-0.5rem); }
+.feature:hover {
+  transform: translateY(-0.5rem);
+}
 
 .feature i {
   font-size: 4.2rem;
@@ -193,7 +195,10 @@
   color: var(--primary);
   text-decoration: underline;
 }
-.feature a:hover { color: var(--secondary); }
+
+.feature a:hover {
+  color: var(--secondary);
+}
 
 /* ---------- Generic content / cards (refactored with variables) ---------- */
 .content-section {
@@ -228,7 +233,7 @@
 }
 
 /* Anchor covers whole card and behaves as column flex container */
-.card > a {
+.card>a {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -239,7 +244,7 @@
 
 /* Image: fixed visual height, doesn't stretch */
 .card-image,
-.card > a img {
+.card>a img {
   flex: 0 0 auto;
   width: 100%;
   height: 30rem;
@@ -295,22 +300,28 @@
 }
 
 /* Accessibility: focus outline for anchor (uses focus outline variable) */
-.card > a:focus {
+.card>a:focus {
   outline: var(--focus-outline);
   outline-offset: 2px;
 }
 
 /* Ensure no text-decoration appears inside anchored card */
-.card > a img,
-.card > a h2,
-.card > a p,
-.card > a .rating {
+.card>a img,
+.card>a h2,
+.card>a p,
+.card>a .rating {
   text-decoration: none;
   color: inherit;
 }
 
 /* Responsive tweak: smaller image height on small screens */
 @media (max-width: 60rem) {
-  .card-image { height: 22rem; }
-  .card-content { padding: 1.4rem; padding-bottom: 1rem; }
+  .card-image {
+    height: 22rem;
+  }
+
+  .card-content {
+    padding: 1.4rem;
+    padding-bottom: 1rem;
+  }
 }

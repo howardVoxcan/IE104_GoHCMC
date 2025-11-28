@@ -52,17 +52,28 @@
       <span class="header__username">{{ user.get_full_name|default:user.username }}</span>
       <i class="fa-solid fa-chevron-down"></i>
     </button>
-
-    <div id="userMenu" class="user-menu">
-      <a href="{% url 'logout' %}">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Logout</span>
-      </a>
-    </div>
     {% else %}
     <a href="/login/"><button class="button button-secondary">Login</button></a>
     <a href="/signup/"><button class="button button-primary">Sign Up</button></a>
     {% endif %}
+    <div class="user-icon" id="userIcon">
+      <i class="fa-solid fa-user"></i>
+    </div>
+    <div id="userMenu" class="user-menu">
+      {% if user.is_authenticated %}
+      <a href="{% url 'logout' %}">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+      {% else %}
+      <a href="/login/">
+        <button class="button button-secondary">Login</button>
+      </a>
+      <a href="/signup/">
+        <button class="button button-primary">Sign Up</button>
+      </a>
+      {% endif %}
+    </div>
   </div>
 </header>
 <script>
@@ -99,9 +110,11 @@
 
   // User menu dropdown logic
   (function () {
-    const userBtn = document.querySelector(".header__user button");
+    const userBtn = document.querySelector(".user-btn");
+    const userIcon = document.getElementById("userIcon");
     const userMenu = document.getElementById("userMenu");
-    if (!userBtn || !userMenu) return;
+    const userTrigger = userBtn || userIcon;
+    if (!userTrigger || !userMenu) return;
 
     function showMenu() {
       userMenu.classList.add("open");
@@ -112,7 +125,7 @@
       userMenu.setAttribute("aria-hidden", "true");
     }
 
-    userBtn.addEventListener("click", function (e) {
+    userTrigger.addEventListener("click", function (e) {
       e.stopPropagation();
       if (userMenu.classList.contains("open")) {
         hideMenu();
@@ -122,7 +135,7 @@
     });
 
     document.addEventListener("click", function (e) {
-      if (!userMenu.contains(e.target) && !userBtn.contains(e.target)) {
+      if (!userMenu.contains(e.target) && !userTrigger.contains(e.target)) {
         hideMenu();
       }
     });

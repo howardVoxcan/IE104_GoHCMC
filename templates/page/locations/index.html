@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <section class="filter">
   <form method="get" action="{% url 'locations' %}" class="filter-form">
     <div class="filter-item">
@@ -153,6 +154,7 @@
   </form>
 </div>
 {% endif %}
+</div>
 
 <script src="{% static 'js/locations_index.js' %}"></script>
 {% endblock %}

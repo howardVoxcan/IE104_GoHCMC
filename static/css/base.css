@@ -94,13 +94,16 @@ body {
 
  
 }   
-@media (min-width: 576px) and (max-width: 879px) { 
+@media (min-width: 577px) and (max-width: 879px) { 
   :root{
     --header-height: 5rem;
   }
 
 }
-@media (max-width: 575px) {
+@media (max-width: 576px) {
+   :root{
+    --header-height: 5rem;
+  }
 
 }
 

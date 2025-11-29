@@ -1,5 +1,8 @@
 {% load static %}
 <header class="header">
+  <div class="hamburger" id="hamburger">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </div>
   <div class="header__logo">
     <a href="{% url 'homepage' %}">
       <img
@@ -36,6 +39,25 @@
       <i class="fas fa-map"></i> My Trip
     </a>
   </nav>
+  <div class="hamburger-menu" id="hamburgerMenu">
+    <div class="hamburger-content">
+      <a href="{% url 'homepage' %}" class="hamburger-link">
+        <i class="fas fa-house"></i> Home
+      </a>
+      <a href="{% url 'weather' %}" class="hamburger-link">
+        <i class="fas fa-cloud-sun"></i> Weather
+      </a>
+      <a href="{% url 'locations' %}" class="hamburger-link">
+        <i class="fas fa-map-pin"></i> Locations
+      </a>
+      <a href="{% url 'favourite' %}" class="hamburger-link">
+        <i class="fas fa-heart"></i> Favourite
+      </a>
+      <a href="{% url 'trip' %}" class="hamburger-link">
+        <i class="fas fa-map"></i> My Trip
+      </a>
+    </div>
+  </div>
   <div class="header__actions">
     {% include 'components/searchbar.html' %}
     <div class="theme-switch" id="themeSwitch" title="Đổi giao diện">
@@ -113,8 +135,6 @@
     const userBtn = document.querySelector(".user-btn");
     const userIcon = document.getElementById("userIcon");
     const userMenu = document.getElementById("userMenu");
-    const userTrigger = userBtn || userIcon;
-    if (!userTrigger || !userMenu) return;
 
     function showMenu() {
       userMenu.classList.add("open");
@@ -125,17 +145,72 @@
       userMenu.setAttribute("aria-hidden", "true");
     }
 
-    userTrigger.addEventListener("click", function (e) {
+    // Attach click event to userBtn if it exists
+    if (userBtn) {
+      userBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (userMenu.classList.contains("open")) {
+          hideMenu();
+        } else {
+          showMenu();
+        }
+      });
+    }
+
+    // Attach click event to userIcon if it exists
+    if (userIcon) {
+      userIcon.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (userMenu.classList.contains("open")) {
+          hideMenu();
+        } else {
+          showMenu();
+        }
+      });
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!userMenu.contains(e.target) && (!userBtn || !userBtn.contains(e.target)) && (!userIcon || !userIcon.contains(e.target))) {
+        hideMenu();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") hideMenu();
+    });
+  })();
+
+  // Hamburger menu logic
+  (function () {
+    const hamburger = document.getElementById("hamburger");
+    const hamburgerMenu = document.getElementById("hamburgerMenu");
+    if (!hamburger || !hamburgerMenu) return;
+
+    function showMenu() {
+      hamburgerMenu.classList.add("open");
+    }
+    function hideMenu() {
+      hamburgerMenu.classList.remove("open");
+    }
+
+    hamburger.addEventListener("click", function (e) {
       e.stopPropagation();
-      if (userMenu.classList.contains("open")) {
+      if (hamburgerMenu.classList.contains("open")) {
         hideMenu();
       } else {
         showMenu();
       }
     });
 
+    // Thêm event cho overlay
+    hamburgerMenu.addEventListener("click", function (e) {
+      if (!hamburgerMenu.querySelector('.hamburger-content').contains(e.target)) {
+        hideMenu();
+      }
+    });
+
     document.addEventListener("click", function (e) {
-      if (!userMenu.contains(e.target) && !userTrigger.contains(e.target)) {
+      if (!hamburgerMenu.contains(e.target) && !hamburger.contains(e.target)) {
         hideMenu();
       }
     });

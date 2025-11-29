@@ -159,7 +159,7 @@
     color: #ffffff;
     font-weight: 600;
     font-size: 0.9rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     transition: background 0.2s, transform 0.2s;
 }
 
@@ -334,11 +334,12 @@ html[data-theme="dark"] .trip-empty-card {
 .trip-empty-card p {
     margin: 0;
     color: var(--text-main, #34495e);
+    font-size: 1.4rem;
 }
 
 .trip-empty-steps {
     list-style: none;
-    padding: 0;
+    padding: revert-layer;
     margin: 0;
     text-align: left;
     color: var(--text-main, #34495e);
@@ -346,6 +347,7 @@ html[data-theme="dark"] .trip-empty-card {
     flex-direction: column;
     gap: 0.8rem;
     line-height: 1.4;
+    font-size: 1.4rem;
 }
 
 .trip-empty-actions {
@@ -360,6 +362,7 @@ html[data-theme="dark"] .trip-empty-card {
     border-radius: 99.9rem;
     padding: 1.2rem 2.2rem;
     font-weight: 600;
+    font-size: 1.2rem;
     text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -454,12 +457,17 @@ html[data-theme="dark"] .widget {
 }
 
 .timeline-pool {
-    border: 1px dashed rgba(5,145,93,0.4);
+    border: 1px dashed rgba(5, 145, 93, 0.4);
     border-radius: 1.4rem;
     padding: 1.2rem;
     margin-bottom: 1.4rem;
 }
-.pool-label { font-weight: 600; margin-bottom: 0.8rem; }
+
+.pool-label {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
 .timeline-chips,
 .slot-body {
     display: flex;
@@ -467,22 +475,26 @@ html[data-theme="dark"] .widget {
     gap: 0.8rem;
     min-height: 3.4rem;
 }
+
 .pool-placeholder,
 .slot-placeholder {
     font-size: 0.85rem;
     color: #888;
 }
+
 .timeline-slot {
-    border: 1px solid rgba(5,145,93,0.2);
+    border: 1px solid rgba(5, 145, 93, 0.2);
     border-radius: 1.6rem;
     padding: 1.2rem;
-    background: rgba(5,145,93,0.04);
+    background: rgba(5, 145, 93, 0.04);
     transition: border-color 0.2s, background 0.2s;
 }
+
 .timeline-slot.drag-over {
     border-color: #05915d;
-    background: rgba(5,145,93,0.12);
+    background: rgba(5, 145, 93, 0.12);
 }
+
 .slot-head {
     display: flex;
     gap: 1rem;
@@ -492,7 +504,7 @@ html[data-theme="dark"] .widget {
 
 .slot-title-input,
 .slot-time-input {
-    border: 1px solid rgba(5,145,93,0.25);
+    border: 1px solid rgba(5, 145, 93, 0.25);
     background: #fff;
     border-radius: 99.9rem;
     padding: 0.6rem 1.4rem;
@@ -515,7 +527,7 @@ html[data-theme="dark"] .widget {
 .slot-title-input:focus,
 .slot-time-input:focus {
     border-color: #05915d;
-    box-shadow: 0 0 0 2px rgba(5,145,93,0.15);
+    box-shadow: 0 0 0 2px rgba(5, 145, 93, 0.15);
 }
 
 .timeline-chip {
@@ -527,10 +539,14 @@ html[data-theme="dark"] .widget {
     cursor: grab;
     position: relative;
 }
-.timeline-chip.is-dragging { opacity: 0.6; }
+
+.timeline-chip.is-dragging {
+    opacity: 0.6;
+}
+
 .chip-remove {
     border: none;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     color: #fff;
     border-radius: 50%;
     width: 1.8rem;
@@ -545,6 +561,7 @@ html[data-theme="dark"] .widget {
         opacity: 0;
         transform: translateY(-0.6rem);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -572,7 +589,7 @@ html[data-theme="dark"] .widget {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6rem 2.4rem;
+    padding: 2rem;
 }
 
 .trip-container.is-empty .trip-empty-state {
@@ -589,6 +606,7 @@ html[data-theme="dark"] .widget {
     .trip-layout {
         flex-direction: column;
     }
+
     .trip-side-widgets {
         width: 100%;
         position: static;

@@ -36,39 +36,52 @@
   color: var(--text-main);
 }
 
-.filter-item select,
-.filter-item input {
+/* Shared input styles */
+.input-field {
   padding: 1rem 1.4rem;
   border: 1px solid var(--border-color);
   border-radius: 0.4rem;
-  font-size: 1.7rem;
   background: var(--main-bg);
   color: var(--text-main);
+  font-size: 1.5rem;
   min-width: 0;
 }
 
-.filter-form > div:last-child {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
+.filter-item select,
+.filter-item input {
+  @extend .input-field;
 }
 
-.btn {
-  width: 100%;
+#comment-form textarea,
+#comment-form select {
+  @extend .input-field;
+  font-size: 1.4rem;
+}
+
+/* Shared button styles */
+.button {
   padding: 1rem 1.8rem;
-  background-color: var(--primary);
+  background: var(--primary);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   transition: background 0.2s, transform 0.2s;
 }
 
-.btn:hover {
-  background-color: var(--secondary);
+.button:hover {
+  background: var(--secondary);
   transform: scale(1.05);
+}
+
+.btn {
+  @extend .button;
+  width: 100%;
+}
+
+#comment-form button {
+  @extend .button;
 }
 
 /* Content section */
@@ -382,31 +395,6 @@
   color: var(--text-main);
 }
 
-#comment-form select {
-  padding: 0.8rem 1.2rem;
-  border: 1px solid var(--border-color);
-  border-radius: 0.4rem;
-  font-size: 1.4rem;
-  background: var(--main-bg);
-  color: var(--text-main);
-}
-
-#comment-form button {
-  padding: 0.8rem 1.6rem;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 1.4rem;
-  transition: background 0.2s, transform 0.2s;
-}
-
-#comment-form button:hover {
-  background: var(--secondary);
-  transform: scale(1.05);
-}
-
 /* Responsive adjustments for mobile */
 @media (max-width: 880px) {
   .filter {
@@ -441,8 +429,8 @@
 
   .filter-item select,
   .filter-item input {
-    font-size: 1.2em;
-    padding: 1.4rem 1rem;
+    font-size: 1em;
+    padding: 0.7rem 1rem;
     width: 100%;
   }
 
@@ -456,11 +444,21 @@
     font-size: 1.4rem;
     margin-top: 0.5rem;
   }
+
+  .input-field {
+    font-size: 1em;
+    padding: 0.7rem 1rem;
+  }
+
+  .button {
+    font-size: 1em;
+    padding: 0.7rem 1rem;
+  }
 }
 
 /* Extra small mobile adjustments */
-@media (max-width: 576px) {
-  .rating i:not(:first-child) {
+@media (max-width: 577px) {
+  .rating.hide i:not(:first-child) {
     display: none;
   }
 }

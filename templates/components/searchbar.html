@@ -24,7 +24,7 @@
   const searchForm = document.getElementById("searchForm");
 
   function checkScreenSize() {
-    if (window.innerWidth > 1199) {
+    if ((window.innerWidth >= 1199) || (window.innerWidth >= 1014 && window.innerWidth <= 1020) || (window.innerWidth >= 870 && window.innerWidth <= 880)) {
       searchForm.classList.add("open");
       searchToggle.style.display = "none";
     } else {

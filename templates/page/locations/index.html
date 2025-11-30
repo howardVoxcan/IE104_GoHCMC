@@ -12,6 +12,7 @@
 <div class="container">
 <section class="filter">
   <form method="get" action="{% url 'locations' %}" class="filter-form">
+    {% csrf_token %}
     <div class="filter-item">
       <label for="type">Type:</label>
       <select name="type" id="type">
@@ -90,27 +91,66 @@
 
 {% if total_pages > 1 %}
 <div class="pagination">
-  <a href="{% pagination_link 1 current_filters limit %}" class="pagination-icon {% if current_page == 1 %}not-allowed{% endif %}">
+  <!-- << button -->
+  <a href="?page=1{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-icon {% if current_page == 1 %}not-allowed{% endif %}">
     <i class="fa-solid fa-angles-left"></i>
   </a>
-  <a href="{% pagination_link current_page|add:-1 current_filters limit %}" class="pagination-icon {% if current_page == 1 %}not-allowed{% endif %}">
+
+  <!-- < button -->
+  <a href="?page={{ current_page|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-icon {% if current_page == 1 %}not-allowed{% endif %}">
     <i class="fa-solid fa-angle-left"></i>
   </a>
-  {% for i in page_list %}
-    <a href="{% pagination_link i current_filters limit %}" class="{% if i == current_page %}active{% endif %}">{{ i }}</a>
-  {% endfor %}
-  <a href="{% pagination_link current_page|add:1 current_filters limit %}" class="pagination-icon {% if current_page == total_pages %}not-allowed{% endif %}">
+
+  {% if total_pages > 1 and total_pages <= 6 %}
+    <!-- Case 4: Total pages are between 1 and 6 -->
+    {% for i in 1|to:total_pages %}
+      <a href="?page={{ i }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="{% if i == current_page %}active{% endif %}">{{ i }}</a>
+    {% endfor %}
+  {% elif current_page == 1 %}
+    <!-- Case 1: Current page is 1 -->
+    <a href="?page=1{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="active">1</a>
+    {% if total_pages > 1 %}
+      <a href="?page=2{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">2</a>
+      <a href="?page=3{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">3</a>
+      <a href="?page=4{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">4</a>
+      <span>...</span>
+      <a href="?page={{ total_pages|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages|add:-1 }}</a>
+      <a href="?page={{ total_pages }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages }}</a>
+    {% endif %}
+  {% elif current_page < total_pages|add:-6 %}
+    <!-- Case 2: Current page is not 1 and less than n-6 -->
+    <a href="?page={{ current_page|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ current_page|add:-1 }}</a>
+    <a href="?page={{ current_page }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="active">{{ current_page }}</a>
+    <a href="?page={{ current_page|add:1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ current_page|add:1 }}</a>
+    <a href="?page={{ current_page|add:2 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">{{ current_page|add:2 }}</a>
+    <span>...</span>
+    <a href="?page={{ total_pages|add:-1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages|add:-1 }}</a>
+    <a href="?page={{ total_pages }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-ellipsis">{{ total_pages }}</a>
+  {% else %}
+    <!-- Case 3: Current page is between n-6 and n -->
+    {% for i in total_pages|add:-6|to:total_pages %}
+      <a href="?page={{ i }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="{% if i == current_page %}active{% endif %}">{{ i }}</a>
+    {% endfor %}
+  {% endif %}
+
+  <!-- > button -->
+  <a href="?page={{ current_page|add:1 }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-icon {% if current_page == total_pages %}not-allowed{% endif %}">
     <i class="fa-solid fa-angle-right"></i>
   </a>
-  <a href="{% pagination_link total_pages current_filters limit %}" class="pagination-icon {% if current_page == total_pages %}not-allowed{% endif %}">
+
+  <!-- >> button -->
+  <a href="?page={{ total_pages }}{% if current_filters.type %}&type={{ current_filters.type|urlencode }}{% endif %}{% if current_filters.rating %}&rating={{ current_filters.rating }}{% endif %}{% if current_filters.desired_time %}&desired_time={{ current_filters.desired_time }}{% endif %}{% if current_filters.search %}&search={{ current_filters.search|urlencode }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}" class="pagination-icon {% if current_page == total_pages %}not-allowed{% endif %}">
     <i class="fa-solid fa-angles-right"></i>
   </a>
+
+  <!-- Page input box -->
   <form method="get" action="{% url 'locations' %}" class="pagination-input-form">
     <input type="number" name="page" min="1" max="{{ total_pages }}" value="{{ current_page }}" class="pagination-input" required>
     <input type="hidden" name="limit" value="{{ limit }}">
-    {% for key, value in current_filters.items %}
-      <input type="hidden" name="{{ key }}" value="{{ value }}">
-    {% endfor %}
+    {% if current_filters.type %}<input type="hidden" name="type" value="{{ current_filters.type }}">{% endif %}
+    {% if current_filters.rating %}<input type="hidden" name="rating" value="{{ current_filters.rating }}">{% endif %}
+    {% if current_filters.desired_time %}<input type="hidden" name="desired_time" value="{{ current_filters.desired_time }}">{% endif %}
+    {% if current_filters.search %}<input type="hidden" name="search" value="{{ current_filters.search }}">{% endif %}
     <button type="submit" class="pagination-go-button">GO</button>
   </form>
 </div>

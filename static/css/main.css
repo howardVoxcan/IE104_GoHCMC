@@ -434,6 +434,7 @@ main {
   color: #eee;
   padding: 2rem 0 0.5rem 0;
   margin-top: 2rem;
+  font-size: 1.6rem;
 }
 
 .footer-container {
@@ -461,6 +462,7 @@ main {
 
 .footer-column h3,
 .footer-column p {
+  font-size: 1.8rem;
   text-align: center;
 }
 

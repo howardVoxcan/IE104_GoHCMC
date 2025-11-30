@@ -6,12 +6,12 @@
 
 .location-list-column {
     flex: 2;
-    min-width: 35rem;
+    width: 100%;
 }
 
 .trip-setup-column {
     flex: 1;
-    min-width: 30rem;
+    width: 100%;
     position: sticky;
     top: 2rem;
     align-self: flex-start;
@@ -37,7 +37,7 @@ html[data-theme="dark"] .location-item-card {
 /* Style cho link tên địa điểm */
 .summary-location-link {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     flex-grow: 1;
     font-weight: bold;
     color: var(--text-light, white);
@@ -61,7 +61,6 @@ html[data-theme="dark"] .location-item-card {
     border-radius: 0.5rem;
     cursor: pointer;
     font-weight: bold;
-    font-size: 0.9em;
     transition: background-color 0.2s, opacity 0.2s;
     flex-shrink: 0;
 }
@@ -84,7 +83,6 @@ html[data-theme="dark"] .location-item-card {
 
 #details-section label {
     color: var(--text-main);
-    font-size: 0.9rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     display: block;
@@ -105,7 +103,6 @@ html[data-theme="dark"] .location-item-card {
 }
 
 .extra-field label {
-    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-main);
     margin-bottom: 0.4rem;
@@ -136,7 +133,6 @@ html[data-theme="dark"] .location-item-card {
     flex: 1;
     border: none;
     background: transparent;
-    font-size: 0.92rem;
     color: var(--text-main);
     outline: none;
 }
@@ -173,7 +169,6 @@ html[data-theme="dark"] .location-item-card {
     display: block;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
     color: var(--text-main);
     transition: color 0.3s;
 }
@@ -190,7 +185,6 @@ html[data-theme="dark"] .location-item-card {
 }
 
 .selected-list-header {
-    font-size: 1rem;
     color: var(--text-main);
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -203,7 +197,7 @@ html[data-theme="dark"] .location-item-card {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 1.6rem;
 }
 
 #selected-locations-list li {
@@ -248,10 +242,11 @@ html[data-theme="dark"] .location-item-card {
     max-width: 120rem;
     margin: 2rem auto;
     padding: 2rem;
+    font-size: 1.6rem;
 }
 
 .favourite-header {
-    font-size: 2.8rem;
+    font-size: 3.2rem;
     color: var(--primary);
     margin-bottom: 2rem;
     text-align: left;
@@ -270,7 +265,7 @@ html[data-theme="dark"] .location-item-card {
 
 .location-summary label {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     flex-grow: 1;
 }
 
@@ -292,7 +287,7 @@ html[data-theme="dark"] .location-item-card {
 }
 
 #toggle-checkbox input:checked+span::after {
-    color: green;
+    color: var(--primary);
 }
 
 .details-section .line {
@@ -339,7 +334,6 @@ h3 {
     letter-spacing: 0.5px;
     margin-bottom: 1rem;
     text-transform: uppercase;
-    font-size: 0.8rem;
 }
 
 .primary-cta {
@@ -351,7 +345,6 @@ h3 {
     border: none;
     border-radius: 99.9rem;
     padding: 1.4rem 1.8rem;
-    font-size: 1rem;
     font-weight: 700;
     background-image: linear-gradient(120deg, #1abc9c, #2ecc71);
     color: #fff;
@@ -382,14 +375,13 @@ h3 {
 }
 
 .empty-favourite-state .empty-title {
-    font-size: 2.6rem;
+    font-size: 3rem;
     font-weight: 700;
     color: var(--primary);
 }
 
 .empty-favourite-state p {
     color: var(--text-main);
-    font-size: 1.4rem;
 }
 
 .back-to-locations-btn {
@@ -400,7 +392,6 @@ h3 {
     background: var(--secondary);
     color: #fff;
     font-weight: 600;
-    font-size: 1.4rem;
     cursor: pointer;
     text-decoration: none;
     transition: transform 0.2s, background 0.2s;
@@ -418,16 +409,20 @@ h3 {
     gap: 1.2rem;
 }
 
+.trip-name {
+    font-size: 3.2rem;
+    color: var(--text-main);
+    margin: 0;
+}
+
 .trip-name-subtitle {
     margin: 0.4rem 0 0;
-    font-size: 0.9rem;
     color: var(--text-main);
     opacity: 0.8;
 }
 
 .trip-guide-inline {
     margin: 0.6rem 0 0;
-    font-size: 0.9rem;
     color: var(--text-main);
 }
 
@@ -480,7 +475,6 @@ h3 {
 
 .group-title {
     margin: 0 0 0.8rem;
-    font-size: 1rem;
     color: var(--text-main);
 }
 
@@ -510,7 +504,6 @@ h3 {
     border: none;
     background: transparent;
     width: 100%;
-    font-size: 0.95rem;
     color: var(--text-main);
     padding: 0;
     outline: none;
@@ -559,7 +552,6 @@ h3 {
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 0.85rem;
 }
 
 .location-name {
@@ -617,7 +609,6 @@ h3 {
     align-items: center;
     justify-content: center;
     color: var(--secondary);
-    font-size: 1.4rem;
 }
 
 .trip-guide-columns {
@@ -636,7 +627,6 @@ h3 {
 
 .guide-card h5 {
     margin: 0 0 0.8rem;
-    font-size: 0.95rem;
     color: var(--primary);
 }
 
@@ -644,13 +634,11 @@ h3 {
     margin: 0;
     padding-left: 1.8rem;
     color: var(--text-main);
-    font-size: 0.9rem;
     line-height: 1.4;
 }
 
 .trip-guide-note {
     margin: 0 0 1.8rem;
-    font-size: 0.9rem;
     color: var(--text-main);
     background: rgba(39, 174, 96, 0.12);
     border-radius: 1rem;
@@ -661,7 +649,6 @@ h3 {
     border: none;
     background: transparent;
     color: var(--text-main);
-    font-size: 1.5rem;
     position: absolute;
     top: 1.4rem;
     right: 1.6rem;
@@ -688,4 +675,11 @@ h3 {
 
 body.modal-open {
     overflow: hidden;
+}
+
+/* Media query for layout change on screens <= 880px */
+@media (max-width: 880px) {
+    .favourite-content-wrapper {
+        flex-direction: column;
+    }
 }

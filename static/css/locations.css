@@ -36,52 +36,39 @@
   color: var(--text-main);
 }
 
-/* Shared input styles */
-.input-field {
+.filter-item select,
+.filter-item input {
   padding: 1rem 1.4rem;
   border: 1px solid var(--border-color);
   border-radius: 0.4rem;
+  font-size: 1.7rem;
   background: var(--main-bg);
   color: var(--text-main);
-  font-size: 1.5rem;
   min-width: 0;
 }
 
-.filter-item select,
-.filter-item input {
-  @extend .input-field;
+.filter-form > div:last-child {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center; 
 }
 
-#comment-form textarea,
-#comment-form select {
-  @extend .input-field;
-  font-size: 1.4rem;
-}
-
-/* Shared button styles */
-.button {
+.btn {
+  width: 100%;
   padding: 1rem 1.8rem;
-  background: var(--primary);
+  background-color: var(--primary);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   transition: background 0.2s, transform 0.2s;
 }
 
-.button:hover {
-  background: var(--secondary);
+.btn:hover {
+  background-color: var(--secondary);
   transform: scale(1.05);
-}
-
-.btn {
-  @extend .button;
-  width: 100%;
-}
-
-#comment-form button {
-  @extend .button;
 }
 
 /* Content section */
@@ -211,6 +198,7 @@
 
 .pagination a,
 .pagination span {
+  font-size: 1.6rem;
   padding: 0.8rem 1.4rem;
   border-radius: 0.8rem;
   text-decoration: none;
@@ -395,6 +383,31 @@
   color: var(--text-main);
 }
 
+#comment-form select {
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  background: var(--main-bg);
+  color: var(--text-main);
+}
+
+#comment-form button {
+  padding: 0.8rem 1.6rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+#comment-form button:hover {
+  background: var(--secondary);
+  transform: scale(1.05);
+}
+
 /* Responsive adjustments for mobile */
 @media (max-width: 880px) {
   .filter {
@@ -429,8 +442,8 @@
 
   .filter-item select,
   .filter-item input {
-    font-size: 1em;
-    padding: 0.7rem 1rem;
+    font-size: 1.2em;
+    padding: 1.4rem 1rem;
     width: 100%;
   }
 
@@ -443,16 +456,6 @@
     width: 100%;
     font-size: 1.4rem;
     margin-top: 0.5rem;
-  }
-
-  .input-field {
-    font-size: 1em;
-    padding: 0.7rem 1rem;
-  }
-
-  .button {
-    font-size: 1em;
-    padding: 0.7rem 1rem;
   }
 }
 

@@ -345,7 +345,6 @@
   color: #fff;
   border-color: var(--primary);
   box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
-  transform: scale(1.08);
 }
 
 /* Vô hiệu hóa hover khi đã active */
@@ -353,7 +352,6 @@
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
-  transform: scale(1.08);
   box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
 }
 
@@ -486,7 +484,7 @@
 }
 
 /* ======= Responsive ======= */
-@media (max-width: 90rem) {
+@media (max-width: 880px ) {
   .weather-wrapper {
     grid-template-columns: 1fr;
     padding: 1rem;
@@ -494,7 +492,7 @@
   }
 
   .day-tabs {
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     height: auto;
     overflow-x: auto;
@@ -535,7 +533,7 @@
   }
 }
 
-@media (max-width: 102.4rem) {
+@media (max-width: 1024px) {
   .weather-wrapper {
     padding: 1.5rem 1rem;
     max-width: 100%;

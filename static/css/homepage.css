@@ -149,7 +149,7 @@
 
 .features {
   display: grid;
-  grid-template-columns: repeat(3, minmax(26rem, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 3.2rem;
   margin-top: 4rem;
 }
@@ -168,6 +168,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
   min-height: 26rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .feature:hover {
@@ -183,21 +185,14 @@
 .feature h3 {
   font-size: 1.4rem;
   margin: 0.8rem 0 1.2rem;
+  overflow-wrap: break-word;
 }
 
 .feature p {
   font-size: 1.4rem;
   line-height: 1.8;
   color: var(--text-sub);
-}
-
-.feature a {
-  color: var(--primary);
-  text-decoration: underline;
-}
-
-.feature a:hover {
-  color: var(--secondary);
+  overflow-wrap: break-word;
 }
 
 /* ---------- Generic content / cards (refactored with variables) ---------- */

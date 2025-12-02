@@ -517,7 +517,7 @@ main {
 /* Back to Top button */
 .back-to-top {
   position: fixed;
-  bottom: 2rem;
+  bottom: 10rem;
   right: 2rem;
   width: 5rem;
   height: 5rem;

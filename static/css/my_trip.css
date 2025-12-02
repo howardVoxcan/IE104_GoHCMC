@@ -1,113 +1,77 @@
 .trip-container {
     max-width: 120rem;
-    margin: 3rem auto;
-    padding: 0 2.4rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
 }
 
 .trip-layout {
     display: flex;
     justify-content: space-between;
-    gap: 2rem;
-    align-items: flex-start;
-}
-
-.trip-main {
-    flex: 0 1 88rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.trip-side-widgets {
-    flex: 0 0 50rem;
-    margin-left: 0;
-    position: sticky;
-    top: 12rem;
-    align-self: flex-start;
-}
-
-.trip-container {
-    max-width: 132rem;
-    margin: 2rem auto;
-    padding: 2rem;
-}
-
-.trip-layout {
-    display: flex;
     gap: 3.2rem;
     align-items: flex-start;
-    justify-content: center;
+    width: 100%;
 }
 
 .trip-main {
-    flex: 0 1 76rem;
+    flex: 1; /* Chiếm phần còn lại */
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
-}
-
-.trip-header {
-    width: 100%;
-    text-align: center;
-}
-
-.trip-card {
-    margin: 0 auto 2.5rem;
+    max-width: 88rem; /* Giới hạn độ rộng để dễ đọc */
 }
 
 .trip-side-widgets {
-    width: 32rem;
+    flex: 0 0 32rem; /* Cố định sidebar 320px */
     position: sticky;
-    top: 12rem;
+    top: calc(var(--header-height) + 2rem);
     align-self: flex-start;
-}
-
-.trip-container {
-    max-width: 120rem;
-    margin: 2rem auto;
-    padding: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: 2.4rem;
 }
 
 .trip-header {
+    width: 100%;
     font-size: 2.8rem;
     color: var(--primary);
     margin-bottom: 2rem;
     text-align: left;
+    font-weight: 700;
 }
 
-/* Card container */
+/* =========================================
+   4. TRIP CARD COMPONENT
+   ========================================= */
 .trip-card {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin: 0 auto 2.5rem 0;
+    box-shadow: var(--card-shadow);
+    margin: 0 0 2.5rem 0;
     overflow: hidden;
-    transition: transform 0.2s ease;
-    max-width: 72rem;
-    margin-left: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     width: 100%;
+    border: 1px solid var(--border-color);
 }
 
 .trip-card:hover {
-    background-color: var(--primary);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--primary);
 }
 
-/* Summary now split into left/right */
+/* --- Card Header (Summary) --- */
 .trip-card-summary {
     display: flex;
     align-items: center;
-    column-gap: 1rem;
+    justify-content: space-between;
     padding: 1.6rem 2rem;
     cursor: pointer;
     list-style: none;
-    background-color: var(--secondary);
+    background-color: var(--secondary); /* Dùng màu xanh đậm làm nền header card */
     gap: 1.4rem;
-    justify-content: space-between;
+    color: #fff;
 }
 
 .summary-left {
@@ -118,8 +82,8 @@
 }
 
 .summary-left .trip-name {
-    font-size: 1.35rem;
-    font-weight: 800;
+    font-size: 1.8rem;
+    font-weight: 700;
     letter-spacing: 0.4px;
     color: #fff;
     text-transform: capitalize;
@@ -131,35 +95,32 @@
     display: inline-flex;
     align-items: center;
     gap: 1rem;
-    padding: 0.8rem 1.4rem;
+    padding: 0.6rem 1.4rem;
     border-radius: 99.9rem;
-    background: rgba(255, 255, 255, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .summary-right .icon {
-    background: #bccec6;
-    color: #1ca766;
+    color: #fff;
     font-weight: 700;
-    border-radius: 99.9rem;
-    padding: 0.6rem 1.4rem;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
-.summary-right .icon i {
-    color: #e6eeeb;
-}
-
+/* Toggle Button Icon */
 .summary-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 1.4rem;
-    border-radius: 99.9rem;
-    background: rgba(255, 255, 255, 0.18);
+    justify-content: center;
+    width: 8rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
-    font-weight: 600;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    font-size: 1.2rem;
     transition: background 0.2s, transform 0.2s;
 }
 
@@ -168,47 +129,32 @@
 }
 
 .trip-card-summary:hover .summary-toggle {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-0.1rem);
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
 }
 
 .trip-card[open] .summary-toggle i {
     transform: rotate(180deg);
 }
 
-/* Font sizes increased */
-.trip-name {
-    color: white;
-    font-size: 2.2rem;
-    font-weight: 700;
-}
-
-.summary-right .icon {
-    color: white;
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-}
-
-#trip-toggle-icon {
-    color: white;
-    margin-left: 1rem;
-    transition: transform 0.2s ease;
-}
-
-.trip-card[open] #trip-toggle-icon {
-    transform: rotate(90deg);
-}
-
-/* Body content */
+/* --- Card Body --- */
 .trip-card-body {
     padding: 2.2rem 2.4rem;
-    background: #fcfffd;
-    border-top: 1px solid rgba(0, 170, 108, 0.1);
-    border-radius: 0 0 1.8rem 1.8rem;
+    background: var(--card-bg);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* Reveal Animation */
+@keyframes trip-card-reveal {
+    from { opacity: 0; transform: translateY(-0.6rem); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.trip-card[open] .trip-card-body {
+    animation: trip-card-reveal 0.4s ease;
+}
+
+/* Location List Inside Card */
 .trip-locations {
     list-style: none;
     margin: 0 0 1.8rem;
@@ -222,75 +168,72 @@
     display: flex;
     gap: 1rem;
     padding: 1rem 1.4rem;
-    border-radius: 1.2rem;
-    background: rgba(0, 170, 108, 0.08);
+    border-radius: 0.8rem;
+    background: var(--hover-bg);
     align-items: center;
-    font-size: 0.95rem;
-    color: #20624a;
+    font-size: 1.4rem;
+    color: var(--text-main);
+    border: 1px solid transparent;
+}
+
+.trip-locations li:hover {
+    border-color: var(--border-color);
 }
 
 .trip-locations li strong {
-    color: #008e5f;
-    min-width: 4.8rem;
+    color: var(--primary);
+    min-width: 5rem;
     text-transform: uppercase;
     font-weight: 700;
+    font-size: 1.2rem;
 }
 
 .dashed-line {
     border: none;
-    border-top: 1px dashed rgba(0, 170, 108, 0.4);
-    margin: 0.6rem 0 1.8rem;
+    border-top: 1px dashed var(--border-color);
+    margin: 1.5rem 0;
     width: 100%;
 }
 
-/* Delete button styling */
+/* --- Delete Button --- */
 .delete-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.8rem;
-    padding: 1rem 2rem;
+    padding: 0.8rem 2rem;
     border-radius: 99.9rem;
     border: none;
-    background: linear-gradient(135deg, #ff7b74, #ff4d69);
+    background: var(--danger);
     color: #fff;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1.3rem;
     cursor: pointer;
     margin-left: auto;
-    box-shadow: 0 10px 18px rgba(255, 77, 105, 0.25);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.25);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .delete-btn i {
-    font-size: 1rem;
+    font-size: 1.4rem;
 }
 
 .delete-btn:hover {
-    transform: translateY(-0.1rem);
-    box-shadow: 0 14px 24px rgba(255, 77, 105, 0.32);
+    transform: translateY(-0.2rem);
+    background: #c0392b;
+    box-shadow: 0 6px 14px rgba(231, 76, 60, 0.35);
 }
 
-/* Hidden when collapsed */
 .trip-card:not([open]) .delete-form {
     display: none;
 }
 
-/* Empty state */
-.no-trips {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-    font-size: 1.8rem;
-}
-
-.trip-empty-state {
-    width: 100%;
-    min-height: calc(100vh - 22rem);
-    display: flex;
-    align-items: center;
+/* =========================================
+   5. EMPTY STATE
+   ========================================= */
+.trip-container.is-empty {
     justify-content: center;
-    padding: 4rem 2rem;
-    text-align: center;
+    align-items: center;
+    min-height: 60vh;
 }
 
 .trip-empty-card {
@@ -298,18 +241,14 @@
     max-width: 56rem;
     width: 100%;
     padding: 4rem 3.6rem;
-    border-radius: 2.4rem;
-    background: var(--card-bg, #f7fff9);
-    border: 1px solid rgba(5, 145, 93, 0.18);
-    box-shadow: 0 25px 60px rgba(5, 145, 93, 0.15);
+    border-radius: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-}
-
-html[data-theme="dark"] .trip-empty-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.08);
+    text-align: center;
 }
 
 .empty-icon {
@@ -317,36 +256,35 @@ html[data-theme="dark"] .trip-empty-card {
     height: 7rem;
     border-radius: 2rem;
     margin: 0 auto;
-    background: rgba(5, 145, 93, 0.15);
+    background: var(--hover-bg);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #05915d;
+    color: var(--primary);
     font-size: 3.2rem;
 }
 
 .trip-empty-card h2 {
     margin: 0;
-    color: #05915d;
+    color: var(--primary);
     font-size: 2.6rem;
 }
 
 .trip-empty-card p {
     margin: 0;
-    color: var(--text-main, #34495e);
+    color: var(--text-sub);
     font-size: 1.4rem;
 }
 
 .trip-empty-steps {
     list-style: none;
-    padding: revert-layer;
-    margin: 0;
+    padding: 0;
+    margin: 1rem 0;
     text-align: left;
-    color: var(--text-main, #34495e);
+    color: var(--text-main);
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-    line-height: 1.4;
     font-size: 1.4rem;
 }
 
@@ -355,7 +293,7 @@ html[data-theme="dark"] .trip-empty-card {
     flex-wrap: wrap;
     gap: 1.2rem;
     justify-content: center;
-    margin-top: 0.8rem;
+    margin-top: 1rem;
 }
 
 .trip-empty-actions a {
@@ -364,61 +302,36 @@ html[data-theme="dark"] .trip-empty-card {
     font-weight: 600;
     font-size: 1.2rem;
     text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s;
 }
 
 .empty-primary {
-    background-image: linear-gradient(120deg, #05915d, #11c983);
+    background: var(--primary);
     color: #fff;
-    box-shadow: 0 12px 25px rgba(17, 201, 131, 0.3);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
 }
-
-.empty-secondary {
-    border: 1px dashed #05915d;
-    color: #05915d;
-}
-
-.trip-empty-actions a:hover {
+.empty-primary:hover {
+    background: var(--secondary);
     transform: translateY(-0.2rem);
 }
 
-.trip-layout {
-    display: flex;
-    gap: 3.2rem;
-    align-items: flex-start;
-    justify-content: center;
+.empty-secondary {
+    border: 1px dashed var(--primary);
+    color: var(--primary);
+}
+.empty-secondary:hover {
+    background: var(--hover-bg);
 }
 
-.trip-main {
-    flex: 0 1 76rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.trip-side-widgets {
-    width: 32rem;
-    position: sticky;
-    top: 12rem;
-    align-self: flex-start;
-}
-
+/* =========================================
+   6. WIDGETS (SIDEBAR)
+   ========================================= */
 .widget {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 1.8rem;
     padding: 1.8rem 2rem;
-    box-shadow: 0 15px 35px rgba(5, 145, 93, 0.12);
-    border: 1px solid rgba(5, 145, 93, 0.12);
-}
-
-html[data-theme="dark"] .widget {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: none;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
 }
 
 .widget-head {
@@ -426,46 +339,53 @@ html[data-theme="dark"] .widget {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .widget-head h3 {
     margin: 0;
-    font-size: 1.1rem;
-    color: #05915d;
+    font-size: 1.4rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .widget-desc {
-    margin: 0.8rem 0 1.2rem;
-    font-size: 0.9rem;
-    color: #4b4b4b;
+    margin: 0.5rem 0 1.2rem;
+    font-size: 1.3rem;
+    color: var(--text-sub);
+    line-height: 1.4;
 }
 
-/* Ghost button style */
+/* Ghost Button */
 .ghost-btn {
-    border: 1px dashed rgba(5, 145, 93, 0.4);
+    border: 1px dashed var(--primary);
     background: transparent;
-    color: #05915d;
+    color: var(--primary);
     border-radius: 99.9rem;
     padding: 0.4rem 1.2rem;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .ghost-btn:hover {
-    background: rgba(5, 145, 93, 0.15);
+    background: var(--hover-bg);
 }
 
+/* --- Timeline Pool & Slots --- */
 .timeline-pool {
-    border: 1px dashed rgba(5, 145, 93, 0.4);
+    border: 1px dashed var(--border-color);
     border-radius: 1.4rem;
     padding: 1.2rem;
     margin-bottom: 1.4rem;
+    background: var(--main-bg);
 }
 
 .pool-label {
     font-weight: 600;
     margin-bottom: 0.8rem;
+    font-size: 1.3rem;
 }
 
 .timeline-chips,
@@ -478,21 +398,23 @@ html[data-theme="dark"] .widget {
 
 .pool-placeholder,
 .slot-placeholder {
-    font-size: 0.85rem;
-    color: #888;
+    font-size: 1.2rem;
+    color: var(--text-sub);
+    font-style: italic;
 }
 
 .timeline-slot {
-    border: 1px solid rgba(5, 145, 93, 0.2);
+    border: 1px solid var(--border-color);
     border-radius: 1.6rem;
     padding: 1.2rem;
-    background: rgba(5, 145, 93, 0.04);
+    background: var(--card-bg);
     transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 1rem;
 }
 
 .timeline-slot.drag-over {
-    border-color: #05915d;
-    background: rgba(5, 145, 93, 0.12);
+    border-color: var(--primary);
+    background: var(--hover-bg);
 }
 
 .slot-head {
@@ -504,40 +426,38 @@ html[data-theme="dark"] .widget {
 
 .slot-title-input,
 .slot-time-input {
-    border: 1px solid rgba(5, 145, 93, 0.25);
-    background: #fff;
+    border: 1px solid var(--border-color);
+    background: var(--main-bg);
     border-radius: 99.9rem;
     padding: 0.6rem 1.4rem;
-    font-size: 0.9rem;
-    color: #05915d;
+    font-size: 1.2rem;
+    color: var(--text-main);
     flex: 1;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.slot-title-input {
-    font-weight: 700;
+    transition: border-color 0.2s;
 }
 
 .slot-time-input {
-    flex: 0 0 13rem;
-    text-align: right;
+    flex: 0 0 10rem;
+    text-align: center;
 }
 
 .slot-title-input:focus,
 .slot-time-input:focus {
-    border-color: #05915d;
-    box-shadow: 0 0 0 2px rgba(5, 145, 93, 0.15);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 
 .timeline-chip {
-    background: #05915d;
+    background: var(--secondary);
     color: #fff;
     border-radius: 99.9rem;
     padding: 0.6rem 1.4rem;
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     cursor: grab;
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
 .timeline-chip.is-dragging {
@@ -546,83 +466,33 @@ html[data-theme="dark"] .widget {
 
 .chip-remove {
     border: none;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
     color: #fff;
     border-radius: 50%;
-    width: 1.8rem;
-    height: 1.8rem;
-    font-size: 0.8rem;
-    margin-left: 0.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
 
-@keyframes trip-card-reveal {
-    from {
-        opacity: 0;
-        transform: translateY(-0.6rem);
-    }
+/* =========================================
+   7. SPECIAL WIDGETS (Wishlist & Stats)
+   ========================================= */
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.trip-card[open] .trip-card-body {
-    animation: trip-card-reveal 0.55s ease;
-}
-
-.trip-layout:has(.trip-empty-state) {
-    justify-content: center;
-}
-
-.trip-main:has(.trip-empty-state) {
-    align-items: center;
-}
-
-.trip-main:has(.trip-empty-state) .trip-empty-card {
-    margin: 0 auto;
-}
-
-.trip-container.is-empty {
-    min-height: calc(100vh - 16rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-}
-
-.trip-container.is-empty .trip-empty-state {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.trip-container.is-empty .trip-empty-card {
-    margin: 0;
-}
-
-@media (max-width: 110rem) {
-    .trip-layout {
-        flex-direction: column;
-    }
-
-    .trip-side-widgets {
-        width: 100%;
-        position: static;
-    }
-}
-
-/* New styles for travel wish widget */
+/* Travel Wish Widget (Colored Gradient) */
 .travel-wish-widget {
-    background: linear-gradient(155deg, #0b3a28, #0f5136);
-    color: #e8fff5;
-    border: 1px solid rgba(233, 255, 245, 0.2);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: #fff;
+    border: none;
 }
 
+.travel-wish-widget .widget-head h3,
 .travel-wish-widget .widget-desc {
-    color: rgba(232, 255, 245, 0.75);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .travel-wish-list {
@@ -638,277 +508,192 @@ html[data-theme="dark"] .widget {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1.2rem 1.4rem;
+    padding: 1rem 1.4rem;
     border-radius: 1.6rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #f5fff9;
-    font-size: 0.95rem;
-    line-height: 1.35;
+    background: rgba(255, 255, 255, 0.15); /* Glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 1.3rem;
 }
 
 .travel-wish-chip i {
-    color: #7ef0bd;
+    color: #fff;
     margin-top: 0.2rem;
 }
 
-html[data-theme="light"] .travel-wish-widget {
-    background: linear-gradient(145deg, #e7fff3, #ccf5e1);
-    color: #075033;
-    border-color: rgba(7, 80, 51, 0.12);
-    box-shadow: 0 20px 45px rgba(19, 121, 83, 0.18);
-}
-
-html[data-theme="light"] .travel-wish-widget .widget-desc {
-    color: rgba(7, 80, 51, 0.7);
-}
-
-html[data-theme="light"] .travel-wish-chip {
-    background: rgba(255, 255, 255, 0.85);
-    border-color: rgba(7, 80, 51, 0.1);
-    color: #0a3b27;
-}
-
-html[data-theme="light"] .travel-wish-chip i {
-    color: #17a663;
-}
-
-/* Trip stats widget styles */
+/* Trip Stats Widget (Primary Theme) */
 .trip-stats-widget {
-    background: linear-gradient(155deg, #0a4f36, #0d6145);
-    color: #e8fff5;
-    border: 1px solid rgba(141, 233, 192, 0.3);
-    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+    background: var(--card-bg);
+    border: 2px solid var(--primary);
     position: relative;
     overflow: hidden;
 }
 
+/* Decorative Circle */
 .trip-stats-widget::before {
     content: "";
     position: absolute;
     top: -50%;
     right: -30%;
-    width: 200px;
-    height: 200px;
+    width: 20rem;
+    height: 20rem;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(126, 240, 189, 0.15), transparent 70%);
+    background: var(--primary);
+    opacity: 0.08;
     pointer-events: none;
-}
-
-.trip-stats-widget .widget-head h3 {
-    color: #8de9c0;
-    font-size: 1.3rem;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-.trip-stats-widget .widget-desc {
-    color: rgba(232, 255, 245, 0.8);
-    font-size: 0.95rem;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    margin: 20px 0;
+    gap: 1rem;
+    margin: 2rem 0;
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 20px 16px;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 1.6rem;
+    padding: 1.6rem 1rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 14px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.stat-card::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, #7ef0bd, #1abc9c);
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.3s ease;
+    gap: 0.5rem;
+    transition: transform 0.2s;
+    text-align: center;
 }
 
 .stat-card:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(126, 240, 189, 0.5);
-    transform: translateX(4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-}
-
-.stat-card:hover::after {
-    transform: scaleY(1);
+    transform: translateY(-0.2rem);
+    border-color: var(--primary);
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
 }
 
 .stat-card i {
-    font-size: 2.2rem;
-    color: #7ef0bd;
-    background: rgba(126, 240, 189, 0.15);
-    border-radius: 16px;
-    padding: 14px;
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover i {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.stat-content {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
 }
 
 .stat-value {
-    font-size: 1.75rem;
+    font-size: 1.8rem;
     font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    color: var(--text-main);
 }
 
 .stat-label {
-    font-size: 0.8rem;
-    color: rgba(232, 255, 245, 0.75);
+    font-size: 1.1rem;
+    color: var(--text-sub);
     text-transform: uppercase;
-    letter-spacing: 0.8px;
     font-weight: 600;
 }
 
 .next-trip-suggest {
-    margin-top: 24px;
-    padding: 22px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(26, 188, 156, 0.15), rgba(46, 204, 113, 0.1));
-    border: 2px dashed rgba(126, 240, 189, 0.35);
-    position: relative;
-}
-
-.next-trip-suggest::before {
-    content: "💡";
-    position: absolute;
-    top: -14px;
-    left: 20px;
-    background: #0d6145;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 1rem;
-    border: 2px solid rgba(126, 240, 189, 0.4);
+    margin-top: 2rem;
+    padding: 1.6rem;
+    border-radius: 1.6rem;
+    background: rgba(46, 204, 113, 0.08); /* Primary tint */
+    border: 1px dashed var(--primary);
+    text-align: center;
 }
 
 .next-trip-suggest h4 {
-    margin: 0 0 10px;
-    color: #8de9c0;
-    font-size: 1.1rem;
+    margin: 0 0 0.8rem;
+    color: var(--primary);
+    font-size: 1.4rem;
     font-weight: 700;
-    letter-spacing: 0.3px;
 }
 
 .next-trip-suggest p {
-    margin: 0 0 16px;
-    color: #f5fff9;
-    font-size: 0.98rem;
-    line-height: 1.5;
+    margin: 0 0 1.2rem;
+    color: var(--text-main);
+    font-size: 1.3rem;
+    line-height: 1.4;
 }
 
 .suggest-btn {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 24px;
-    border-radius: 999px;
-    background: linear-gradient(120deg, #1abc9c, #2ecc71);
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    border-radius: 99rem;
+    background: var(--primary);
     color: #fff;
     font-weight: 700;
     text-decoration: none;
-    box-shadow: 0 12px 28px rgba(26, 188, 156, 0.35);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-}
-
-.suggest-btn i {
-    font-size: 1.1rem;
-    transition: transform 0.3s ease;
+    font-size: 1.2rem;
+    transition: background 0.2s;
 }
 
 .suggest-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 36px rgba(26, 188, 156, 0.45);
-    background: linear-gradient(120deg, #16a085, #27ae60);
+    background: var(--secondary);
 }
 
-.suggest-btn:hover i {
-    transform: rotate(15deg) scale(1.1);
+/* =========================================
+   8. MEDIA QUERIES (RESPONSIVE)
+   ========================================= */
+@media (max-width: 1100px) {
+    .trip-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .trip-main {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .trip-side-widgets {
+        width: 100%;
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+    
+    .widget {
+        flex: 1;
+    }
 }
 
-/* Light theme adjustments */
-html[data-theme="light"] .trip-stats-widget {
-    background: linear-gradient(145deg, #e0fff1, #c5f5dd);
-    color: #075033;
-    border-color: rgba(7, 80, 51, 0.15);
-    box-shadow: 0 25px 55px rgba(19, 121, 83, 0.2);
+@media (max-width: 768px) {
+    .trip-container {
+        padding: 1rem;
+        margin: 0 auto;
+    }
+    
+    .trip-card-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+    }
+
+    .summary-right {
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .trip-side-widgets {
+        flex-direction: column;
+    }
+    
+    .widget {
+        width: 100%;
+    }
 }
 
-html[data-theme="light"] .trip-stats-widget::before {
-    background: radial-gradient(circle, rgba(23, 166, 99, 0.12), transparent 70%);
+/* Responsive Variables for Header Height */
+@media (min-width: 1024px) {
+  :root, :root[data-theme="dark"] { --header-height: 6.4rem; }
 }
-
-html[data-theme="light"] .trip-stats-widget .widget-head h3 {
-    color: #0a5a3d;
+@media (min-width: 880px ) and (max-width: 1023px) {
+  :root, :root[data-theme="dark"] { --header-height: 6rem; }
 }
-
-html[data-theme="light"] .stat-card {
-    background: rgba(255, 255, 255, 0.85);
-    border-color: rgba(7, 80, 51, 0.12);
+@media (min-width: 577px) and (max-width: 879px) { 
+  :root, :root[data-theme="dark"] { --header-height: 5.8rem; }
 }
-
-html[data-theme="light"] .stat-card:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(23, 166, 99, 0.35);
-    box-shadow: 0 10px 28px rgba(7, 80, 51, 0.15);
-}
-
-html[data-theme="light"] .stat-card i {
-    color: #17a663;
-    background: rgba(23, 166, 99, 0.12);
-}
-
-html[data-theme="light"] .stat-value {
-    color: #0a3b27;
-    text-shadow: none;
-}
-
-html[data-theme="light"] .stat-label {
-    color: rgba(7, 80, 51, 0.7);
-}
-
-html[data-theme="light"] .next-trip-suggest {
-    background: linear-gradient(135deg, rgba(23, 166, 99, 0.08), rgba(46, 204, 113, 0.06));
-    border-color: rgba(23, 166, 99, 0.25);
-}
-
-html[data-theme="light"] .next-trip-suggest::before {
-    background: #c5f5dd;
-    border-color: rgba(23, 166, 99, 0.3);
-}
-
-html[data-theme="light"] .next-trip-suggest h4 {
-    color: #17a663;
-}
-
-html[data-theme="light"] .next-trip-suggest p {
-    color: #0a3b27;
+@media (max-width: 576px) {
+   :root, :root[data-theme="dark"] { --header-height: 5.4rem; }
 }

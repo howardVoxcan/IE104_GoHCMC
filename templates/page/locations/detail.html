@@ -58,15 +58,17 @@
         {% csrf_token %}
         <textarea name="content" placeholder="Write your comment..." required></textarea>
         <div class="form-group">
-            <label for="rating">Rate this location:</label>
-            <select name="rating" id="rating">
-                <option value="">-- Optional --</option>
-                <option value="5">5 - Excellent</option>
-                <option value="4">4 - Very Good</option>
-                <option value="3">3 - Average</option>
-                <option value="2">2 - Poor</option>
-                <option value="1">1 - Terrible</option>
-            </select>
+            <div class="rating-group">
+                <label for="rating">Rate this location:</label>
+                <select name="rating" id="rating">
+                    <option value="">-- Optional --</option>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="3">3 - Average</option>
+                    <option value="2">2 - Poor</option>
+                    <option value="1">1 - Terrible</option>
+                </select>
+            </div>
             <button id="submit" type="submit" class="btn">Submit Comment <i class="fas fa-paper-plane"></i></button>
         </div>
     </form>

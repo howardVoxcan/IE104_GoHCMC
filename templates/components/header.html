@@ -98,6 +98,7 @@
     </div>
   </div>
 </header>
+{% include 'components/loading.html' %}
 <script>
   // Theme switch logic
   const themeSwitch = document.getElementById("themeSwitch");
@@ -218,6 +219,37 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") hideMenu();
     });
+  })();
+
+  // Loading overlay logic for page transitions
+  (function () {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (!loadingOverlay) return;
+
+    // Function to show loading
+    function showLoading() {
+      loadingOverlay.classList.add('show');
+    }
+
+    // Function to hide loading
+    function hideLoading() {
+      loadingOverlay.classList.remove('show');
+    }
+
+    // Add click listeners to navigation links and buttons
+    const navLinks = document.querySelectorAll('.nav-link, .hamburger-link');
+    const userButtons = document.querySelectorAll('.header__user a button, .user-menu a, .user-menu button');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', showLoading);
+    });
+
+    userButtons.forEach(button => {
+      button.addEventListener('click', showLoading);
+    });
+
+    // Hide loading after page loads
+    window.addEventListener('load', hideLoading);
   })();
 </script>
 

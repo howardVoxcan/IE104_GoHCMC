@@ -9,8 +9,10 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <section class="filter">
   <form method="get" action="{% url 'locations' %}" class="filter-form">
+    {% csrf_token %}
     <div class="filter-item">
       <label for="type">Type:</label>
       <select name="type" id="type">
@@ -72,7 +74,7 @@
             <p>{{ loc.description }}</p>
           </div>
           <div class="card-footer">
-            <div class="rating">
+            <div class="rating hide">
               {{ loc.star_html|safe }}
               <span>{{ loc.rating }} / 5</span>
             </div>
@@ -153,39 +155,7 @@
   </form>
 </div>
 {% endif %}
+</div>
 
-<script>
-document.querySelectorAll('.fav-btn').forEach(function(button) {
-  button.addEventListener('click', function(e) {
-    e.preventDefault();
-    const code = this.dataset.code;
-    const icon = this.querySelector('i');
-
-    fetch("{% url 'locations' %}", {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: `value=${code}`
-    })
-    .then(response => {
-      if (response.status === 401) {
-        alert("Bạn cần đăng nhập để thêm vào danh sách yêu thích.");
-        window.location.href = "{% url 'login' %}";
-      } else if (response.ok) {
-        icon.classList.toggle('fa-solid');
-        icon.classList.toggle('fa-regular');
-      } else {
-        alert("Có lỗi xảy ra khi cập nhật favourite.");
-      }
-    })
-    .catch(error => {
-      console.error('Lỗi:', error);
-      alert("Không thể kết nối với server.");
-    });
-  });
-});
-</script>
+<script src="{% static 'js/locations_index.js' %}"></script>
 {% endblock %}

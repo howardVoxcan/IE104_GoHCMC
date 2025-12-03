@@ -1,0 +1,57 @@
+{% load static %}
+<div class="header__search-bar" id="searchBar">
+  <button type="button" class="header__search-icon" id="searchToggle">
+    <i class="fas fa-search"></i>
+  </button>
+  <form
+    method="get"
+    action="#"
+    class="search-form"
+    id="searchForm">
+    <input
+      type="text"
+      name="search"
+      placeholder="Searching..."
+      value="{{ current_filters.search|default_if_none:'' }}"
+      class="search-input" />
+    <button type="submit" class="search-button">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+</div>
+<script>
+  const searchToggle = document.getElementById("searchToggle");
+  const searchForm = document.getElementById("searchForm");
+
+  function checkScreenSize() {
+    if ((window.innerWidth >= 1199) || (window.innerWidth >= 1014 && window.innerWidth <= 1020) || (window.innerWidth >= 870 && window.innerWidth <= 880)) {
+      searchForm.classList.add("open");
+      searchToggle.style.display = "none";
+    } else {
+      searchForm.classList.remove("open");
+      searchToggle.style.display = "inline-flex";
+    }
+  }
+
+  window.addEventListener("resize", checkScreenSize);
+  checkScreenSize();
+
+  searchToggle.onclick = function () {
+    searchForm.classList.add("open");
+    searchToggle.style.display = "none";
+    searchForm.querySelector("input").focus();
+  };
+
+  function hideSearchForm() {
+    searchForm.classList.remove("open");
+    searchToggle.style.display = "inline-flex";
+  }
+
+  searchForm.querySelector("input").addEventListener("blur", function () {
+    setTimeout(hideSearchForm, 150);
+  });
+
+  searchForm.addEventListener("submit", function (e) {
+    hideSearchForm();
+  });
+</script>

@@ -51,22 +51,24 @@
     </iframe>
 
     <hr>
-    <h3>Post a comment</h3>
-
+    
     {% if user.is_authenticated %}
     <form id="comment-form">
+        <h3>Post a comment</h3>
         {% csrf_token %}
         <textarea name="content" placeholder="Write your comment..." required></textarea>
         <div class="form-group">
-            <label for="rating">Rate this location:</label>
-            <select name="rating" id="rating">
-                <option value="">-- Optional --</option>
-                <option value="5">5 - Excellent</option>
-                <option value="4">4 - Very Good</option>
-                <option value="3">3 - Average</option>
-                <option value="2">2 - Poor</option>
-                <option value="1">1 - Terrible</option>
-            </select>
+            <div class="rating-group">
+                <label for="rating">Rate this location:</label>
+                <select name="rating" id="rating">
+                    <option value="">-- Optional --</option>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="3">3 - Average</option>
+                    <option value="2">2 - Poor</option>
+                    <option value="1">1 - Terrible</option>
+                </select>
+            </div>
             <button id="submit" type="submit" class="btn">Submit Comment <i class="fas fa-paper-plane"></i></button>
         </div>
     </form>
@@ -96,35 +98,6 @@
         {% endfor %}
     </div>
 
-    <script>
-        document.getElementById("comment-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            fetch("{% url 'submit_comment_ajax' code %}", {
-                method: "POST",
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                },
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        const commentHTML = `
-                        <div class="comment">
-                            <p><strong>${data.username}</strong>: ${data.content}</p>
-                            <p><em>Bot reply:</em> ${data.bot_reply}</p>
-                        </div>
-                    `;
-                        document.getElementById("comments").insertAdjacentHTML('beforeend', commentHTML);
-                        form.reset();
-                    }
-                })
-                .catch(error => console.error("Error:", error));
-        });
-    </script>
+    <script src="{% static 'js/locations_detail.js' %}"></script>
 </div>
 {% endblock %}
